@@ -1,0 +1,133 @@
+/* Utility classes for responsive design */
+
+/* Responsive margin and padding */
+.mb-resp {
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.mt-resp {
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.py-resp {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.px-resp {
+  padding-left: clamp(1rem, 3vw, 2rem);
+  padding-right: clamp(1rem, 3vw, 2rem);
+}
+
+/* Responsive text classes */
+.text-resp-lg {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+.text-resp-xl {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.text-resp-2xl {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Responsive width */
+.w-resp-full {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .w-resp-full {
+    width: auto;
+  }
+}
+
+/* Responsive image */
+.img-responsive {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Responsive flex direction */
+.flex-resp {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .flex-resp {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Hide on mobile, show on desktop */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/* Hide on desktop, show on mobile */
+.hide-desktop {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/* Fix aspect ratio for videos and images */
+.aspect-ratio-16-9 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+}
+
+.aspect-ratio-16-9 iframe,
+.aspect-ratio-16-9 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive grid system */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.grid-responsive-sm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.grid-responsive-lg {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+/* Touch targets for mobile */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

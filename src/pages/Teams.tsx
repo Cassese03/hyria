@@ -1,0 +1,249 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const Teams = () => {
+  // Dati della squadra
+  const teamCategories = [
+    {
+      id: 1,
+      name: 'Prima Squadra',
+      description: 'La nostra prima squadra milita nel campionato regionale ed è la punta di diamante del progetto Hyria Basket.',
+      image: '/images/prima-squadra.jpg',
+      players: [
+        { name: 'Alessandro Bianchi', number: 4, position: 'Playmaker', image: '/images/player1.jpg' },
+        { name: 'Marco Rossi', number: 7, position: 'Guardia', image: '/images/player2.jpg' },
+        { name: 'Luca Verdi', number: 10, position: 'Ala', image: '/images/player3.jpg' },
+        { name: 'Davide Neri', number: 15, position: 'Ala Grande', image: '/images/player4.jpg' },
+        { name: 'Fabio Esposito', number: 21, position: 'Centro', image: '/images/player5.jpg' }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Under 19',
+      description: 'Il nostro gruppo Under 19 compete ai massimi livelli regionali preparando i talenti per il salto in prima squadra.',
+      image: '/images/under19.jpg',
+      players: []
+    },
+    {
+      id: 3,
+      name: 'Under 17',
+      description: 'La squadra Under 17 è un importante punto di formazione per giovani atleti ambiziosi.',
+      image: '/images/under17.jpg',
+      players: []
+    }
+  ];
+
+  return (
+    <div className="teams-page">
+      {/* Hero Section */}
+      <section className="hero-section" style={{ height: '60vh' }}>
+        <div className="hero-background">
+          <img src="/images/team-hero.jpg" alt="Hyria Basket Team" className="hero-bg-image" />
+          <div className="hero-overlay"></div>
+        </div>
+        <div className="hero-content">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="hero-text-container"
+          >
+            <h1 className="hero-title">
+              LE NOSTRE <span className="gradient-text">SQUADRE</span>
+            </h1>
+            <div className="section-divider"></div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Teams Overview */}
+      <section className="section-padding">
+        <div className="container">
+          <motion.h2 
+            className="section-title"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            STAGIONE 2024/2025
+          </motion.h2>
+          <div className="section-divider"></div>
+          <motion.p 
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Scopri tutte le squadre del progetto Hyria Basket per questa stagione
+          </motion.p>
+          
+          {/* Team Categories */}
+          <div className="space-y-24">
+            {teamCategories.map((team, index) => (
+              <div key={team.id} className="team-category">
+                <motion.h3
+                  className="text-3xl font-bold mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  {team.name}
+                </motion.h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="rounded-lg overflow-hidden shadow-xl"
+                  >
+                    <img src={team.image} alt={team.name} className="w-full h-auto" />
+                  </motion.div>
+                  
+                  <motion.div 
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    <p className="text-lg mb-6">{team.description}</p>
+                    
+                    {team.id === 1 && (
+                      <div>
+                        <h4 className="text-xl font-bold mb-4">Roster</h4>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {team.players.map((player) => (
+                            <div key={player.name} className="text-center">
+                              <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-2">
+                                <img src={player.image} alt={player.name} className="w-full h-full object-cover" />
+                              </div>
+                              <p className="font-bold">{player.name}</p>
+                              <p className="text-sm">{player.position} | #{player.number}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <motion.button
+                          className="btn-primary mt-8"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          ROSTER COMPLETO
+                        </motion.button>
+                      </div>
+                    )}
+                    
+                    {team.id !== 1 && (
+                      <motion.button
+                        className="btn-primary"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        SCOPRI DI PIÙ
+                      </motion.button>
+                    )}
+                  </motion.div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* League Table Section */}
+      <section className="section-padding bg-gradient-to-r from-gray-900 to-gray-800">
+        <div className="container">
+          <motion.h2 
+            className="section-title text-white"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            CLASSIFICA
+          </motion.h2>
+          <div className="section-divider"></div>
+          
+          <div className="overflow-x-auto">
+            <motion.table
+              className="w-full text-sm text-left text-gray-300 mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <thead className="text-xs uppercase bg-gray-700">
+                <tr>
+                  <th scope="col" className="px-6 py-3">Posizione</th>
+                  <th scope="col" className="px-6 py-3">Squadra</th>
+                  <th scope="col" className="px-6 py-3">PG</th>
+                  <th scope="col" className="px-6 py-3">V</th>
+                  <th scope="col" className="px-6 py-3">P</th>
+                  <th scope="col" className="px-6 py-3">PF</th>
+                  <th scope="col" className="px-6 py-3">PS</th>
+                  <th scope="col" className="px-6 py-3">Punti</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { pos: 1, team: "Basket Campione", played: 10, wins: 9, losses: 1, scored: 820, against: 720, points: 18 },
+                  { pos: 2, team: "Hyria Basket", played: 10, wins: 8, losses: 2, scored: 802, against: 740, points: 16 },
+                  { pos: 3, team: "Basket Rivale", played: 10, wins: 7, losses: 3, scored: 790, against: 750, points: 14 },
+                  { pos: 4, team: "Team Basket City", played: 10, wins: 6, losses: 4, scored: 770, against: 760, points: 12 },
+                  { pos: 5, team: "Hoops Stars", played: 10, wins: 5, losses: 5, scored: 750, against: 770, points: 10 }
+                ].map((team) => (
+                  <tr key={team.pos} className={`border-b border-gray-700 ${team.team === 'Hyria Basket' ? 'bg-orange-900/30 font-bold' : ''}`}>
+                    <td className="px-6 py-4">{team.pos}</td>
+                    <td className="px-6 py-4">{team.team}</td>
+                    <td className="px-6 py-4">{team.played}</td>
+                    <td className="px-6 py-4">{team.wins}</td>
+                    <td className="px-6 py-4">{team.losses}</td>
+                    <td className="px-6 py-4">{team.scored}</td>
+                    <td className="px-6 py-4">{team.against}</td>
+                    <td className="px-6 py-4">{team.points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </motion.table>
+          </div>
+          
+          <div className="text-center mt-12">
+            <motion.button
+              className="btn-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              CALENDARIO COMPLETO
+            </motion.button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="cta-content"
+          >
+            <h2 className="cta-title">
+              Sostieni i nostri <span className="gradient-text">campioni</span>
+            </h2>
+            <p className="cta-description">
+              Vieni a tifare per noi alle partite casalinghe o acquista il merchandise ufficiale
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <motion.button
+                className="btn-primary"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                CALENDARIO PARTITE
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Teams;
