@@ -38,7 +38,7 @@ const Navbar = () => {
           <div className="flex justify-between h-20">
             {/* Desktop menu */}
             <div className="hidden md:flex md:items-center md:justify-center w-full">
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <div key={item.name} className="relative group">
                   <Link
                     to={item.href}

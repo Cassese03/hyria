@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const Teams = () => {
@@ -79,7 +78,7 @@ const Teams = () => {
           
           {/* Team Categories */}
           <div className="space-y-24">
-            {teamCategories.map((team, index) => (
+            {teamCategories.map((team) => (
               <div key={team.id} className="team-category">
                 <motion.h3
                   className="text-3xl font-bold mb-6"
