@@ -9,14 +9,15 @@ import SettoreGiovanile from './pages/SettoreGiovanile';
 import Sponsor from './pages/Sponsor';
 import './styles/home.css';
 import './styles/global.css';
-import './styles/responsive.css'; // Importiamo il nuovo file di stili responsive
+import './styles/responsive.css';
+import './styles/overflow-fix.css'; // Importiamo per ultimo per sovrascrivere altri stili
 
 const App = () => {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pt-[60px] md:pt-[70px]"> {/* Padding-top regolabile in base all'altezza dell'header */}
+    <Router>-full overflow-x-hidden">
+      <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+        <Header />w-full */}
+        <main className="flex-grow pt-[60px] md:pt-[70px] w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/team" element={<Teams />} />
@@ -24,13 +25,12 @@ const App = () => {
             <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
             <Route path="/sponsor" element={<Sponsor />} />
             <Route path="/contatti" element={<Contact />} />
-            {/* Aggiungi altre rotte qui */}
           </Routes>
-        </main>
+        </main> />
         <Footer />
-      </div>
+      </div>>
     </Router>
   );
 };
-
+export default App;
 export default App;

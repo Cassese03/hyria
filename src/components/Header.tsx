@@ -32,7 +32,7 @@ const Header = () => {
   }, [isOpen]);
 
   return (
-    <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`site-header ${isScrolled ? 'scrolled' : ''} w-full overflow-x-hidden`}>
       <div className="header-inner">
         <div className="header-logo">
           <a href="/">

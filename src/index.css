@@ -8,6 +8,11 @@
   html {
     font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -15,10 +20,24 @@
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight text-hyria-tertiary;
+  }
+
+  #root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden; /* Previene overflow orizzontale */
   }
 }
 
