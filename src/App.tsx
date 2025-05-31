@@ -14,9 +14,9 @@ import './styles/overflow-fix.css'; // Importiamo per ultimo per sovrascrivere a
 
 const App = () => {
   return (
-    <Router>-full overflow-x-hidden">
+    <Router>
       <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
-        <Header />w-full */}
+        <Header />
         <main className="flex-grow pt-[60px] md:pt-[70px] w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,11 +26,10 @@ const App = () => {
             <Route path="/sponsor" element={<Sponsor />} />
             <Route path="/contatti" element={<Contact />} />
           </Routes>
-        </main> />
+        </main> 
         <Footer />
-      </div>>
+      </div>
     </Router>
   );
 };
-export default App;
 export default App;
