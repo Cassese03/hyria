@@ -1,0 +1,505 @@
+/* Stili avanzati per la pagina dello store */
+
+/* Effetto glassmorphism su alcune card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Effetti hover migliorati per le card */
+.product-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.product-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Effetto overlay al passaggio del mouse */
+.product-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.product-card:hover .overlay {
+  opacity: 1;
+}
+
+/* Animazione per i badge */
+.product-badge {
+  position: absolute;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  animation: pulse 2s infinite;
+  z-index: 10;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 108, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(217, 108, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 108, 0, 0);
+  }
+}
+
+.product-badge.new {
+  top: 15px;
+  left: 15px;
+  background: var(--color-secondary);
+  color: white;
+}
+
+.product-badge.sale {
+  top: 15px;
+  right: 15px;
+  background: #e53e3e;
+  color: white;
+}
+
+/* Stile per le immagini prodotto */
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+  height: 280px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+/* Effetto di overlay gradiente sulle immagini */
+.product-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-image-container::after {
+  opacity: 1;
+}
+
+/* Stili per i dettagli prodotto */
+.product-details {
+  padding: 1.5rem;
+  background-color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #1a202c;
+  transition: color 0.3s ease;
+}
+
+.product-card:hover .product-title {
+  color: var(--color-secondary);
+}
+
+/* Prezzo e scontistica */
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.current-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #2d3748;
+}
+
+.original-price {
+  font-size: 0.875rem;
+  text-decoration: line-through;
+  color: #a0aec0;
+}
+
+.discount-label {
+  background-color: #fed7d7;
+  color: #c53030;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Pulsante acquista con effetto 3D */
+.buy-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(217, 108, 0, 0.2), 0 1px 3px rgba(217, 108, 0, 0.1);
+}
+
+.buy-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(217, 108, 0, 0.3), 0 4px 6px rgba(217, 108, 0, 0.2);
+}
+
+.buy-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 4px rgba(217, 108, 0, 0.3);
+}
+
+/* Effetto onda al click */
+.buy-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+}
+
+.buy-button:focus::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(30);
+    opacity: 0;
+  }
+}
+
+/* Categorie con effetto neomorfismo */
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.category-button {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.category-button.active {
+  background-color: var(--color-secondary);
+  color: white;
+  box-shadow: 0 6px 15px rgba(217, 108, 0, 0.3);
+}
+
+.category-button:not(.active) {
+  background-color: #f7fafc;
+  color: #4a5568;
+  box-shadow: 5px 5px 10px #e2e8f0, -5px -5px 10px #ffffff;
+}
+
+.category-button:not(.active):hover {
+  box-shadow: 3px 3px 6px #e2e8f0, -3px -3px 6px #ffffff;
+  background-color: #edf2f7;
+}
+
+/* Categorie box con glassmorphism e sfondi sfumati */
+.category-box {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 2rem;
+  height: 100%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.category-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, rgba(94, 3, 3, 0.8), rgba(217, 108, 0, 0.7));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.category-box .category-icon {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.3));
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.category-box:hover .category-icon {
+  transform: scale(1.2) translateY(-5px);
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.category-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+/* Sezione "Come funziona" */
+.how-it-works-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  background: linear-gradient(45deg, #5e0303 0%, #7a0505 100%);
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.how-it-works-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.how-it-works-number {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(217, 108, 0, 0.4);
+}
+
+.how-it-works-number::after {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--color-secondary);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.5;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+/* Hero section migliorata */
+.store-hero {
+  height: 70vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.store-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1519861531473-9200262188bf');
+  background-size: cover;
+  background-position: center;
+  animation: zoomInOut 20s infinite alternate;
+  filter: brightness(0.6);
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.store-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.store-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.store-hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Animazioni per elementi */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .product-image-container {
+    height: 220px;
+  }
+  
+  .how-it-works-card {
+    padding: 1.5rem;
+  }
+  
+  .category-box {
+    min-height: 200px;
+    padding: 1.5rem;
+  }
+}
+
+/* Barra di ricerca con auto-complete */
+.search-bar {
+  position: relative;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 100px;
+  border: 1px solid #e2e8f0;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(217, 108, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.6);
+}

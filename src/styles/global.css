@@ -373,3 +373,79 @@ img, video, iframe {
 .bg-gray-100.border-l-4.border-hyria-tertiary {
   border-color: var(--color-secondary);
 }
+
+/* Stili per la pagina Store */
+.store-page .hero-section {
+  background-color: var(--color-dark);
+}
+
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Badge per prodotti */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-new {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.badge-sale {
+  background-color: #e53e3e;
+  color: white;
+}
+
+/* Price styles */
+.price {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.price-original {
+  text-decoration: line-through;
+  color: #a0aec0;
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Category buttons */
+.category-button {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.category-button.active {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.category-button:not(.active) {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.category-button:not(.active):hover {
+  background-color: #cbd5e0;
+}

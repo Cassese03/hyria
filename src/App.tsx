@@ -7,10 +7,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import SettoreGiovanile from './pages/SettoreGiovanile';
 import Sponsor from './pages/Sponsor';
+import Store from './pages/Store';
 import './styles/home.css';
 import './styles/global.css';
 import './styles/responsive.css';
 import './styles/overflow-fix.css'; // Importiamo per ultimo per sovrascrivere altri stili
+import './styles/store.css'; // Importiamo i nuovi stili dello store
 
 const App = () => {
   return (
@@ -24,6 +26,7 @@ const App = () => {
             <Route path="/chi-siamo" element={<About />} />
             <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
             <Route path="/sponsor" element={<Sponsor />} />
+            <Route path="/store" element={<Store />} />
             <Route path="/contatti" element={<Contact />} />
           </Routes>
         </main> 
@@ -32,4 +35,5 @@ const App = () => {
     </Router>
   );
 };
+
 export default App;
