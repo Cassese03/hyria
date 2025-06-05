@@ -53,10 +53,10 @@ const Header = () => {
               <a href="/settore-giovanile">SETTORE GIOVANILE</a>
             </li>
             <li className="menu-item">
-              <a href="/sponsor">SPONSOR</a>
+              <a href="/store">STORE</a>
             </li>
             <li className="menu-item">
-              <a href="/store">STORE</a>
+              <a href="/sponsor">SPONSOR</a>
             </li>
             <li className="menu-item">
               <a href="/contatti">CONTATTI</a>
@@ -89,10 +89,10 @@ const Header = () => {
                 <a href="/settore-giovanile" onClick={() => setIsOpen(false)}>SETTORE GIOVANILE</a>
               </li>
               <li className="mobile-menu-item">
-                <a href="/sponsor" onClick={() => setIsOpen(false)}>SPONSOR</a>
+                <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
               </li>
               <li className="mobile-menu-item">
-                <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
+                <a href="/sponsor" onClick={() => setIsOpen(false)}>SPONSOR</a>
               </li>
               <li className="mobile-menu-item">
                 <a href="/contatti" onClick={() => setIsOpen(false)}>CONTATTI</a>

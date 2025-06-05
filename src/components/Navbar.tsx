@@ -19,6 +19,7 @@ const Navbar = () => {
       ],
     },
     { name: 'SETTORE GIOVANILE', href: '/settore-giovanile' },
+    { name: 'STORE', href: '/store' },
     { name: 'SPONSOR', href: '/sponsor' }, 
     { name: 'CONTATTI', href: '/contatti' },
   ];

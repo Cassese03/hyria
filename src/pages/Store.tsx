@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import PageHero from '../components/PageHero';
 import SectionTitle from '../components/SectionTitle';
 import '../styles/store.css'; // Importiamo il nuovo file CSS
 
@@ -121,7 +120,7 @@ const Store: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<{id: number, quantity: number}[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [] = useState(false);
   
   // Filtraggio dei prodotti in base alla categoria selezionata e termine di ricerca
   const filteredProducts = products
