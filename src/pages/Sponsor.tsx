@@ -276,7 +276,7 @@ const Sponsor: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="hero-section section-padding bg-gray-100">
+      <section className="about-section section-padding bg-gray-100">
         <div className="container">
           <SectionTitle 
             title="VANTAGGI PER GLI SPONSOR" 
