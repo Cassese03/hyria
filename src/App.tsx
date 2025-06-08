@@ -7,7 +7,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import SettoreGiovanile from './pages/SettoreGiovanile';
 import Sponsor from './pages/Sponsor';
-import Store  from './pages/Store';
+//import Store  from './pages/Store';
 import './styles/home.css';
 import './styles/global.css';
 import './styles/responsive.css';
@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/chi-siamo" element={<About />} />
             <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
             <Route path="/sponsor" element={<Sponsor />} />
-            <Route path="/store" element={<Store />} />
+            {/* <Route path="/store" element={<Store />} /> */}
             <Route path="/contatti" element={<Contact />} />
           </Routes>
         </main> 

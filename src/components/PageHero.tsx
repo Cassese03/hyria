@@ -34,13 +34,13 @@ const PageHero: React.FC<PageHeroProps> = ({
             {coloredText ? (
               <>
                 <span className="block sm:inline">{normalText}</span>{' '}
-                <span className="gradient-text">{coloredText}</span>
+                <span className="gradient-text" style={{color:'#d96c00'}}>{coloredText}</span>
               </>
             ) : (
               <span className="gradient-text">{title}</span>
             )}
           </h1>
-          {subtitle && <p className="hero-subtitle text-lg mt-2 md:mt-4">{subtitle}</p>}
+          {subtitle && <p className="hero-subtitle text-lg mt-2 md:mt-4" style={{color:'white'}}>{subtitle}</p>}
           <div className="section-divider mx-auto"></div>
         </motion.div>
       </div>

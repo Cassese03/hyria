@@ -18,10 +18,10 @@ const Home: React.FC = () => {
             className="hero-text-container"
           >
             <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl">
-              HYRIA <span className="gradient-text">BASKET</span>
+              HYRIA <span style={{color:'#d96c00'}}>BASKET</span>
             </h1>
             <p className="hero-description text-base md:text-lg">
-              Una squadra di basket giovane, nata dal progetto di imprenditori millennials 
+              Una squadra di basket giovane, nata dal progetto di giovani imprenditori 
               convinti che un'atmosfera familiare e attenta al lato umano e allo spirito di squadra 
               possa conciliarsi perfettamente con la tecnologia più avanzata e i giovani talenti del territorio.
             </p>
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
               viewport={{ once: true }}
             >
               Il "Hyria" è una squadra di basket moderna militante attualmente nel campionato regionale.
-              Il progetto, costituito da oltre 150 atleti tesserati e circa 20 dirigenti, si pone l'obiettivo 
+              Il progetto, costituito da oltre 50 atleti tesserati e circa 15 dirigenti, si pone l'obiettivo 
               di arrivare al basket professionistico sfruttando le nuove tecnologie e il know how in ambito 
               imprenditoriale dei soci fondatori.
             </motion.p>
@@ -242,7 +242,7 @@ const Home: React.FC = () => {
               { value: "50+", label: "ATLETI" },
               { value: "15+", label: "STAFF" },
               // { value: "1+", label: "ANNI" },
-              { value: "1000+", label: "TIFOSI" }
+              //  { value: "1000+", label: "TIFOSI" }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

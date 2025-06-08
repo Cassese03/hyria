@@ -8,7 +8,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="hero-section" style={{ height: '60vh' }}>
         <div className="hero-background">
-          <img src="/images/about-hero.jpg" alt="Hyria Basket Team" className="hero-bg-image" />
+          <img src="/images/contact-hero.jpg" alt="Hyria Basket Team" className="hero-bg-image" />
           <div className="hero-overlay"></div>
         </div>
         <div className="hero-content">
@@ -50,13 +50,13 @@ const About = () => {
               style={{ color: 'white', }}
             >
               <p className="text-lg mb-6">
-                Hyria Basket nasce nel 2020 dal progetto di un gruppo di imprenditori millennials appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
+                Hyria Basket nasce nel 2020 dal progetto di un gruppo di giovani imprenditori appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
               </p>
               <p className="text-lg mb-6">
                 Il nome "Hyria" richiama l'antica città che sorgeva nell'area nolana, simbolo di tradizione e radici territoriali, mentre lo sguardo è proiettato verso il futuro del basket moderno.
               </p>
               <p className="text-lg">
-                In pochi anni, siamo riusciti a costruire un progetto solido che comprende prima squadra, settore giovanile e numerose iniziative sul territorio, diventando un punto di riferimento per la pallacanestro nella nostra regione.
+                In poco tempo, siamo riusciti a costruire un progetto solido che comprende prima squadra, minibasket e numerose iniziative sul territorio, diventando un punto di riferimento per la pallacanestro nella nostra realtà.
               </p>
             </motion.div>
             <motion.div
@@ -66,7 +66,7 @@ const About = () => {
               transition={{ delay: 0.4 }}
               className="rounded-lg overflow-hidden shadow-xl"
             >
-              <img src="/images/storia-hyria.jpg" alt="Storia di Hyria Basket" className="w-full h-auto" />
+              <img src="/images/logo-hyria.png" alt="Storia di Hyria Basket" className="w-full h-auto" />
             </motion.div>
           </div>
         </div>
@@ -100,14 +100,14 @@ const About = () => {
                 description: "L'amore per il basket è il motore di tutto ciò che facciamo, dalla prima squadra al minibasket",
                 icon: "❤️"
               },
-              {
-                title: "Innovazione",
-                description: "Utilizziamo tecnologie avanzate per l'analisi delle prestazioni e lo sviluppo dei talenti",
-                icon: "💡"
-              },
+              // {
+              //   title: "Innovazione",
+              //   description: "Utilizziamo tecnologie avanzate per l'analisi delle prestazioni e lo sviluppo dei talenti",
+              //   icon: "💡"
+              // },
               {
                 title: "Comunità",
-                description: "Crediamo nel valore di creare una comunità unita attorno al nostro progetto sportivo",
+                description: "Crediamo nel valore di creare una comunità unita attorno al nostro progetto sportivo dentro e fuori dal campo",
                 icon: "🤝"
               },
               {
@@ -156,14 +156,13 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { name: "Attilio De Sena", role: "Presidente", image: "/images/staff-1.jpg" },
-              { name: "Paolino Franzese", role: "Direttore Sportivo",image: "/images/staff-1.jpg" },
-              { name: "Lorenzo Cassese", role: "Head Coach",image: "/images/staff-1.jpg" },
-              { name: "Giovanni Sangermano", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
-              { name: "Davide Esposito", role: "Resp. Marketing",image: "/images/staff-1.jpg" },
-              { name: "Agostino Esposito", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
-              { name: "Giacomo Mascolo", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
-              { name: "Christian Guida", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
+              { name: "Attilio De Sena", role: "Presidente", image: "/images/contact-hero.jpg" },
+              { name: "Paolino Franzese", role: "Vice Presidente",image: "/images/contact-hero.jpg" },
+              { name: "Lorenzo Cassese", role: "Socio Fondatore",image: "/images/contact-hero.jpg" },
+              { name: "Giovanni Sangermano", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
+              { name: "Davide Esposito", role: "Socio Fondatore",image: "/images/contact-hero.jpg" },
+              { name: "Agostino Esposito", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
+              { name: "Giacomo Mascolo", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
 
             ].map((member, index) => (
               <motion.div
@@ -204,6 +203,7 @@ const About = () => {
               className="btn-primary"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.href = '/contatti'}
             >
               CONTATTACI ORA
             </motion.button>

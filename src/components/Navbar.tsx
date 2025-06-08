@@ -9,7 +9,7 @@ const Navbar = () => {
   const navigation = [
     { name: 'CHI SIAMO', href: '/chi-siamo' },
     {
-      name: 'TEAM',
+      name: 'ROSTER',
       href: '/team',
       submenu: [
         { name: 'PRIMA SQUADRA', href: '/team/prima-squadra' },
@@ -18,8 +18,8 @@ const Navbar = () => {
         { name: 'STAFF TECNICO', href: '/team/staff-tecnico' },
       ],
     },
-    { name: 'SETTORE GIOVANILE', href: '/settore-giovanile' },
-    { name: 'STORE', href: '/store' },
+    { name: 'minibasket', href: '/settore-giovanile' },
+    // { name: 'STORE', href: '/store' },
     { name: 'SPONSOR', href: '/sponsor' }, 
     { name: 'CONTATTI', href: '/contatti' },
   ];

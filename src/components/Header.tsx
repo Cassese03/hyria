@@ -50,10 +50,10 @@ const Header = () => {
               <a href="/chi-siamo">CHI SIAMO</a>
             </li>
             <li className="menu-item">
-              <a href="/team">TEAM</a>
+              <a href="/team">Roster</a>
             </li>
             <li className="menu-item">
-              <a href="/settore-giovanile">SETTORE GIOVANILE</a>
+              <a href="/settore-giovanile">minibasket</a>
             </li>
             {/* <li className="menu-item">
               <a href="/store">STORE</a>
@@ -86,14 +86,14 @@ const Header = () => {
                 <a href="/chi-siamo" onClick={() => setIsOpen(false)}>CHI SIAMO</a>
               </li>
               <li className="mobile-menu-item">
-                <a href="/team" onClick={() => setIsOpen(false)}>TEAM</a>
+                <a href="/team" onClick={() => setIsOpen(false)}>Roster</a>
               </li>
               <li className="mobile-menu-item">
-                <a href="/settore-giovanile" onClick={() => setIsOpen(false)}>SETTORE GIOVANILE</a>
+                <a href="/settore-giovanile" onClick={() => setIsOpen(false)}>minibasket</a>
               </li>
-              <li className="mobile-menu-item">
+              {/* <li className="mobile-menu-item">
                 <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
-              </li>
+              </li> */}
               <li className="mobile-menu-item">
                 <a href="/sponsor" onClick={() => setIsOpen(false)}>SPONSOR</a>
               </li>

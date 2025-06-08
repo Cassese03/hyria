@@ -44,7 +44,7 @@ const SettoreGiovanile: React.FC = () => {
   ];
 
   const coaches = [
-    { name: "Marco Rossi", role: "Responsabile Settore Giovanile", image: "/images/coach1.jpg" },
+    { name: "Marco Rossi", role: "Responsabile minibasket", image: "/images/coach1.jpg" },
     { name: "Laura Bianchi", role: "Allenatrice Minibasket", image: "/images/coach2.jpg" },
     { name: "Luca Verdi", role: "Allenatore Under 13/15", image: "/images/coach3.jpg" },
     { name: "Giulia Neri", role: "Allenatrice Under 17/19", image: "/images/coach4.jpg" }
@@ -76,7 +76,7 @@ const SettoreGiovanile: React.FC = () => {
   return (
     <div className="settore-giovanile-page">
       <PageHero 
-        backgroundImage="/images/settore-giovanile-hero.jpg"
+        backgroundImage="/images/contact-hero.jpg"
         normalText="SETTORE"
         coloredText="GIOVANILE"
         subtitle="Il futuro del basket parte da qui"
@@ -97,7 +97,7 @@ const SettoreGiovanile: React.FC = () => {
               viewport={{ once: true }}
             >
               <p className="text-lg mb-6">
-                Il settore giovanile rappresenta il cuore del progetto Hyria Basket. Crediamo fermamente che la crescita di una società sportiva passi attraverso lo sviluppo dei giovani atleti del territorio.
+                Il minibasket rappresenta il cuore del progetto Hyria Basket. Crediamo fermamente che la crescita di una società sportiva passi attraverso lo sviluppo dei giovani atleti del territorio.
               </p>
               <p className="text-lg mb-6">
                 Il nostro programma è strutturato per accompagnare bambini e ragazzi in un percorso di crescita sportiva e personale, dal Minibasket fino alle soglie della prima squadra.
@@ -137,7 +137,7 @@ const SettoreGiovanile: React.FC = () => {
             >
               <img 
                 src="/images/settore-giovanile-intro.jpg" 
-                alt="Settore Giovanile Hyria Basket" 
+                alt="minibasket Hyria Basket" 
                 className="w-full h-auto"
               />
             </motion.div>
@@ -326,14 +326,14 @@ const SettoreGiovanile: React.FC = () => {
         <div className="container">
           <SectionTitle 
             title="DOMANDE FREQUENTI" 
-            subtitle="Tutto quello che devi sapere sul nostro settore giovanile"
+            subtitle="Tutto quello che devi sapere sul nostro minibasket"
           />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             {[
               {
                 question: "Come posso iscrivere mio figlio/a?",
-                answer: "Per iscrivere tuo figlio/a al settore giovanile di Hyria Basket, puoi venire direttamente presso la nostra segreteria negli orari indicati o contattarci telefonicamente per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico sportivo valido."
+                answer: "Per iscrivere tuo figlio/a al minibasket di Hyria Basket, puoi contattarci tramite i nostri profili social  o contattarci telefonicamente per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico sportivo valido."
               },
               {
                 question: "Quali sono i costi di iscrizione?",
@@ -374,7 +374,7 @@ const SettoreGiovanile: React.FC = () => {
             className="cta-content"
           >
             <h2 className="cta-title">
-              Unisciti al nostro <span className="gradient-text">Settore Giovanile</span>
+              Unisciti al nostro <span className="gradient-text">minibasket</span>
             </h2>
             <p className="cta-description">
               Scopri il divertimento e i benefici di giocare a basket con Hyria

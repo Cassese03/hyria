@@ -235,7 +235,7 @@ img, video, iframe {
   background: linear-gradient(to bottom, rgba(94, 3, 3, 0.7), rgba(94, 3, 3, 0.9)); /* Cambiato */
 }
 
-/* Stili per la pagina Settore Giovanile */
+/* Stili per la pagina minibasket */
 .settore-giovanile-page .hero-section {
   background-color: var(--color-dark);
 }

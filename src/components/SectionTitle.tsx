@@ -14,6 +14,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, light = fa
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        style={{color:'#5e0303'}}
       >
         {title}
       </motion.h2>
@@ -25,6 +26,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, light = fa
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          style={{color:'white'}}
         >
           {subtitle}
         </motion.p>

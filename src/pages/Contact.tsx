@@ -1,23 +1,23 @@
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
 
-const Contact = () => { 
+const Contact = () => {
 
   const faqs = [
     {
       question: "Come posso iscrivermi alle attività di Hyria Basket?",
-      answer: "Per iscriverti puoi venire direttamente presso la nostra segreteria negli orari indicati, oppure contattarci via email o telefono per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico valido."
+      answer: "Per iscriverti puoi contattarci tramite i nostri profili social , oppure contattarci via email o telefono per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico valido."
     },
     {
       question: "Quali sono i costi di iscrizione?",
-      answer: "I costi variano in base alla categoria e al tipo di attività. Contattaci per ricevere informazioni dettagliate sui costi e sulle eventuali promozioni in corso."
+      answer: "I costi variano in base al tipo di attività e promozioni varie. Contattaci per ricevere informazioni dettagliate sui costi e sulle eventuali promozioni in corso."
     },
     {
-      question: "Da che età si può iniziare a praticare basket?",
-      answer: "I nostri corsi di minibasket accolgono bambini a partire dai 5 anni. Per i più piccoli abbiamo attività ludico-motorie propedeutiche al basket."
+      question: "Da che età si può iniziare a praticare baske<t?",
+      answer: "I nostri corsi di minibasket accolgono bambini a partire dai 5 anni. Per i più piccoli abbiamo attività ludico-motorie propedeutiche e all'inclusione al basket."
     },
     {
       question: "Dove si svolgono gli allenamenti?",
-      answer: "Gli allenamenti si svolgono presso il nostro impianto principale a Nola e in altre strutture convenzionate nella zona. Gli indirizzi esatti vengono comunicati al momento dell'iscrizione."
+      answer: "Gli allenamenti si svolgono presso il nostro palazzetto principale a Nola e in altre strutture convenzionate nella zona. Gli indirizzi esatti vengono comunicati al momento dell'iscrizione."
     }
   ];
 
@@ -38,7 +38,7 @@ const Contact = () => {
             className="hero-text-container"
           >
             <h1 className="hero-title">
-              <span className="gradient-text">CONTATTI</span>
+              <span style={{color:'#d96c00'}}>CONTATTI</span>
             </h1>
             <div className="section-divider"></div>
           </motion.div>
@@ -72,7 +72,7 @@ const Contact = () => {
 
                   <div>
                     <h3 className="font-semibold text-lg text-hyria-tertiary" style={{ color: '#d96c00' }}> Indirizzo</h3>
-                    <p className="text-gray-300" style={{ color: 'white' }}>Via Roma, 123 - 80035 Nola (NA)</p>
+                    <p className="text-gray-300" style={{ color: 'white' }}>Via Madonna delle Grazie, 61 - 80035 Nola (NA)</p>
                   </div>
                 </motion.div>
 
@@ -83,7 +83,8 @@ const Contact = () => {
 
                   <div>
                     <h3 className="font-semibold text-lg text-hyria-tertiary" style={{ color: '#d96c00' }}> Telefono</h3>
-                    <p className="text-gray-300" style={{ color: 'white' }}>+39 334 989 4343</p>
+                    <p className="text-gray-300" style={{ color: 'white' }}>Attilio +39 333 746 1777</p>
+                    <p className="text-gray-300" style={{ color: 'white' }}>Paolino +39 331 402 3282</p>
                   </div>
                 </motion.div>
 
@@ -101,7 +102,44 @@ const Contact = () => {
               </div>
 
             </motion.div>
+            {/* FAQ Section */}
+            <section className="cta-section">
+              <div className="container">
+                <motion.h2
+                  className="section-title text-hyria-tertiary"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  style={{ color: '#d96c00' }}
+                >
+                  DOMANDE FREQUENTI
+                </motion.h2>
+                <div className="section-divider"></div>
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                  {faqs.map((faq, index) => (
+                    <motion.div
+                      style={{ color: '#d96c00' }}
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="glass-card hover:bg-white/20 transition-all duration-300"
+                    >
+                      <motion.div
+                        className="p-6"
+                        whileHover={{ x: 10 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <h3 className="text-lg font-bold mb-3 text-hyria-tertiary">{faq.question}</h3>
+                        <p className="text-gray-300" style={{ color: 'white' }}>{faq.answer}</p>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
             {/* Form Side */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -110,18 +148,18 @@ const Contact = () => {
               className="bg-white/5 p-8 rounded-lg backdrop-blur-sm border border-white/10"
             >
               <h2 className="text-3xl font-bold mb-6 text-hyria-tertiary" style={{ color: '#d96c00' }}>Modulo di Contatto</h2>
-              
+
               <div className="jotform-container">
                 <iframe
                   id="JotFormIFrame-251582849354063"
                   title="Modulo di contatto Hyria Basket"
                   onLoad={() => {
                     window.parent.scrollTo(0, 0);
-                    
+
                     // Add JotForm script for automatic height adjustment
                     const iframe = document.getElementById('JotFormIFrame-251582849354063');
                     if (iframe) {
-                      window.addEventListener('message', function(event) {
+                      window.addEventListener('message', function (event) {
                         if (event.data.action === 'scrollIntoView' || event.data.action === 'setHeight') {
                           const height = event.data.height;
                           if (height) {
@@ -171,7 +209,7 @@ const Contact = () => {
             className="mt-12 h-[400px] rounded-lg overflow-hidden shadow-lg"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3014.5145804258295!2d14.535448476525769!3d40.92638812446258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133bb3c3163d7469%3A0xdf66cd7eeff81e00!2sScuola%20Secondaria%20Statale%20di%20I%20grado%20G.%20Merliano%20-%20L.%20Tansillo!5e0!3m2!1sit!2sit!4v1749381474839!5m2!1sit!2sit"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3014.617422555087!2d14.533819076267536!3d40.92413362460155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133bb3db602399a5%3A0x638012fb6713a298!2sVia%20Madonna%20delle%20Grazie%2C%2061%2C%2080035%20Nola%20NA!5e0!3m2!1sit!2sit!4v1749403025023!5m2!1sit!2sit"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -183,44 +221,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="cta-section">
-        <div className="container">
-          <motion.h2
-            className="section-title text-hyria-tertiary"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ color: '#d96c00' }}
-          >
-            DOMANDE FREQUENTI
-          </motion.h2>
-          <div className="section-divider"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            {faqs.map((faq, index) => (
-              <motion.div
-              style={{ color: '#d96c00' }}
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-card hover:bg-white/20 transition-all duration-300"
-              >
-                <motion.div
-                  className="p-6"
-                  whileHover={{ x: 10 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <h3 className="text-lg font-bold mb-3 text-hyria-tertiary">{faq.question}</h3>
-                  <p className="text-gray-300" style={{color:'white'}}>{faq.answer}</p>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Footer = () => {
               </svg>
             </a>
             <a 
-              href="https://www.facebook.com/hyriabasket" 
+              href="https://www.facebook.com/share/1EwASMhiUT/?mibextid=wwXIfr" 
               className="social-icon text-white hover:text-hyria-orange transition-colors" 
               target="_blank" 
               rel="noopener noreferrer"

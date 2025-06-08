@@ -185,7 +185,7 @@ const Store: React.FC = () => {
   return (
     <div className="store-page">
       {/* Hero Section con sfondo animato */}
-      <div className="store-hero">
+      <div className="contact-hero">
         <div className="store-hero-content">
           <motion.h1 
             className="store-hero-title text-white"
