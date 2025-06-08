@@ -1,21 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { EnvelopeIcon, PhoneIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion'; 
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
-  const [formStatus, setFormStatus] = useState({
-    submitted: false,
-    success: false,
-    message: ''
-  });
+const Contact = () => { 
 
   const faqs = [
     {
@@ -36,31 +21,6 @@ const Contact = () => {
     }
   ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Simulate form submission
-    setFormStatus({
-      submitted: true,
-      success: true,
-      message: 'Grazie per averci contattato. Ti risponderemo al più presto!',
-      style: { color: '#d96c00' },
-    });
-
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
-  };
 
   return (
     <div className="contact-page">
@@ -185,12 +145,6 @@ const Contact = () => {
                   scrolling="no"
                 ></iframe>
               </div>
-              
-              {formStatus.submitted && (
-                <div className="mt-4 p-4 rounded-md bg-white/10" style={formStatus.style}>
-                  {formStatus.message}
-                </div>
-              )}
             </motion.div>
           </div>
         </div>
