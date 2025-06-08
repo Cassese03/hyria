@@ -34,9 +34,9 @@ const Header = () => {
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''} w-full overflow-x-hidden`}>
       <div className="header-inner">
-        <div className="header-logo">
+        <div className="header-logo" >
           <a href="/">
-            <img src="/images/logo-hyria.png" alt="Hyria Basket" />
+            <img src="/images/logo-hyria.png" alt="Hyria Basket" style={{height:'60px'}}/>
           </a>
         </div>
 

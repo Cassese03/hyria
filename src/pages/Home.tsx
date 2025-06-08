@@ -274,7 +274,19 @@ const Home: React.FC = () => {
           <div className="section-divider"></div>
 
           <div className="gallery-grid">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+            {[1, 2,3, 4, 5,6].map((item) => (
+            item === 3 ? (
+              <motion.div 
+                key={3} 
+                className="gallery-item"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: (3 % 4) * 0.1 }}
+              >
+                <video autoPlay muted loop src="/images/1.mp4"></video>
+              </motion.div>
+            ) : (
               <motion.div 
                 key={item} 
                 className="gallery-item"
@@ -283,9 +295,9 @@ const Home: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: (item % 4) * 0.1 }}
               >
-                <img src={`/images/gallery-${item}.jpg`} alt={`Gallery image ${item}`} />
+                <img src={`/images/${item}.jpg`} alt={`Gallery image ${item}`} />
               </motion.div>
-            ))}
+            )))}
           </div>
         </div>
       </section>
