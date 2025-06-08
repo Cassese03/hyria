@@ -196,7 +196,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
 }
 
 .hero-bg-image {
@@ -289,8 +288,8 @@
 
 .scroll-indicator {
   position: absolute;
-  bottom: 2rem;
-  left: 50%;
+  bottom: -3.5rem;
+  left: 48%;
   transform: translateX(-50%);
   color: var(--color-light);
   width: 2rem;
@@ -358,7 +357,7 @@ section {
 
 .about-video {
   position: relative;
-  padding-top: 56.25%;
+  padding-top: 3.25%;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);

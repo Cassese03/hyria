@@ -30,6 +30,7 @@ const Home: React.FC = () => {
                 className="btn-primary w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/chi-siamo'}
               >
                 SCOPRI DI PIÙ
               </motion.button>
@@ -37,6 +38,7 @@ const Home: React.FC = () => {
                 className="btn-secondary w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/contatti'}
               >
                 UNISCITI A NOI
               </motion.button>
@@ -94,12 +96,13 @@ const Home: React.FC = () => {
           </div>
           <div className="about-media">
             <div className="about-video">
-              <iframe 
+              {/* <iframe 
                 src="https://player.vimeo.com/video/101917190?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1&amp;autoplay=1&amp;background=1" 
                 frameBorder="0"
                 style={{ border: 0 }}
                 title="Hyria Basket Promo"
-              ></iframe>
+              ></iframe> */}
+              <img src="/images/basketball-motto.jpg" alt="Hyria Basket Team" className="about-image" />
             </div>
           </div>
         </div>
@@ -179,7 +182,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Teams Section */}
-      <section className="teams-section">
+      {/* <section className="teams-section">
         <div className="container">
           <motion.h2 
             className="section-title"
@@ -229,16 +232,16 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Stats Section */}
       <section className="stats-section">
         <div className="container">
           <div className="stats-grid">
             {[
-              { value: "150+", label: "ATLETI" },
-              { value: "20+", label: "STAFF" },
-              { value: "25+", label: "ANNI" },
+              { value: "50+", label: "ATLETI" },
+              { value: "15+", label: "STAFF" },
+              // { value: "1+", label: "ANNI" },
               { value: "1000+", label: "TIFOSI" }
             ].map((stat, index) => (
               <motion.div
@@ -306,6 +309,7 @@ const Home: React.FC = () => {
               className="btn-primary"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.href = '/contatti'}
             >
               CONTATTACI ORA
             </motion.button>

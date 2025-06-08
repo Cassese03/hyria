@@ -30,10 +30,11 @@ const About = () => {
       <section className="about-section section-padding">
         <div className="container">
           <motion.h2 
-            className="section-title"
+            className="section-title text-white"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+              style={{ color: '#d96c00', }}
           >
             LA NOSTRA STORIA
           </motion.h2>
@@ -45,6 +46,8 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
+              className="text-white"
+              style={{ color: 'white', }}
             >
               <p className="text-lg mb-6">
                 Hyria Basket nasce nel 2020 dal progetto di un gruppo di imprenditori millennials appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
@@ -153,10 +156,15 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { name: "Marco Rossi", role: "Presidente", image: "/images/staff-1.jpg" },
-              { name: "Laura Bianchi", role: "Direttore Sportivo", image: "/images/staff-2.jpg" },
-              { name: "Roberto Verdi", role: "Head Coach", image: "/images/staff-3.jpg" },
-              { name: "Giulia Neri", role: "Resp. Marketing", image: "/images/staff-4.jpg" }
+              { name: "Attilio De Sena", role: "Presidente", image: "/images/staff-1.jpg" },
+              { name: "Paolino Franzese", role: "Direttore Sportivo",image: "/images/staff-1.jpg" },
+              { name: "Lorenzo Cassese", role: "Head Coach",image: "/images/staff-1.jpg" },
+              { name: "Giovanni Sangermano", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
+              { name: "Davide Esposito", role: "Resp. Marketing",image: "/images/staff-1.jpg" },
+              { name: "Agostino Esposito", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
+              { name: "Giacomo Mascolo", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
+              { name: "Christian Guida", role: "Resp. Marketing", image: "/images/staff-1.jpg" },
+
             ].map((member, index) => (
               <motion.div
                 key={member.name}
@@ -169,8 +177,8 @@ const About = () => {
                 <div className="mb-4 rounded-full overflow-hidden w-40 h-40 mx-auto">
                   <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">{member.name}</h3>
-                <p className="text-gray-600">{member.role}</p>
+                <h3 className="text-xl font-bold mb-2" style={{color : '#d96c00',textAlign:'center'}}>{member.name}</h3>
+                <h4 style={{color:'#0F0615',textAlign:'center'}}>{member.role}</h4>
               </motion.div>
             ))}
           </div>

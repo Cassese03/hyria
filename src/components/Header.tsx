@@ -44,6 +44,9 @@ const Header = () => {
         <nav className="main-navigation desktop-nav">
           <ul className="nav-menu">
             <li className="menu-item">
+              <a href="/">HOME</a>
+            </li>
+            <li className="menu-item">
               <a href="/chi-siamo">CHI SIAMO</a>
             </li>
             <li className="menu-item">
@@ -52,9 +55,9 @@ const Header = () => {
             <li className="menu-item">
               <a href="/settore-giovanile">SETTORE GIOVANILE</a>
             </li>
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <a href="/store">STORE</a>
-            </li>
+            </li> */}
             <li className="menu-item">
               <a href="/sponsor">SPONSOR</a>
             </li>
