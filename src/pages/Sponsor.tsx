@@ -25,6 +25,7 @@ const Sponsor: React.FC = () => {
       name: "Main Sponsor",
       price: "",
       benefits: [
+        "1 divisa da gioco ufficiale in omaggio",
         "Logo sulla parte frontale delle divise da gioco",
         "Banner pubblicitario principale nel palazzetto",
         "Visibilità prioritaria sul sito web e social media",
