@@ -12,7 +12,7 @@ const Contact = () => {
       answer: "I costi variano in base al tipo di attività e promozioni varie. Contattaci per ricevere informazioni dettagliate sui costi e sulle eventuali promozioni in corso."
     },
     {
-      question: "Da che età si può iniziare a praticare baske<t?",
+      question: "Da che età si può iniziare a praticare basket?",
       answer: "I nostri corsi di minibasket accolgono bambini a partire dai 5 anni. Per i più piccoli abbiamo attività ludico-motorie propedeutiche e all'inclusione al basket."
     },
     {
