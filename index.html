@@ -1,15 +1,65 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/logo-hyria.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hyria Basket | Basket Nola – Squadra Ufficiale</title>
-    <meta name="description" content="Scopri Hyria Basket, la squadra di Basket di Nola. Allenamenti, partite, roster e ultime notizie ufficiali.">
 
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/images/logo-hyria.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hyria Basket | Basket Nola – Squadra Ufficiale</title>
+  <meta name="description"
+    content="Scopri Hyria Basket, la squadra di Basket di Nola. Allenamenti, partite, roster e ultime notizie ufficiali.">
+  <!-- Open Graph (per condivisione social) -->
+  <meta property="og:image" content="https://hyriabasket.it/images/logo-hyria.png" data-rh="true">
+  <meta property="og:url" content="https://hyriabasket.it" data-rh="true">
+  <meta property="og:title" content="Hyria Basket | Basket Nola - Squadra Ufficiale di Pallacanestro">
+  <meta property="og:description"
+    content="Hyria Basket è la squadra ufficiale di basket di Nola. Partecipa ai campionati regionali, scopri eventi, roster e partite.">
+  <meta property="og:type" content="website">
+  <meta property="fb:app_id" content="3793302144330966"> <!-- solo se usi Facebook App -->
+
+  <!-- SEO -->
+  <link rel="canonical" href="https://hyriabasket.it" />
+  <meta name="description"
+    content="Hyria Basket è la realtà cestistica di riferimento a Nola. News, calendario partite, giovani talenti e molto altro.">
+
+ <meta name="facebook-domain-verification" content="6l92v6qt5y4w2qhcwa8cq3edfivyqm" />
+
+  <!-- JSON-LD Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsTeam",
+  "name": "Hyria Basket",
+  "url": "https://hyriabasket.it",
+  "logo": "https://hyriabasket.it/assets/images/logo-hyria.png",
+  "description": "Hyria Basket - Squadra ufficiale di pallacanestro di Nola. Eventi, tornei, partite e promozione del basket locale.",
+  "sport": "Basketball",
+  "location": {
+    "@type": "Place",
+    "name": "Nola",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nola",
+      "addressCountry": "IT"
+    }
+  },
+  "sameAs": [
+    "https://www.facebook.com/hyriabasket",
+    "https://www.instagram.com/hyriabasket"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Support",
+    "email": "info@hyriabasket.it"
+  }
+}
+</script>
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
