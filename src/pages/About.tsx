@@ -50,7 +50,7 @@ const About = () => {
               style={{ color: 'white', }}
             >
               <p className="text-lg mb-6">
-                Hyria Basket nasce nel 2020 dal progetto di un gruppo di giovani imprenditori appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
+                Hyria Basket nasce nel 2025 dal progetto di un gruppo di giovani imprenditori appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
               </p>
               <p className="text-lg mb-6">
                 Il nome "Hyria" richiama l'antica città che sorgeva nell'area nolana, simbolo di tradizione e radici territoriali, mentre lo sguardo è proiettato verso il futuro del basket moderno.
