@@ -138,7 +138,8 @@ const Sponsor: React.FC = () => {
                   <img 
                     src={sponsor.image} 
                     alt={sponsor.name} 
-                    className="h-32 mx-auto object-contain mb-6"
+                    style={{ width: '90vw' }}
+                    className="w-[90vw] max-w-full h-32 mx-auto object-contain mb-6"
                   />
                   <h3 className="text-xl font-bold mb-2"  style={{color:'#d96c00'}}>{sponsor.name}</h3>
                   <p className="text-sm text-gray-500">Main Sponsor</p>
@@ -175,6 +176,7 @@ const Sponsor: React.FC = () => {
                   <img 
                     src={sponsor.image} 
                     alt={sponsor.name} 
+                    style={{ width: '90vw' }}
                     className="h-24 mx-auto object-contain mb-4"
                   />
                   <h3 className="text-lg font-bold mb-2" style={{color:'#d96c00'}}>{sponsor.name}</h3>
