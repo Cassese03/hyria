@@ -26,7 +26,8 @@ const Sponsor: React.FC = () => {
       price: "",
       benefits: [
         "1 divisa da gioco ufficiale in omaggio",
-        "Logo sulla parte frontale delle divise da gioco",
+        "Logo sulle divise da gioco",
+        "Scelta del posizionamento logo (costo aggiuntivo)",
         "Banner pubblicitario principale nel palazzetto",
         "Visibilità prioritaria sul sito web e social media",
         "Logo su borsone e maglie di allenamento/riscaldamento della squadra",
