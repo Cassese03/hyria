@@ -249,7 +249,7 @@ const Sponsor: React.FC = () => {
                   index === 2 ? 'bg-gray-400' : 
                   'bg-hyria-primary'
                 }`}>
-                  <h3 className="text-xl font-bold"  style={{color:'#5e0303'}}>{pkg.name}</h3>
+                  <h3 className="text-xl font-bold"   style={{color:'#d96c00'}}>{pkg.name}</h3>
                 </div>
                 <div className="p-6">
                   <p className="text-2xl font-bold text-center mb-6"  style={{color:'#d96c00'}}>{pkg.price}</p>
