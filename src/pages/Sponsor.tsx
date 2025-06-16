@@ -59,7 +59,7 @@ const Sponsor: React.FC = () => {
       benefits: [
         "Logo nella sezione sponsor del sito web e social media",
         "Banner pubblicitario piccolo nel palazzetto",
-        "Logo su bordone da gioco"
+        "Logo su borsone da gioco"
       ]
     },
   ];
