@@ -1,9 +1,29 @@
+import React from 'react';
 import { motion } from 'framer-motion';
+import PageHead from '../components/PageHead';
 
-const About = () => {
-  // Animazione per gli elementi quando entrano nella viewport
+const About: React.FC = () => {
+  const chisianoStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Chi Siamo - Hyria Basket",
+    "description": "Scopri la storia e la missione di Hyria Basket, squadra di basket di Nola con passione giovanile.",
+    "url": "https://hyriabasket.it/chi-siamo"
+  };
 
   return (
+    <>
+      <PageHead
+        title="Chi siamo | Hyriabasket – Basket a Nola con Passione Giovanile"
+        description="Scopri la storia di Hyria Basket, squadra di pallacanestro di Nola. La nostra missione, valori e passione per il basket giovanile."
+        keywords="chi siamo, Hyria Basket, storia, missione, basket Nola, squadra, valori, passione giovanile"
+        ogTitle="Chi Siamo - Hyria Basket Nola"
+        ogDescription="Conosci la storia e i valori di Hyria Basket, la squadra di basket di Nola che crede nella passione giovanile e nell'innovazione."
+        ogUrl="https://hyriabasket.it/chi-siamo"
+        canonicalUrl="https://hyriabasket.it/chi-siamo"
+        structuredData={chisianoStructuredData}
+      />
+      
     <div className="about-page">
       {/* Hero Section */}
       <section className="hero-section" style={{ height: '60vh' }}>
@@ -210,7 +230,8 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+      </>
   );
 };
 
