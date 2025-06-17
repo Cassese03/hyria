@@ -26,8 +26,6 @@ const Teams = () => {
       ]
     },
   ];
-
-  const Teams: React.FC = () => {
     const teamStructuredData = {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -281,7 +279,6 @@ const Teams = () => {
     </div>
     </>
   );
-};
 };
 
 export default Teams;
