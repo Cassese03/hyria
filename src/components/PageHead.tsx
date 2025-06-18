@@ -45,7 +45,7 @@ const PageHead: React.FC<PageHeadProps> = ({
     };
 
     // Helper function to update or create link tags
-    const updateLinkTag = (rel: string, href: string) => {
+    const updateLinkTag = (rel: string, href: string, type?: string) => {
       let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
       
       if (!link) {
@@ -54,7 +54,13 @@ const PageHead: React.FC<PageHeadProps> = ({
         document.head.appendChild(link);
       }
       link.setAttribute('href', href);
+      if (type) {
+        link.setAttribute('type', type);
+      }
     };
+
+    // Add favicon
+    updateLinkTag('icon', '/images/logo.ico', 'image/x-icon');
 
     // Update meta tags
     updateMetaTag('description', description);
@@ -88,6 +94,36 @@ const PageHead: React.FC<PageHeadProps> = ({
         document.head.appendChild(script);
       }
       script.textContent = JSON.stringify(structuredData);
+    }
+
+    // Add Firebase Analytics Script
+    let firebaseScript = document.querySelector('script[data-firebase="true"]');
+    
+    if (!firebaseScript) {
+      firebaseScript = document.createElement('script');
+      firebaseScript.setAttribute('type', 'module');
+      firebaseScript.setAttribute('data-firebase', 'true');
+      firebaseScript.textContent = `
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyALIuj5nsWXBJN7QIyl66Pc1lKQsfPkKao",
+          authDomain: "hyriabasket.firebaseapp.com",
+          projectId: "hyriabasket",
+          storageBucket: "hyriabasket.firebasestorage.app",
+          messagingSenderId: "780923068432",
+          appId: "1:780923068432:web:4d495dd798bdf6eee3ea95",
+          measurementId: "G-2E8JK29033"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      `;
+      document.head.appendChild(firebaseScript);
     }
 
     // Cleanup function to reset title when component unmounts
