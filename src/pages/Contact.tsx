@@ -1,32 +1,38 @@
-import { motion } from 'framer-motion';
-import PageHead from '../components/PageHead';
+import { motion } from "framer-motion";
+import PageHead from "../components/PageHead";
+import ContactForm from "../components/ContactForm";
 
 const Contact = () => {
   const contactStructuredData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contatti - Hyria Basket",
-    "description": "Contatta Hyria Basket per informazioni su corsi, iscrizioni e attività. Trova i nostri recapiti e modulo di contatto.",
-    "url": "https://hyriabasket.it/contatti"
+    name: "Contatti - Hyria Basket",
+    description:
+      "Contatta Hyria Basket per informazioni su corsi, iscrizioni e attività. Trova i nostri recapiti e modulo di contatto.",
+    url: "https://hyriabasket.it/contatti",
   };
 
   const faqs = [
     {
       question: "Come posso iscrivermi alle attività di Hyria Basket?",
-      answer: "Per iscriverti puoi contattarci tramite i nostri profili social , oppure contattarci via email o telefono per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico valido."
+      answer:
+        "Per iscriverti puoi contattarci tramite i nostri profili social , oppure contattarci via email o telefono per fissare un appuntamento. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico valido.",
     },
     {
       question: "Quali sono i costi di iscrizione?",
-      answer: "I costi variano in base al tipo di attività e promozioni varie. Contattaci per ricevere informazioni dettagliate sui costi e sulle eventuali promozioni in corso."
+      answer:
+        "I costi variano in base al tipo di attività e promozioni varie. Contattaci per ricevere informazioni dettagliate sui costi e sulle eventuali promozioni in corso.",
     },
     {
       question: "Da che età si può iniziare a praticare basket?",
-      answer: "I nostri corsi di minibasket accolgono bambini a partire dai 5 anni. Per i più piccoli abbiamo attività ludico-motorie propedeutiche e all'inclusione al basket."
+      answer:
+        "I nostri corsi di minibasket accolgono bambini a partire dai 5 anni. Per i più piccoli abbiamo attività ludico-motorie propedeutiche e all'inclusione al basket.",
     },
     {
       question: "Dove si svolgono gli allenamenti?",
-      answer: "Gli allenamenti si svolgono presso il nostro palazzetto principale a Nola e in altre strutture convenzionate nella zona. Gli indirizzi esatti vengono comunicati al momento dell'iscrizione."
-    }
+      answer:
+        "Gli allenamenti si svolgono presso il nostro palazzetto principale a Nola e in altre strutture convenzionate nella zona. Gli indirizzi esatti vengono comunicati al momento dell'iscrizione.",
+    },
   ];
 
   return (
@@ -41,12 +47,16 @@ const Contact = () => {
         canonicalUrl="https://hyriabasket.it/contatti"
         structuredData={contactStructuredData}
       />
-      
+
       <div className="contact-page">
         {/* Hero Section */}
-        <section className="hero-section" style={{ height: '60vh' }}>
+        <section className="hero-section" style={{ height: "60vh" }}>
           <div className="hero-background">
-            <img src="/images/contact-hero.jpg" alt="Contatti Hyria Basket" className="hero-bg-image" />
+            <img
+              src="/images/contact-hero.jpg"
+              alt="Contatti Hyria Basket"
+              className="hero-bg-image"
+            />
             <div className="hero-overlay"></div>
           </div>
           <div className="hero-content">
@@ -57,9 +67,12 @@ const Contact = () => {
               className="hero-text-container"
             >
               <h1 className="hero-title">
-                <span style={{color:'#d96c00'}}>CONTATTI HYRIABASKET</span>
+                <span style={{ color: "#d96c00" }}>CONTATTI HYRIABASKET</span>
               </h1>
-              <p className="hero-description text-base md:text-lg" style={{color: 'white'}}>
+              <p
+                className="hero-description text-base md:text-lg"
+                style={{ color: "white" }}
+              >
                 Squadra Basket Nola - Informazioni e Iscrizioni
               </p>
               <div className="section-divider"></div>
@@ -79,10 +92,20 @@ const Contact = () => {
                 className="space-y-8 bg-white/5 p-8 rounded-lg backdrop-blur-sm border border-white/10"
               >
                 <div>
-                  <h2 className="text-3xl font-bold mb-6 text-hyria-tertiary" style={{ color: '#d96c00' }}> Contattaci</h2>
-                  <p className="text-lg mb-8 text-gray-300" style={{ color: 'white' }}>
-                    Hai domande sul nostro progetto, sui corsi di basket o vuoi semplicemente saperne di più?
-                    Non esitare a contattarci, saremo felici di risponderti.
+                  <h2
+                    className="text-3xl font-bold mb-6 text-hyria-tertiary"
+                    style={{ color: "#d96c00" }}
+                  >
+                    {" "}
+                    Contattaci
+                  </h2>
+                  <p
+                    className="text-lg mb-8 text-gray-300"
+                    style={{ color: "white" }}
+                  >
+                    Hai domande sul nostro progetto, sui corsi di basket o vuoi
+                    semplicemente saperne di più? Non esitare a contattarci,
+                    saremo felici di risponderti.
                   </p>
                 </div>
 
@@ -91,10 +114,17 @@ const Contact = () => {
                     className="flex items-start hover:transform hover:translate-x-2 transition-transform duration-300"
                     whileHover={{ scale: 1.02 }}
                   >
-
                     <div>
-                      <h3 className="font-semibold text-lg text-hyria-tertiary" style={{ color: '#d96c00' }}> Indirizzo</h3>
-                      <p className="text-gray-300" style={{ color: 'white' }}>Via Madonna delle Grazie, 61 - 80035 Nola (NA)</p>
+                      <h3
+                        className="font-semibold text-lg text-hyria-tertiary"
+                        style={{ color: "#d96c00" }}
+                      >
+                        {" "}
+                        Indirizzo
+                      </h3>
+                      <p className="text-gray-300" style={{ color: "white" }}>
+                        Via Madonna delle Grazie, 61 - 80035 Nola (NA)
+                      </p>
                     </div>
                   </motion.div>
 
@@ -102,11 +132,20 @@ const Contact = () => {
                     className="flex items-start hover:transform hover:translate-x-2 transition-transform duration-300"
                     whileHover={{ scale: 1.02 }}
                   >
-
                     <div>
-                      <h3 className="font-semibold text-lg text-hyria-tertiary" style={{ color: '#d96c00' }}> Telefono</h3>
-                      <p className="text-gray-300" style={{ color: 'white' }}>Attilio +39 333 746 1777</p>
-                      <p className="text-gray-300" style={{ color: 'white' }}>Paolino +39 331 402 3282</p>
+                      <h3
+                        className="font-semibold text-lg text-hyria-tertiary"
+                        style={{ color: "#d96c00" }}
+                      >
+                        {" "}
+                        Telefono
+                      </h3>
+                      <p className="text-gray-300" style={{ color: "white" }}>
+                        Attilio +39 333 746 1777
+                      </p>
+                      <p className="text-gray-300" style={{ color: "white" }}>
+                        Paolino +39 331 402 3282
+                      </p>
                     </div>
                   </motion.div>
 
@@ -114,16 +153,22 @@ const Contact = () => {
                     className="flex items-start hover:transform hover:translate-x-2 transition-transform duration-300"
                     whileHover={{ scale: 1.02 }}
                   >
-
                     <div>
-                      <h3 className="font-semibold text-lg text-hyria-tertiary" style={{ color: '#d96c00' }}> Email</h3>
-                      <p className="text-gray-300" style={{ color: 'white' }}>info@hyriabasket.it</p>
+                      <h3
+                        className="font-semibold text-lg text-hyria-tertiary"
+                        style={{ color: "#d96c00" }}
+                      >
+                        {" "}
+                        Email
+                      </h3>
+                      <p className="text-gray-300" style={{ color: "white" }}>
+                        info@hyriabasket.it
+                      </p>
                     </div>
                   </motion.div>
-
                 </div>
-
               </motion.div>
+              
               {/* FAQ Section */}
               <section className="cta-section">
                 <div className="container">
@@ -132,7 +177,7 @@ const Contact = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    style={{ color: '#d96c00' }}
+                    style={{ color: "#d96c00" }}
                   >
                     DOMANDE FREQUENTI
                   </motion.h2>
@@ -141,7 +186,7 @@ const Contact = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
                     {faqs.map((faq, index) => (
                       <motion.div
-                        style={{ color: '#d96c00' }}
+                        style={{ color: "#d96c00" }}
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -154,57 +199,30 @@ const Contact = () => {
                           whileHover={{ x: 10 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
-                          <h3 className="text-lg font-bold mb-3 text-hyria-tertiary">{faq.question}</h3>
-                          <p className="text-gray-300" style={{ color: 'white' }}>{faq.answer}</p>
+                          <h3 className="text-lg font-bold mb-3 text-hyria-tertiary">
+                            {faq.question}
+                          </h3>
+                          <p
+                            className="text-gray-300"
+                            style={{ color: "white" }}
+                          >
+                            {faq.answer}
+                          </p>
                         </motion.div>
                       </motion.div>
                     ))}
                   </div>
                 </div>
               </section>
+              
               {/* Form Side */}
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/5 p-8 rounded-lg backdrop-blur-sm border border-white/10"
+                className="w-full lg:col-span-1"
               >
-                <h2 className="text-3xl font-bold mb-6 text-hyria-tertiary" style={{ color: '#d96c00' }}>Modulo di Contatto</h2>
-
-                <div className="jotform-container">
-                  <iframe
-                    id="JotFormIFrame-251582849354063"
-                    title="Modulo di contatto Hyria Basket"
-                    onLoad={() => {
-                      window.parent.scrollTo(0, 0);
-
-                      // Add JotForm script for automatic height adjustment
-                      const iframe = document.getElementById('JotFormIFrame-251582849354063');
-                      if (iframe) {
-                        window.addEventListener('message', function (event) {
-                          if (event.data.action === 'scrollIntoView' || event.data.action === 'setHeight') {
-                            const height = event.data.height;
-                            if (height) {
-                              iframe.style.height = parseInt(height) + 50 + 'px'; // Add extra padding
-                            }
-                          }
-                        });
-                      }
-                    }}
-                    allowTransparency={true}
-                    allowFullScreen={true}
-                    allow="geolocation; microphone; camera"
-                    src="https://form.jotform.com/251582849354063"
-                    frameBorder="0"
-                    style={{
-                      minWidth: '100%',
-                      height: '1300px', // Increase initial height to ensure visibility
-                      border: 'none',
-                      overflow: 'hidden'
-                    }}
-                    scrolling="no"
-                  ></iframe>
-                </div>
+                <ContactForm />
               </motion.div>
             </div>
           </div>
@@ -218,7 +236,7 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              style={{ color: '#d96c00' }}
+              style={{ color: "#d96c00" }}
             >
               DOVE SIAMO
             </motion.h2>
