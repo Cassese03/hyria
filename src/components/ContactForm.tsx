@@ -80,17 +80,34 @@ const ContactForm: React.FC = () => {
     }
 
     try {
-      // Salva il messaggio usando l'utility come backup
-      console.log("Messaggio salvato localmente:", formData);
+      
+    // Prepara i dati per l'API
+    const response = await fetch('https://send-email-nine-pi.vercel.app/api/send-email', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+      to: 'casseselorenzo03@gmail.com', // Replace with recipient email
+      from: 'info@hyriabasket.it', // Replace with sender email
+      subject: `Nuovo contatto da SITO : ${formData.name} - ${formData.reason}`,
+      html: `
+        <h2>Nuovo messaggio dal form di contatto</h2>
+        <p><strong>Nome:</strong> ${formData.name}</p>
+        <p><strong>Email:</strong> ${formData.email}</p>
+        <p><strong>Telefono:</strong> ${formData.phone || 'Non specificato'}</p>
+        <p><strong>Motivo:</strong> ${formData.reason}</p>
+        <p><strong>Messaggio:</strong></p>
+        <p>${formData.message}</p>
+      `,
+      }),
+    });
 
-      // Invia il messaggio tramite API (simulato per questo esempio)
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula ritardo della chiamata API
+    // Controlla la risposta
+    const data = await response.json();
+    const success = response.ok;
 
-      // Simuliamo una risposta positiva
-      const success = true; // In un caso reale, questo valore dipenderebbe dalla risposta dell'API
-
-      // Imposta lo stato submitted a true con il risultato
-      setStatus({
+    setStatus({
         submitted: true,
         success: success,
         message: success
