@@ -104,7 +104,6 @@ const ContactForm: React.FC = () => {
     });
 
     // Controlla la risposta
-    const data = await response.json();
     const success = response.ok;
 
     setStatus({
