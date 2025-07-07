@@ -56,7 +56,7 @@ const Teams = () => {
   
     <div className="teams-page">
       {/* Hero Section */}
-      <section className="hero-section" style={{ height: '60vh' }}>
+      {/* <section className="hero-section" style={{ height: '60vh' }}>
         <div className="hero-background">
           <img src="/images/contact-hero.jpg" alt="Hyria Basket Team" className="hero-bg-image" />
           <div className="hero-overlay"></div>
@@ -74,7 +74,7 @@ const Teams = () => {
             <div className="section-divider"></div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Teams Overview */}
       <section className="section-padding">
