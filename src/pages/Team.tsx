@@ -23,15 +23,6 @@ const Team: React.FC = () => {
         canonicalUrl="https://hyriabasket.it/team"
         structuredData={teamStructuredData}
       />
-      
-      <div className="team-page">
-        <PageHero 
-          backgroundImage="/images/contact-hero.jpg"
-          normalText="PRIMA"
-          coloredText="SQUADRA"
-          subtitle="Il cuore pulsante di Hyria Basket - Stagione 2025"
-        />
-      </div>
     </>
   );
 };
