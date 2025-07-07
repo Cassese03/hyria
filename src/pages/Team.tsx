@@ -1,5 +1,4 @@
 import React from 'react';
-import PageHero from '../components/PageHero';
 import PageHead from '../components/PageHead';
 
 const Team: React.FC = () => {
