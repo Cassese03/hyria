@@ -20,6 +20,9 @@ const Sponsor: React.FC = () => {
   
   const silverSponsors = [
     { name: "Softmaint S.R.L.", image: "https://lh3.googleusercontent.com/p/AF1QipO5ieOGPOtdTFzntDmjUY4D_1ZzJBU3YHnp39vo=s680-w680-h510-rw", website: "https://softmaint.it" },
+  ];
+
+  const bronzeSponsors = [
     { name: "Citroen", image: "https://upload.wikimedia.org/wikipedia/it/thumb/a/ab/Logo_della_Citro%C3%ABn.svg/2560px-Logo_della_Citro%C3%ABn.svg.png", website: "https://concessionari.citroen.it/officinaianniciello" },
   ];
 
@@ -230,6 +233,43 @@ const Sponsor: React.FC = () => {
                       className="h-16 mx-auto object-contain mb-3"
                     />
                     <h3 className="text-sm font-bold"  style={{color:'#d96c00'}}>{sponsor.name}</h3>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </section>
+        {/* Bronze Sponsors Section */}
+        <section className="section-padding">
+          <div className="container">
+            <SectionTitle 
+              title="BRONZE SPONSOR" 
+              subtitle="Partner che sostengono la nostra visione"
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              {bronzeSponsors.map((sponsor, index) => (
+                <motion.a
+                  href={sponsor.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={sponsor.name}
+                  className="block"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  style={{ textAlign: 'center' }}
+                >
+                  <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 text-center h-full">
+                    <img 
+                      src={sponsor.image} 
+                      alt={sponsor.name} 
+                      style={{ width: '90vw' }}
+                      className="h-24 mx-auto object-contain mb-4"
+                    />
+                    <h3 className="text-lg font-bold mb-2" style={{color:'#d96c00'}}>{sponsor.name}</h3>
+                    <p className="text-xs text-gray-500" style={{color:'#5e0303'}}>Bronze Sponsor</p>
                   </div>
                 </motion.a>
               ))}
