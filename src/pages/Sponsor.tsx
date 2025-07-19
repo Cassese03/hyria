@@ -11,6 +11,7 @@ const Sponsor: React.FC = () => {
   ];
   
   const goldSponsors = [
+    { name: "Hyria Consulting", image: "https://www.hyriaconsulting.it/wp-content/uploads/2023/08/logo-HC-2.png", website: "https://www.hyriaconsulting.it/" },
     { name: "DilamaBaby", image: "https://dilamababystore.com/cdn/shop/files/Logo_int_f3c10636-63a1-4461-88c0-076d651e5428_1024x1024.png?v=1637411319", website: "dilamababystore.com" },
     { name: "Enoteca De Sena", image: "/images/EnotecaDeSena.jpg", website: "" },
     { name: "Queen Bees Baiano", image: "", website: "" },
@@ -18,6 +19,7 @@ const Sponsor: React.FC = () => {
   ];
   
   const silverSponsors = [
+    { name: "Softmaint S.R.L.", image: "https://lh3.googleusercontent.com/p/AF1QipO5ieOGPOtdTFzntDmjUY4D_1ZzJBU3YHnp39vo=s680-w680-h510-rw", website: "https://softmaint.it" },
     { name: "Citroen", image: "https://upload.wikimedia.org/wikipedia/it/thumb/a/ab/Logo_della_Citro%C3%ABn.svg/2560px-Logo_della_Citro%C3%ABn.svg.png", website: "https://concessionari.citroen.it/officinaianniciello" },
   ];
 
