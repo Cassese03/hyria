@@ -20,7 +20,7 @@ const Teams = () => {
         { name: 'Christian Guida', number: 21, position: 'Ala', image: '/images/logo-hyria.png' },
         { name: 'Agostino Pio Esposito', number: 41, position: 'Ala Grande', image: '/images/logo-hyria.png' },
         { name: 'Christian Barrella', number: 23, position: 'Ala Grande', image: '/images/logo-hyria.png' },
-        { name: 'Alessandro Palumbo', number: 31, position: 'Ala Grande', image: '/images/logo-hyria.png' },
+        { name: 'Davide Guadagni', number: 41, position: 'Ala Grande', image: '/images/logo-hyria.png' },
         { name: 'Giovanni Spiezia', number: 9, position: 'Ala Grande', image: '/images/logo-hyria.png' },
       ]
     },
