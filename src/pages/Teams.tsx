@@ -14,15 +14,18 @@ const Teams = () => {
         { name: 'Davide Esposito', number: 19, position: 'Playmaker', image: '/images/logo-hyria.png' },
         { name: 'Attilio De Sena', number: 32, position: 'Playmaker', image: '/images/logo-hyria.png' },
         { name: 'Giovanni Sangermano', number: 34, position: 'Guardia', image: '/images/logo-hyria.png' },
-        { name: 'Paolino Franzese', number: 14, position: 'Guardia', image: '/images/logo-hyria.png' },
-        { name: 'Lorenzo Cassese', number: 33, position: 'Ala', image: '/images/logo-hyria.png' },
-        { name: 'Giacomo Mascolo', number: 35, position: 'Ala', image: '/images/logo-hyria.png' },
-        { name: 'Christian Guida', number: 21, position: 'Ala', image: '/images/logo-hyria.png' },
-        { name: 'Agostino Pio Esposito', number: 41, position: 'Ala Grande', image: '/images/logo-hyria.png' },
-        { name: 'Christian Barrella', number: 23, position: 'Ala Grande', image: '/images/logo-hyria.png' },
-        { name: 'Davide Guadagni', number: 41, position: 'Ala Grande', image: '/images/logo-hyria.png' },
+        { name: 'Paolino Franzese', number: 30, position: 'Guardia', image: '/images/logo-hyria.png' },
+        { name: 'Lorenzo Cassese', number: 33, position: 'Ala Piccola', image: '/images/logo-hyria.png' },
+        { name: 'Giacomo Mascolo', number: 35, position: 'Ala Piccola', image: '/images/logo-hyria.png' },
+        { name: 'Christian Guida', number: 21, position: 'Ala Piccola', image: '/images/logo-hyria.png' },
+        { name: 'Agostino Pio Esposito', number: 5, position: 'Ala Grande', image: '/images/logo-hyria.png' },
+        { name: 'Christian Barrella', number: 7, position: 'Ala Piccola', image: '/images/logo-hyria.png' },
+        { name: 'Davide Guadagni', number: 42, position: 'Ala Grande', image: '/images/logo-hyria.png' },
         { name: 'Giovanni Spiezia', number: 9, position: 'Ala Grande', image: '/images/logo-hyria.png' },
-      ]
+        { name: 'Giovanni Attanasio', number: 93, position: 'Guardia', image: '/images/logo-hyria.png' },
+        { name: 'Luigi Manfellotto', number: 9, position: 'Centro', image: '/images/logo-hyria.png' },
+        { name: 'Alessandro Ascione', number: 3, position: 'Guardia', image: '/images/logo-hyria.png' },
+        ]
     },
   ];
     const teamStructuredData = {
