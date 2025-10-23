@@ -168,7 +168,7 @@ const Teams = () => {
         </div>
       </section>
 
-      {/* League Table Section */}
+      {/* League Table Section 
       <section className="section-padding bg-gradient-to-r from-gray-900 to-gray-800">
         <div className="container">
           <motion.h2
@@ -219,8 +219,8 @@ const Teams = () => {
                     <td className="px-6 py-4">{team.against}</td>
                     <td className="px-6 py-4">{team.points}</td>
                   </tr>
-                ))} */}
-
+                ))} */}  
+{/*}
                 <tr className={`border-b border-gray-700 'bg-orange-900/30 font-bold'`}>
                   <td className="px-6 py-4">1</td>
 
@@ -236,6 +236,7 @@ const Teams = () => {
               </tbody>
             </motion.table>
           </div>
+          */}
           {/* 
           <div className="text-center mt-12">
             <motion.button
@@ -245,9 +246,10 @@ const Teams = () => {
             >
               CALENDARIO COMPLETO
             </motion.button>
-          </div> */}
+          </div> */}{/* 
         </div>
       </section>
+*/}
 
       {/* CTA Section */}
       <section className="cta-section">
