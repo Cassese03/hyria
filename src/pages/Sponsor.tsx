@@ -16,7 +16,7 @@ const Sponsor: React.FC = () => {
     { name: "Hyria Consulting", image: "https://www.hyriaconsulting.it/wp-content/uploads/2023/08/logo-HC-2.png", website: "https://www.hyriaconsulting.it/" },
     { name: "DilamaBaby", image: "https://dilamababystore.com/cdn/shop/files/Logo_int_f3c10636-63a1-4461-88c0-076d651e5428_1024x1024.png?v=1637411319", website: "dilamababystore.com" },
     { name: "Enoteca De Sena", image: "/images/EnotecaDeSena.jpg", website: "" },
-    { name: "Queen Bees Baiano", image: "", website: "" },
+    { name: "Queen Bees Baiano", image: "/images/StockShoes.jpg", website: "" },
     { name: "Studio Napolitano Associati", image: "/images/StudioNapolitano.jpg", website: "" },
   ];
   
