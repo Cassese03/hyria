@@ -25,7 +25,7 @@ const Teams = () => {
         { name: 'Giovanni Attanasio', number: 93, position: 'Guardia', image: '/maglie/14.png' },
         { name: 'Luigi Manfellotto', number: 0, position: 'Centro', image: '/maglie/12.png' },
         { name: 'Alessandro Ascione', number: 3, position: 'Guardia', image: '/maglie/5.png' },
-        { name: 'Ciro Piscopo', number: 17, position: 'Ala Grande', image: '/maglie/17.png' },
+        { name: 'Ciro Francesco Piscopo', number: 17, position: 'Ala Grande', image: '/maglie/17.png' },
         ]
     },
   ];
