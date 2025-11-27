@@ -9,24 +9,29 @@ interface SponsorBannerProps {
   shadow?: boolean;
   fit?: "cover" | "contain";
   padding?: number; // px
-  invert?: boolean; // nuovo: inverte i colori del logo
+  invert?: boolean;
+  className?: string; // opzionale per override css
 }
 
 const SponsorBanner: React.FC<SponsorBannerProps> = ({
   src,
   alt,
   height = 312,
-  width = 780,
+  width = "100%", // responsive di default
   bgColor = "#fff",
   shadow = true,
   fit = "contain",
   padding = 24,
-  invert = false // default: non invertire
+  invert = false,
+  className = ""
 }) => (
   <div
+    className={className}
     style={{
       width,
-      height,
+      maxWidth: 900, // limite massimo per desktop
+      height: "auto",
+      aspectRatio: "13/5", // proporzione banner, fallback per browser moderni
       background: bgColor,
       display: "flex",
       alignItems: "center",
@@ -43,13 +48,16 @@ const SponsorBanner: React.FC<SponsorBannerProps> = ({
       alt={alt}
       style={{
         width: "100%",
-        height: "100%",
+        height: height,
+        maxHeight: "32vw", // limita l'altezza su schermi grandi
+        minHeight: 100,
         objectFit: fit,
         objectPosition: "center",
         borderRadius: 20,
-        background: bgColor, // usa lo stesso colore del contenitore
+        background: bgColor,
         boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-        filter: invert ? "invert(1) grayscale(1) brightness(0.2)" : undefined // inverte e scurisce
+        filter: invert ? "invert(1) grayscale(1) brightness(0.2)" : undefined,
+        display: "block"
       }}
       loading="lazy"
       draggable={false}
