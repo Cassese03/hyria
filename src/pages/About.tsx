@@ -79,15 +79,6 @@ const About: React.FC = () => {
                 In poco tempo, siamo riusciti a costruire un progetto solido che comprende prima squadra, minibasket e numerose iniziative sul territorio, diventando un punto di riferimento per la pallacanestro nella nostra realtà.
               </p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="rounded-lg overflow-hidden shadow-xl"
-            >
-              <img src="/images/logo-hyria.png" alt="Storia di Hyria Basket" className="w-full h-auto" />
-            </motion.div>
           </div>
         </div>
       </section>

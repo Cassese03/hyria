@@ -46,8 +46,10 @@ const SettoreGiovanile: React.FC = () => {
 
   const coaches = [
     { name: "Attilio De Sena", role: "Responsabile/ Allenatore minibasket", image: "/images/contact-hero.jpg" },
-    { name: "Lorenzo Cassese", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
+    { name: "Agostino Esposito", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
+    { name: "Paolino Franzese", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
     { name: "Davide Esposito", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
+    { name: "Giacomo Mascolo", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
   ];
 
   const methodologies = [

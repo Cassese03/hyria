@@ -7,9 +7,9 @@ const Teams = () => {
   const teamCategories = [
     {
       id: 1,
-      name: 'Prima Squadra',
+      name: '',
       description: 'La nostra prima squadra milita nel campionato regionale DR2 Campnia ed è la punta di diamante del progetto Hyria Basket.',
-      image: '/images/prima-squadra.jpg',
+      image: '',
       players: [
         { name: 'Davide Esposito', number: 19, position: 'Playmaker', image: '/maglie/9.png' },
         { name: 'Attilio De Sena', number: 32, position: 'Playmaker', image: '/maglie/4.png' },
@@ -115,14 +115,14 @@ const Teams = () => {
                 </motion.h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                  <motion.div
+                  {/* <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     className="rounded-lg overflow-hidden shadow-xl"
                   >
                     <img src={team.image} alt={team.name} className="w-full h-auto" />
-                  </motion.div>
+                  </motion.div> */}
 
                   <motion.div
                     initial={{ opacity: 0, x: 50 }}
@@ -134,7 +134,7 @@ const Teams = () => {
                     {team.id === 1 && (
                       <div>
                         <h4 className="text-xl font-bold mb-4">Roster</h4>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4" style={{backgroundColor: 'white', padding: '10px', borderRadius: '8px'}}>
                           {team.players.map((player) => (
                             <div key={player.name} className="text-center"
                               style={{ textAlign: 'center', color: '#5e0303' }} >
