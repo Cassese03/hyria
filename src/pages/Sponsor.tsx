@@ -42,6 +42,10 @@ const Sponsor: React.FC = () => {
       website: "https://www.hyriaconsulting.it/",
       fit: "scale-down",
     },
+  ];
+
+  const silverSponsors = [
+
     {
       name: "DilamaBaby",
       image:
@@ -49,26 +53,25 @@ const Sponsor: React.FC = () => {
       website: "dilamababystore.com",
       fit: "contain",
     },
+
+    {
+      name: "Softmaint S.R.L.",
+      image: "/images/SM_Logo.jpg",
+      website: "https://softmaint.it",
+      fit: "contain",
+    },
+    { name: "Queen Bees Baiano", image: "/images/StockShoes.jpg", website: "" },
+
     {
       name: "Enoteca De Sena",
       image: "/images/EnotecaDeSena.jpg",
       website: "",
       fit: "contain",
     },
-    { name: "Queen Bees Baiano", image: "/images/StockShoes.jpg", website: "" },
     {
       name: "Studio Napolitano Associati",
       image: "/images/StudioNapolitano.jpg",
       website: "",
-      fit: "contain",
-    },
-  ];
-
-  const silverSponsors = [
-    {
-      name: "Softmaint S.R.L.",
-      image: "/images/SM_Logo.jpg",
-      website: "https://softmaint.it",
       fit: "contain",
     },
   ];
@@ -404,15 +407,14 @@ const Sponsor: React.FC = () => {
                   style={{ textAlign: "center" }}
                 >
                   <div
-                    className={`p-4 text-center text-white ${
-                      index === 0
+                    className={`p-4 text-center text-white ${index === 0
                         ? "bg-hyria-primary"
                         : index === 1
-                        ? "bg-hyria-secondary"
-                        : index === 2
-                        ? "bg-gray-400"
-                        : "bg-hyria-primary"
-                    }`}
+                          ? "bg-hyria-secondary"
+                          : index === 2
+                            ? "bg-gray-400"
+                            : "bg-hyria-primary"
+                      }`}
                   >
                     <h3
                       className="text-xl font-bold"
