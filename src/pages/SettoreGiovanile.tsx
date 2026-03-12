@@ -53,11 +53,12 @@ const CATEGORIES = [
 ];
 
 const COACHES = [
-  { name: 'Attilio De Sena',   role: 'Responsabile · Allenatore Minibasket', image: '/images/contact-hero.jpg' },
-  { name: 'Agostino Esposito', role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
-  { name: 'Paolino Franzese',  role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
-  { name: 'Davide Esposito',   role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
-  { name: 'Giacomo Mascolo',   role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
+  { name: 'Attilio De Sena',   role: 'Responsabile · Allenatore Minibasket',  image: '/images/logo-hyria-white.png' },
+  { name: 'Agostino Esposito', role: 'Allenatore Minibasket',                 image: '/images/logo-hyria-white.png' },
+  { name: 'Paolino Franzese',  role: 'Allenatore Minibasket',                 image: '/images/logo-hyria-white.png' },
+  { name: 'Davide Esposito',   role: 'Allenatore Minibasket',                 image: '/images/logo-hyria-white.png' },
+  { name: 'Giacomo Mascolo',   role: 'Allenatore Minibasket',                 image: '/images/logo-hyria-white.png' },
+  { name: 'Lorenzo Cassese',   role: 'Allenatore Minibasket',                 image: '/images/logo-hyria-white.png' },
 ];
 
 const METHODOLOGIES = [
@@ -324,33 +325,35 @@ const SettoreGiovanile: React.FC = () => {
               style={{ transformOrigin: 'left center' }}
             />
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+              className="staff-grid"
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
             >
-              {COACHES.map((coach, index) => (
+              {COACHES.map((coach) => (
                 <motion.div
                   key={coach.name}
-                  className={`card p-6 text-center${index === 0 ? ' settore-coach-featured' : ''}`}
+                  className="staff-card"
                   variants={fadeInUp}
-                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
-                  style={{ willChange: 'transform' }}
                 >
-                  <div className="mb-4 rounded-full overflow-hidden w-40 h-40 mx-auto">
-                    <img
-                      src={coach.image}
-                      alt={coach.name}
-                      className="w-full h-full object-cover"
-                      width={160}
-                      height={160}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                  <div className="staff-card-avatar">
+                      {/*coach.name.split(' ').slice(0, 2).map(n => n[0]).join('')*/}
+                      <span className="staff-card-initials">
+                      {/* {member.name.split(' ').slice(0, 2).map(n => n[0]).join('')} */}
+                      <img
+                        src={coach.image}
+                        alt={coach.name}
+                        width={100}
+                        height={100}
+                        className="staff-avatar-image"
+                      />
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-hyria-secondary text-center">{coach.name}</h3>
-                  <p className="text-sm font-medium text-center text-white/60">{coach.role}</p>
+                  <div className="staff-card-body">
+                    <h3 className="staff-card-name">{coach.name}</h3>
+                    <p className="staff-card-role">{coach.role}</p>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

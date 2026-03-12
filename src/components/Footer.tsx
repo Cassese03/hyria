@@ -65,23 +65,6 @@ const Footer = () => {
               </motion.a>
             ))}
 
-            <motion.button
-              type="button"
-              onClick={() => alert('In arrivo!')}
-              className="social-icon text-white inline-flex items-center justify-center font-semibold"
-              aria-label="Profilo X in arrivo"
-              whileHover={{ scale: 1.2, y: -3 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.2 }}
-            >
-              <img
-                src="/images/social-x.svg"
-                alt="X"
-                className="w-5 h-5"
-                loading="lazy"
-                decoding="async"
-              />
-            </motion.button>
           </motion.div>
         </div>
 
