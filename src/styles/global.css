@@ -45,6 +45,19 @@ img, video, iframe {
   background-color: var(--color-dark);
 }
 
+/* About page — rendering performance for below-fold sections */
+.about-page .about-section,
+.about-page .features-section,
+.about-page .teams-section,
+.about-page .cta-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+.about-page .hero-bg-image {
+  transform: translateZ(0);
+}
+
 .about-timeline {
   position: relative;
 }
@@ -539,5 +552,1024 @@ img, video, iframe {
 @-moz-document url-prefix() {
   .contact-form select {
     text-align-last: center;
+  }
+}
+
+/* ================================================================
+   ABOUT — BOLDER PASS
+   All rules scoped to .about-page.about-bolder
+   ================================================================ */
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.about-page.about-bolder .hero-section {
+  align-items: flex-end;
+}
+
+.about-page.about-bolder .hero-overlay {
+  background:
+    radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--color-secondary) 18%, transparent), transparent 50%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-dark) 30%, transparent), color-mix(in srgb, var(--color-dark) 88%, transparent));
+}
+
+.about-page.about-bolder .hero-content {
+  max-width: 1200px;
+  margin-inline: auto;
+  text-align: left;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+.about-page.about-bolder .hero-text-container {
+  align-items: flex-start;
+  text-align: left;
+  max-width: 700px;
+}
+
+.about-page.about-bolder .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  margin-bottom: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 65%, transparent);
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-tertiary) 82%, var(--color-secondary));
+}
+
+.about-page.about-bolder .hero-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(3.5rem, 11vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  margin-bottom: 0;
+}
+
+.about-page.about-bolder .hero-accent {
+  color: var(--color-secondary);
+}
+
+/* ── Storia — asymmetric 2-col grid + pull quote ─────────────── */
+.about-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.about-story-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 3.5rem;
+}
+
+.about-pull-quote {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--color-secondary);
+  margin: 0;
+  font-family: 'Arvo', serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  line-height: 1.3;
+  color: var(--color-tertiary);
+  font-style: normal;
+}
+
+.about-pull-quote span {
+  display: block;
+  color: var(--color-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.about-year-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.55rem 1.3rem;
+  border: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  font-family: 'Arvo', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: color-mix(in srgb, var(--color-tertiary) 80%, var(--color-secondary));
+  background: color-mix(in srgb, var(--color-secondary) 8%, transparent);
+}
+
+/* ── Valori — numbered editorial rows ───────────────────────── */
+.about-values-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  margin-top: 2.5rem;
+}
+
+.about-value-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 2rem;
+  padding: 2.2rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 22%, transparent);
+  align-items: start;
+}
+
+.about-value-num {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-secondary);
+  opacity: 0.85;
+  padding-top: 0.1rem;
+}
+
+.about-value-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.about-value-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-tertiary);
+}
+
+.about-value-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--color-tertiary) 80%, var(--color-warm-muted));
+  max-width: 55ch;
+}
+
+/* ── Staff — featured presidente ────────────────────────────── */
+.about-staff-featured {
+  grid-column: span 2;
+  background: color-mix(in srgb, var(--color-secondary) 10%, var(--color-primary));
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 45%, transparent);
+  border-top: 3px solid var(--color-secondary);
+}
+
+/* ── CTA ────────────────────────────────────────────────────── */
+.about-page.about-bolder .cta-section {
+  background: linear-gradient(165deg, color-mix(in srgb, var(--color-primary) 88%, var(--color-dark)), var(--color-dark));
+}
+
+.about-page.about-bolder .cta-content {
+  text-align: left;
+  max-width: 900px;
+}
+
+.about-page.about-bolder .cta-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 1.2rem;
+}
+
+.about-cta-accent {
+  color: var(--color-secondary);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .about-story-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-story-aside {
+    padding-top: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .about-pull-quote {
+    flex: 1 1 260px;
+  }
+
+  .about-year-badge {
+    flex: 0 0 auto;
+    align-self: flex-start;
+  }
+
+  .about-staff-featured {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page.about-bolder .hero-text-container,
+  .about-page.about-bolder .cta-content {
+    text-align: center;
+    align-items: center;
+  }
+
+  .about-value-row {
+    grid-template-columns: 64px 1fr;
+    gap: 1.2rem;
+    padding: 1.6rem 0;
+  }
+
+  .about-value-num {
+    font-size: 2rem;
+  }
+}
+
+/* ── Rendering containment ──────────────────────────────────── */
+.about-values-list {
+  contain: layout style;
+}
+
+.about-value-row {
+  contain: layout;
+}
+
+.about-page.about-bolder .teams-section .grid {
+  contain: layout;
+}
+
+.about-page.about-bolder .card {
+  transform: translateZ(0);
+}
+
+/* ================================================================
+   TEAMS — BOLDER PASS
+   All rules scoped to .teams-page.teams-bolder
+   ================================================================ */
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.teams-page.teams-bolder .hero-section {
+  align-items: flex-end;
+}
+
+.teams-page.teams-bolder .hero-overlay {
+  background:
+    radial-gradient(circle at 65% 25%, color-mix(in srgb, var(--color-secondary) 20%, transparent), transparent 50%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-dark) 30%, transparent), color-mix(in srgb, var(--color-dark) 90%, transparent));
+}
+
+.teams-page.teams-bolder .hero-content {
+  max-width: 1200px;
+  margin-inline: auto;
+  text-align: left;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+.teams-page.teams-bolder .hero-text-container {
+  align-items: flex-start;
+  text-align: left;
+  max-width: 700px;
+}
+
+.teams-page.teams-bolder .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  margin-bottom: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 65%, transparent);
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-tertiary) 82%, var(--color-secondary));
+}
+
+.teams-page.teams-bolder .hero-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(3.5rem, 11vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+.teams-page.teams-bolder .hero-accent {
+  color: var(--color-secondary);
+}
+
+.teams-page.teams-bolder .section-divider {
+  margin-left: 0;
+}
+
+.teams-page.teams-bolder .section-title,
+.teams-page.teams-bolder .section-subtitle {
+  text-align: left;
+  margin-left: 0;
+}
+
+/* ── Roster Grid ─────────────────────────────────────────────── */
+.teams-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  margin-top: 3rem;
+  background: color-mix(in srgb, var(--color-secondary) 22%, transparent);
+  border: 2px solid color-mix(in srgb, var(--color-secondary) 22%, transparent);
+  contain: layout;
+}
+
+.player-card {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-primary) 80%, var(--color-dark));
+  will-change: transform;
+  cursor: default;
+  transition: background 0.25s ease;
+}
+
+.player-card:hover {
+  background: color-mix(in srgb, var(--color-secondary) 12%, var(--color-primary));
+  z-index: 2;
+}
+
+.player-card-visual {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-primary) 90%, var(--color-dark));
+}
+
+.player-number-bg {
+  position: absolute;
+  bottom: -0.15em;
+  right: -0.05em;
+  font-family: 'Arvo', serif;
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  color: color-mix(in srgb, var(--color-secondary) 22%, transparent);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.player-jersey {
+  width: 80%;
+  height: 85%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(0);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.player-card:hover .player-jersey {
+  transform: translateY(-6px) scale(1.05) translateZ(0);
+}
+
+.player-card-info {
+  padding: 0.7rem 0.85rem 0.85rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-secondary) 28%, transparent);
+}
+
+.player-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-tertiary);
+  line-height: 1.35;
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+}
+
+.player-position {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── CTA ─────────────────────────────────────────────────────── */
+.teams-page.teams-bolder .cta-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+}
+
+.teams-cta-accent {
+  color: var(--color-secondary);
+}
+
+.teams-page.teams-bolder .cta-content {
+  text-align: left;
+  max-width: 900px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .teams-roster-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .teams-roster-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .teams-page.teams-bolder .hero-text-container,
+  .teams-page.teams-bolder .section-title,
+  .teams-page.teams-bolder .section-subtitle,
+  .teams-page.teams-bolder .cta-content {
+    text-align: center;
+  }
+
+  .teams-page.teams-bolder .section-divider {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .teams-roster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ================================================================
+   CONTACT PAGE — BOLDER PASS
+   All rules scoped to .contact-page.contact-bolder
+   ================================================================ */
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.contact-page.contact-bolder .contact-hero {
+  min-height: min(65vh, 650px);
+  align-items: flex-end;
+}
+
+.contact-page.contact-bolder .contact-hero .hero-overlay {
+  background:
+    radial-gradient(circle at 30% 60%, color-mix(in srgb, var(--color-secondary) 14%, transparent), transparent 55%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-dark) 20%, transparent), color-mix(in srgb, var(--color-dark) 90%, transparent));
+}
+
+.contact-page.contact-bolder .contact-hero .hero-content {
+  max-width: 1200px;
+  margin-inline: auto;
+  text-align: left;
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.contact-page.contact-bolder .contact-hero .hero-text-container {
+  align-items: flex-start;
+  text-align: left;
+  max-width: 640px;
+}
+
+.contact-page.contact-bolder .contact-hero .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  margin-bottom: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 65%, transparent);
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-tertiary) 82%, var(--color-secondary));
+}
+
+.contact-page.contact-bolder .contact-hero .hero-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  margin-bottom: 0;
+}
+
+.contact-page.contact-bolder .hero-accent {
+  color: var(--color-secondary);
+}
+
+/* ── Section titles ───────────────────────────────────────────── */
+.contact-page.contact-bolder .section-title,
+.contact-page.contact-bolder .section-subtitle {
+  text-align: left;
+}
+
+.contact-page.contact-bolder .section-divider {
+  margin-left: 0;
+}
+
+/* ── Contact body — 2-col asymmetric grid ─────────────────────── */
+.contact-page.contact-bolder .contact-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+
+/* ── Info column ──────────────────────────────────────────────── */
+.contact-page.contact-bolder .contact-info-heading {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--color-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+
+.contact-page.contact-bolder .contact-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.contact-page.contact-bolder .contact-info-row:first-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: 2rem;
+}
+
+.contact-page.contact-bolder .contact-info-num {
+  font-family: 'Arvo', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  min-width: 2rem;
+  padding-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.contact-page.contact-bolder .contact-info-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.contact-page.contact-bolder .contact-info-line {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.65;
+}
+
+/* ── FAQ — editorial numbered rows ───────────────────────────── */
+.contact-page.contact-bolder .contact-faq-list {
+  margin-top: 2.5rem;
+}
+
+.contact-page.contact-bolder .contact-faq-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.contact-page.contact-bolder .contact-faq-row:first-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.contact-page.contact-bolder .contact-faq-num {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-secondary) 28%, transparent);
+  line-height: 1;
+  min-width: 3rem;
+  flex-shrink: 0;
+}
+
+.contact-page.contact-bolder .contact-faq-question {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  font-weight: 700;
+  color: var(--color-tertiary);
+  margin-bottom: 0.7rem;
+  line-height: 1.35;
+}
+
+.contact-page.contact-bolder .contact-faq-answer {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.75;
+}
+
+/* ── Map frame ────────────────────────────────────────────────── */
+.contact-page.contact-bolder .contact-map-frame {
+  margin-top: 2.5rem;
+  height: 420px;
+  overflow: hidden;
+  position: relative;
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-page.contact-bolder .contact-map-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .contact-page.contact-bolder .contact-body-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-page.contact-bolder .contact-hero .hero-text-container,
+  .contact-page.contact-bolder .section-title,
+  .contact-page.contact-bolder .section-subtitle {
+    text-align: left;
+  }
+
+  .contact-page.contact-bolder .contact-faq-num {
+    font-size: 1.8rem;
+    min-width: 2.2rem;
+  }
+}
+
+/* ================================================================
+   SETTORE GIOVANILE PAGE — BOLDER PASS
+   All rules scoped to .settore-giovanile-page.settore-bolder
+   ================================================================ */
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-hero {
+  min-height: min(65vh, 650px);
+  align-items: flex-end;
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero .hero-overlay {
+  background:
+    radial-gradient(circle at 20% 70%, color-mix(in srgb, var(--color-secondary) 16%, transparent), transparent 50%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-dark) 25%, transparent), color-mix(in srgb, var(--color-dark) 88%, transparent));
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero .hero-content {
+  max-width: 1200px;
+  margin-inline: auto;
+  text-align: left;
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero .hero-text-container {
+  align-items: flex-start;
+  text-align: left;
+  max-width: 700px;
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  margin-bottom: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 65%, transparent);
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-tertiary) 82%, var(--color-secondary));
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero .hero-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2.8rem, 8.5vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  text-align: left;
+  text-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  margin-bottom: 0;
+}
+
+.settore-giovanile-page.settore-bolder .hero-accent {
+  color: var(--color-secondary);
+}
+
+.settore-giovanile-page.settore-bolder .settore-hero-lead {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+/* ── Section titles — left-aligned ───────────────────────────── */
+.settore-giovanile-page.settore-bolder .section-title,
+.settore-giovanile-page.settore-bolder .section-subtitle {
+  text-align: left;
+}
+
+.settore-giovanile-page.settore-bolder .section-divider {
+  margin-left: 0;
+}
+
+/* ── Intro — asymmetric grid + pull quote ─────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.45fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.settore-giovanile-page.settore-bolder .settore-intro-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 3.5rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-pull-quote {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--color-secondary);
+  margin: 0;
+  font-family: 'Arvo', serif;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.35;
+  color: var(--color-tertiary);
+  font-style: normal;
+}
+
+.settore-giovanile-page.settore-bolder .settore-pull-quote span {
+  display: block;
+  color: var(--color-secondary);
+}
+
+.settore-giovanile-page.settore-bolder .settore-age-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--color-secondary);
+  font-family: 'Arvo', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+
+/* ── Methodology — numbered editorial rows ────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-method-list {
+  margin-top: 2.5rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-method-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.settore-giovanile-page.settore-bolder .settore-method-row:first-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.settore-giovanile-page.settore-bolder .settore-method-num {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-secondary) 28%, transparent);
+  line-height: 1;
+  min-width: 3.5rem;
+  flex-shrink: 0;
+}
+
+.settore-giovanile-page.settore-bolder .settore-method-title {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-tertiary);
+  margin-bottom: 0.5rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-method-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.75;
+}
+
+/* ── Category — featured editorial card ──────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-category-card {
+  margin-top: 2.5rem;
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  background: color-mix(in srgb, var(--color-primary) 55%, var(--color-dark));
+  border-top: 3px solid var(--color-secondary);
+  position: relative;
+}
+
+.settore-giovanile-page.settore-bolder .settore-category-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.settore-giovanile-page.settore-bolder .settore-category-name {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-tertiary);
+  margin-bottom: 0.3rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-category-age {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.settore-giovanile-page.settore-bolder .settore-category-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  text-align: right;
+}
+
+.settore-giovanile-page.settore-bolder .settore-schedule-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.settore-giovanile-page.settore-bolder .settore-schedule-value {
+  font-family: 'Arvo', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-tertiary);
+}
+
+.settore-giovanile-page.settore-bolder .settore-category-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  max-width: 680px;
+}
+
+.settore-giovanile-page.settore-bolder .settore-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-group-pill {
+  padding: 0.3rem 0.75rem;
+  background: color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-tertiary) 85%, var(--color-secondary));
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Coach featured card (first coach spans) ──────────────────── */
+.settore-giovanile-page.settore-bolder .settore-coach-featured {
+  border-top: 2px solid var(--color-secondary);
+}
+
+/* ── FAQ — numbered rows ──────────────────────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-faq-list {
+  margin-top: 2.5rem;
+}
+
+.settore-giovanile-page.settore-bolder .settore-faq-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.settore-giovanile-page.settore-bolder .settore-faq-row:first-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.settore-giovanile-page.settore-bolder .settore-faq-num {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-secondary) 28%, transparent);
+  line-height: 1;
+  min-width: 3rem;
+  flex-shrink: 0;
+}
+
+.settore-giovanile-page.settore-bolder .settore-faq-question {
+  font-family: 'Arvo', serif;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  font-weight: 700;
+  color: var(--color-tertiary);
+  margin-bottom: 0.7rem;
+  line-height: 1.35;
+}
+
+.settore-giovanile-page.settore-bolder .settore-faq-answer {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.75;
+}
+
+/* ── CTA accent ───────────────────────────────────────────────── */
+.settore-giovanile-page.settore-bolder .settore-cta-accent {
+  color: var(--color-secondary);
+}
+
+.settore-giovanile-page.settore-bolder .cta-title {
+  font-family: 'Arvo', serif;
+  text-align: left;
+}
+
+.settore-giovanile-page.settore-bolder .cta-content {
+  text-align: left;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .settore-giovanile-page.settore-bolder .settore-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .settore-giovanile-page.settore-bolder .settore-intro-aside {
+    padding-top: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .settore-giovanile-page.settore-bolder .settore-category-schedule {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .settore-giovanile-page.settore-bolder .settore-category-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .settore-giovanile-page.settore-bolder .settore-faq-num,
+  .settore-giovanile-page.settore-bolder .settore-method-num {
+    font-size: 1.8rem;
+    min-width: 2.2rem;
+  }
+
+  .settore-giovanile-page.settore-bolder .cta-content,
+  .settore-giovanile-page.settore-bolder .cta-title {
+    text-align: center;
   }
 }

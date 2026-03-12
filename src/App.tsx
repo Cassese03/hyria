@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Teams from './pages/Teams';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import SettoreGiovanile from './pages/SettoreGiovanile';
-import Sponsor from './pages/Sponsor';
-import Store from './pages/Store';
-import Calendario from './pages/Calendario';
 import './styles/home.css';
 import './styles/global.css';
 import './styles/responsive.css';
 import './styles/overflow-fix.css';
 import './styles/store.css';
 import LoadingPage from './components/LoadingPage';
+
+const Teams = lazy(() => import('./pages/Teams'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const SettoreGiovanile = lazy(() => import('./pages/SettoreGiovanile'));
+const Sponsor = lazy(() => import('./pages/Sponsor'));
+const Store = lazy(() => import('./pages/Store'));
+const Calendario = lazy(() => import('./pages/Calendario'));
 
 const AppContent = () => {
   const location = useLocation();
@@ -49,16 +50,18 @@ const AppContent = () => {
       <div className={`flex flex-col min-h-screen w-full overflow-x-hidden ${showLoadingPage ? 'overflow-hidden' : ''}`}>
         <Header />
         <main className="flex-grow pt-[60px] md:pt-[70px] w-full overflow-x-hidden">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/team" element={<Teams />} />
-            <Route path="/chi-siamo" element={<About />} />
-            <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
-            <Route path="/sponsor" element={<Sponsor />} />
-            <Route path="/store" element={<Store />} />
-            <Route path="/calendario" element={<Calendario />} />
-            <Route path="/contatti" element={<Contact />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/team" element={<Teams />} />
+              <Route path="/chi-siamo" element={<About />} />
+              <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
+              <Route path="/sponsor" element={<Sponsor />} />
+              <Route path="/store" element={<Store />} />
+              <Route path="/calendario" element={<Calendario />} />
+              <Route path="/contatti" element={<Contact />} />
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
       </div>

@@ -31,6 +31,17 @@ const Header = () => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isOpen]);
+
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''} w-full overflow-x-hidden`}>
       <div className="header-inner">
@@ -72,9 +83,11 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="mobile-menu-button"
+          className={`mobile-menu-button ${isOpen ? 'is-open' : ''}`}
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Menu principale"
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
         >
           <span></span>
           <span></span>
@@ -82,7 +95,10 @@ const Header = () => {
         </button>
 
         {/* Mobile Navigation */}
-        <div className={`mobile-nav ${isOpen ? 'open' : ''}`}>
+        <div
+          id="mobile-menu"
+          className={`mobile-nav ${isOpen ? 'open' : ''}`}
+        >
           <div className="mobile-nav-container">
             <ul className="mobile-nav-menu">
               <li className="mobile-menu-item">

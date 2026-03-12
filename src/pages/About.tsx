@@ -1,17 +1,45 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
 import { heroContainer, heroItem, staggerContainer, fadeInUp, fadeInLeft, scaleReveal, revealTransition } from '../utils/animations';
 
-const About: React.FC = () => {
-  const chisianoStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "Chi Siamo - Hyria Basket",
-    "description": "Scopri la storia e la missione di Hyria Basket, squadra di basket di Nola con passione giovanile.",
-    "url": "https://hyriabasket.it/chi-siamo"
-  };
+const MotionLink = motion(Link);
 
+const ABOUT_VALUES = [
+  {
+    title: 'Passione',
+    description: "L'amore per il basket è il motore di tutto ciò che facciamo, dalla prima squadra al minibasket",
+  },
+  {
+    title: 'Comunità',
+    description: 'Crediamo nel valore di creare una comunità unita attorno al nostro progetto sportivo dentro e fuori dal campo',
+  },
+  {
+    title: 'Crescita',
+    description: 'Investiamo nello sviluppo tecnico e umano di ogni atleta, a qualsiasi livello',
+  },
+];
+
+const CHISIAMO_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Chi Siamo - Hyria Basket",
+  "description": "Scopri la storia e la missione di Hyria Basket, squadra di basket di Nola con passione giovanile.",
+  "url": "https://hyriabasket.it/chi-siamo"
+};
+
+const STAFF_MEMBERS = [
+  { name: 'Attilio De Sena',      role: 'Presidente',       image: '/images/contact-hero.jpg' },
+  { name: 'Paolino Franzese',     role: 'Vice Presidente',   image: '/images/contact-hero.jpg' },
+  { name: 'Lorenzo Cassese',      role: 'Socio Fondatore',   image: '/images/contact-hero.jpg' },
+  { name: 'Giovanni Sangermano',  role: 'Socio Fondatore',   image: '/images/contact-hero.jpg' },
+  { name: 'Davide Esposito',      role: 'Socio Fondatore',   image: '/images/contact-hero.jpg' },
+  { name: 'Agostino Esposito',    role: 'Socio Fondatore',   image: '/images/contact-hero.jpg' },
+  { name: 'Giacomo Mascolo',      role: 'Socio Fondatore',   image: '/images/contact-hero.jpg' },
+];
+
+const About: React.FC = () => {
   return (
     <>
       <PageHead
@@ -22,14 +50,22 @@ const About: React.FC = () => {
         ogDescription="Conosci la storia e i valori di Hyria Basket, la squadra di basket di Nola che crede nella passione giovanile e nell'innovazione."
         ogUrl="https://hyriabasket.it/chi-siamo"
         canonicalUrl="https://hyriabasket.it/chi-siamo"
-        structuredData={chisianoStructuredData}
+        structuredData={CHISIAMO_STRUCTURED_DATA}
       />
       
-    <div className="about-page">
+    <div className="about-page about-bolder">
       {/* Hero Section */}
-      <section className="hero-section" style={{ height: '60vh' }}>
+      <section className="hero-section" style={{ minHeight: 'min(70vh, 700px)' }}>
         <div className="hero-background">
-          <img src="/images/contact-hero.jpg" alt="Hyria Basket Team" className="hero-bg-image" />
+          <img
+              src="/images/contact-hero.jpg"
+              alt="Team Hyria Basket sul campo"
+              className="hero-bg-image"
+              width={1920}
+              height={1080}
+              decoding="async"
+              fetchPriority="high"
+            />
           <div className="hero-overlay"></div>
         </div>
         <div className="hero-content">
@@ -39,59 +75,69 @@ const About: React.FC = () => {
             animate="visible"
             className="hero-text-container"
           >
+            <motion.p variants={heroItem} className="hero-kicker">
+              NOLA · 2025
+            </motion.p>
             <motion.h1 variants={heroItem} className="hero-title">
-              CHI <span className="gradient-text">SIAMO</span>
+              CHI <span className="hero-accent">SIAMO</span>
             </motion.h1>
-            <motion.div
-              variants={scaleReveal}
-              className="section-divider"
-              style={{ transformOrigin: 'center' }}
-            />
           </motion.div>
         </div>
       </section>
 
       {/* La Nostra Storia Section */}
-      <section className="about-section section-padding">
+      <section className="about-section about-story section-padding">
         <div className="container">
-          <motion.h2 
-            className="section-title text-white"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={revealTransition}
-              style={{ color: '#d96c00', }}
-          >
-            LA NOSTRA STORIA
-          </motion.h2>
-          <motion.div
-            className="section-divider"
-            variants={scaleReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            style={{ transformOrigin: 'left center' }}
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <motion.div 
-              variants={fadeInLeft}
-              initial="hidden"
-              whileInView="visible"
+          <div className="about-story-grid">
+            <div className="about-story-main">
+              <motion.h2
+                className="section-title text-hyria-secondary"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={revealTransition}
+              >
+                LA NOSTRA STORIA
+              </motion.h2>
+              <motion.div
+                className="section-divider"
+                variants={scaleReveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                style={{ transformOrigin: 'left center' }}
+              />
+              <motion.div
+                variants={fadeInLeft}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="text-white"
+              >
+                <p className="text-lg mb-6">
+                  Hyria Basket nasce nel 2025 dal progetto di un gruppo di giovani imprenditori appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
+                </p>
+                <p className="text-lg mb-6">
+                  Il nome "Hyria" richiama l'antica città che sorgeva nell'area nolana, simbolo di tradizione e radici territoriali, mentre lo sguardo è proiettato verso il futuro del basket moderno.
+                </p>
+                <p className="text-lg">
+                  In poco tempo, siamo riusciti a costruire un progetto solido che comprende prima squadra, minibasket e numerose iniziative sul territorio, diventando un punto di riferimento per la pallacanestro nella nostra realtà.
+                </p>
+              </motion.div>
+            </div>
+            <motion.aside
+              className="about-story-aside"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-white"
-              style={{ color: 'white', }}
+              transition={revealTransition}
             >
-              <p className="text-lg mb-6">
-                Hyria Basket nasce nel 2025 dal progetto di un gruppo di giovani imprenditori appassionati di basket e del proprio territorio, con una visione chiara: creare una società sportiva moderna che unisse la tradizione del basket alla tecnologia e all'innovazione.
-              </p>
-              <p className="text-lg mb-6">
-                Il nome "Hyria" richiama l'antica città che sorgeva nell'area nolana, simbolo di tradizione e radici territoriali, mentre lo sguardo è proiettato verso il futuro del basket moderno.
-              </p>
-              <p className="text-lg">
-                In poco tempo, siamo riusciti a costruire un progetto solido che comprende prima squadra, minibasket e numerose iniziative sul territorio, diventando un punto di riferimento per la pallacanestro nella nostra realtà.
-              </p>
-            </motion.div>
+              <blockquote className="about-pull-quote">
+                <span>Radici antiche.</span>
+                Visione moderna.
+              </blockquote>
+              <div className="about-year-badge">EST. 2025</div>
+            </motion.aside>
           </div>
         </div>
       </section>
@@ -127,43 +173,23 @@ const About: React.FC = () => {
           </motion.p>
 
           <motion.div
-            className="features-grid"
+            className="about-values-list"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            {[
-              {
-                title: "Passione",
-                description: "L'amore per il basket è il motore di tutto ciò che facciamo, dalla prima squadra al minibasket",
-                icon: "❤️"
-              },
-              // {
-              //   title: "Innovazione",
-              //   description: "Utilizziamo tecnologie avanzate per l'analisi delle prestazioni e lo sviluppo dei talenti",
-              //   icon: "💡"
-              // },
-              {
-                title: "Comunità",
-                description: "Crediamo nel valore di creare una comunità unita attorno al nostro progetto sportivo dentro e fuori dal campo",
-                icon: "🤝"
-              },
-              {
-                title: "Crescita",
-                description: "Investiamo nello sviluppo tecnico e umano di ogni atleta, a qualsiasi livello",
-                icon: "📈"
-              }
-            ].map((item) => (
-              <motion.div 
+            {ABOUT_VALUES.map((item, index) => (
+              <motion.div
                 key={item.title}
-                className="feature-card"
+                className="about-value-row"
                 variants={fadeInUp}
-                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
-                <div className="feature-icon text-4xl mb-4">{item.icon}</div>
-                <h3 className="feature-title">{item.title}</h3>
-                <p className="feature-description">{item.description}</p>
+                <span className="about-value-num">0{index + 1}</span>
+                <div className="about-value-body">
+                  <h3 className="about-value-title">{item.title}</h3>
+                  <p className="about-value-desc">{item.description}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -207,27 +233,27 @@ const About: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            {[
-              { name: "Attilio De Sena", role: "Presidente", image: "/images/contact-hero.jpg" },
-              { name: "Paolino Franzese", role: "Vice Presidente",image: "/images/contact-hero.jpg" },
-              { name: "Lorenzo Cassese", role: "Socio Fondatore",image: "/images/contact-hero.jpg" },
-              { name: "Giovanni Sangermano", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
-              { name: "Davide Esposito", role: "Socio Fondatore",image: "/images/contact-hero.jpg" },
-              { name: "Agostino Esposito", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
-              { name: "Giacomo Mascolo", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
-
-            ].map((member) => (
+            {STAFF_MEMBERS.map((member, index) => (
               <motion.div
                 key={member.name}
-                className="card p-6 text-center"
+                className={`card p-6 text-center${index === 0 ? ' about-staff-featured' : ''}`}
                 variants={fadeInUp}
                 whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                style={{ willChange: 'transform' }}
               >
                 <div className="mb-4 rounded-full overflow-hidden w-40 h-40 mx-auto">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                    width={160}
+                    height={160}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
-                <h3 className="text-xl font-bold mb-2" style={{color : '#d96c00',textAlign:'center'}}>{member.name}</h3>
-                <h4 style={{color:'#0F0615',textAlign:'center'}}>{member.role}</h4>
+                <h3 className="text-xl font-bold mb-2 text-hyria-secondary text-center">{member.name}</h3>
+                <p className="text-sm font-medium text-center text-white/60">{member.role}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -244,19 +270,19 @@ const About: React.FC = () => {
             className="cta-content"
           >
             <h2 className="cta-title">
-              Entra a far parte della <span className="gradient-text">nostra famiglia</span>
+              Entra a far parte della <span className="about-cta-accent">nostra famiglia</span>
             </h2>
             <p className="cta-description">
               Scopri come unirti alla comunità di Hyria Basket come giocatore, partner o tifoso
             </p>
-            <motion.button
+            <MotionLink
+              to="/contatti"
               className="btn-primary"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              onClick={() => window.location.href = '/contatti'}
             >
               CONTATTACI ORA
-            </motion.button>
+            </MotionLink>
           </motion.div>
         </div>
       </section>

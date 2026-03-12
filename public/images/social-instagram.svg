@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Instagram</title>
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="32" cy="32" r="11" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="45" cy="19" r="3.5" fill="#ffffff"/>
+</svg>

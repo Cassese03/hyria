@@ -1,9 +1,41 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
 import { heroContainer, heroItem, staggerContainer, fadeInUp, revealTransition, scaleReveal } from '../utils/animations';
 
+const MotionLink = motion(Link);
+const HERO_HIGHLIGHTS = [
+  { value: '50+', label: 'ATLETI ATTIVI' },
+  { value: '15+', label: 'DIRIGENTI E STAFF' },
+  { value: 'NOLA', label: 'CUORE DEL PROGETTO' },
+];
+
 const Home: React.FC = () => {
+  const galleryVideoRef = useRef<HTMLDivElement | null>(null);
+  const [shouldLoadGalleryVideo, setShouldLoadGalleryVideo] = useState(false);
+
+  useEffect(() => {
+    const target = galleryVideoRef.current;
+    if (!target || shouldLoadGalleryVideo) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoadGalleryVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '250px 0px' }
+    );
+
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [shouldLoadGalleryVideo]);
+
   const homeStructuredData = {
     "@context": "https://schema.org",
     "@type": "SportsTeam",
@@ -36,11 +68,19 @@ const Home: React.FC = () => {
         structuredData={homeStructuredData}
       />
       
-      <div className="home-container">
+      <div className="home-container home-bolder">
         {/* Hero Section */}
         <section className="hero-section">
           <div className="hero-background">
-            <img src="/images/basketball-hero.jpg" alt="Basketball court" className="hero-bg-image" />
+            <img
+              src="/images/basketball-hero.jpg"
+              alt="Campo da basket in atmosfera serale"
+              className="hero-bg-image"
+              width={1920}
+              height={1080}
+              decoding="async"
+              fetchPriority="high"
+            />
             <div className="hero-overlay"></div>
           </div>
           <div className="hero-content px-4 sm:px-6">
@@ -50,35 +90,50 @@ const Home: React.FC = () => {
               animate="visible"
               className="hero-text-container"
             >
+              <motion.p variants={heroItem} className="hero-kicker">
+                NOLA • DAL 2025
+              </motion.p>
               <motion.h1 variants={heroItem} className="hero-title text-4xl sm:text-5xl md:text-6xl">
-                HYRIA <span style={{color:'#d96c00'}}>BASKET</span>
+                HYRIA <span className="hero-accent">BASKET</span>
               </motion.h1>
+              <motion.p variants={heroItem} className="hero-lead">
+                GIOVANE. AUDACE. RADICATA.
+              </motion.p>
               <motion.p variants={heroItem} className="hero-description text-base md:text-lg">
                 Una squadra di basket giovane, nata dal progetto di giovani imprenditori 
                 convinti che un'atmosfera familiare e attenta al lato umano e allo spirito di squadra 
                 possa conciliarsi perfettamente con la tecnologia più avanzata e i giovani talenti del territorio.
               </motion.p>
               <motion.div variants={heroItem} className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button 
+                <MotionLink
+                  to="/chi-siamo"
                   className="btn-primary w-full sm:w-auto"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => window.location.href = '/chi-siamo'}
                 >
                   SCOPRI DI PIÙ
-                </motion.button>
-                <motion.button 
+                </MotionLink>
+                <MotionLink
+                  to="/contatti"
                   className="btn-secondary w-full sm:w-auto"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => window.location.href = '/contatti'}
                 >
                   UNISCITI A NOI
-                </motion.button>
+                </MotionLink>
+              </motion.div>
+              <motion.div variants={heroItem} className="hero-strip" aria-label="Dati chiave Hyria Basket">
+                {HERO_HIGHLIGHTS.map((highlight) => (
+                  <div key={highlight.label} className="hero-strip-item">
+                    <span className="hero-strip-value">{highlight.value}</span>
+                    <span className="hero-strip-label">{highlight.label}</span>
+                  </div>
+                ))}
               </motion.div>
             </motion.div>
             <motion.div 
               className="scroll-indicator"
+              aria-hidden="true"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -135,7 +190,15 @@ const Home: React.FC = () => {
                   style={{ border: 0 }}
                   title="Hyria Basket Promo"
                 ></iframe> */}
-                <img src="/images/basketball-motto.jpg" alt="Hyria Basket Team" className="about-image" />
+                <img
+                  src="/images/basketball-motto.jpg"
+                  alt="Squadra Hyria Basket durante un momento di gioco"
+                  className="about-image"
+                  width={1280}
+                  height={720}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
           </div>
@@ -321,12 +384,24 @@ const Home: React.FC = () => {
                 <motion.div 
                   key={3} 
                   className="gallery-item"
+                  ref={galleryVideoRef}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: (3 % 4) * 0.1 }}
                 >
-                  <video autoPlay muted loop src="/images/1.mp4"></video>
+                  <video
+                    autoPlay={shouldLoadGalleryVideo}
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    aria-label="Clip azione partita Hyria Basket"
+                    poster="/images/1.jpg"
+                    width={1280}
+                    height={720}
+                    src={shouldLoadGalleryVideo ? '/images/1.mp4' : undefined}
+                  ></video>
                 </motion.div>
               ) : (
                 <motion.div 
@@ -337,7 +412,14 @@ const Home: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: (item % 4) * 0.1 }}
                 >
-                  <img src={`/images/${item}.jpg`} alt={`Gallery image ${item}`} />
+                  <img
+                    src={`/images/${item}.jpg`}
+                    alt={`Momento di partita Hyria Basket ${item}`}
+                    width={1200}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </motion.div>
               )))}
             </div>
@@ -354,19 +436,19 @@ const Home: React.FC = () => {
               className="cta-content"
             >
               <h2 className="cta-title">
-                Entra a Far Parte della <span className="gradient-text">Famiglia Hyria</span>
+                Entra a Far Parte della <span className="cta-highlight">Famiglia Hyria</span>
               </h2>
               <p className="cta-description">
                 Unisciti a noi e diventa protagonista di una nuova era del basket
               </p>
-              <motion.button
+              <MotionLink
+                to="/contatti"
                 className="btn-primary"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.location.href = '/contatti'}
               >
                 CONTATTACI ORA
-              </motion.button>
+              </MotionLink>
             </motion.div>
           </div>
         </section>

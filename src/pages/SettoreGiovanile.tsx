@@ -1,19 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import PageHero from '../components/PageHero';
-import SectionTitle from '../components/SectionTitle';
+import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import { heroContainer, heroItem, staggerContainer, fadeInUp, scaleReveal, revealTransition } from '../utils/animations';
 
-const SettoreGiovanile: React.FC = () => {
-  const categories = [
-    {
-      name: "Minibasket",
-      ageRange: "5-11 anni",
-      description: "Il percorso di Minibasket è pensato per avvicinare i bambini al mondo della pallacanestro attraverso il gioco e il divertimento. Le attività sono strutturate per sviluppare coordinazione, capacità motorie e spirito di squadra.",
-      schedule: "2 a settimana",
-      image: "/images/minibasket.jpg",
-      groups: ["Pulcini (5-6 anni)", "Scoiattoli (7-8 anni)", "Aquilotti (9-10 anni)", "Esordienti (11 anni)"]
-    },
+const MotionLink = motion(Link);
+
+const SETTORE_STRUCTURED_DATA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Settore Giovanile - Hyria Basket',
+  description: 'Scopri il settore giovanile di Hyria Basket. Corsi, allenamenti e sviluppo per giovani talenti del basket a Nola.',
+  url: 'https://hyriabasket.it/settore-giovanile',
+};
+
+const CATEGORIES = [
+  {
+    name: 'Minibasket',
+    ageRange: '5–11 anni',
+    description: 'Il percorso di Minibasket è pensato per avvicinare i bambini al mondo della pallacanestro attraverso il gioco e il divertimento. Le attività sono strutturate per sviluppare coordinazione, capacità motorie e spirito di squadra.',
+    schedule: '2 sessioni a settimana',
+    groups: ['Pulcini (5-6 anni)', 'Scoiattoli (7-8 anni)', 'Aquilotti (9-10 anni)', 'Esordienti (11 anni)'],
+  },
     // {
     //   name: "Under 13",
     //   ageRange: "12-13 anni",
@@ -42,42 +50,54 @@ const SettoreGiovanile: React.FC = () => {
     //   schedule: "Lunedì, Mercoledì e Venerdì",
     //   image: "/images/under19.jpg"
     // }
-  ];
+];
 
-  const coaches = [
-    { name: "Attilio De Sena", role: "Responsabile/ Allenatore minibasket", image: "/images/contact-hero.jpg" },
-    { name: "Agostino Esposito", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
-    { name: "Paolino Franzese", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
-    { name: "Davide Esposito", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
-    { name: "Giacomo Mascolo", role: "Allenatore Minibasket", image: "/images/contact-hero.jpg" },
-  ];
+const COACHES = [
+  { name: 'Attilio De Sena',   role: 'Responsabile · Allenatore Minibasket', image: '/images/contact-hero.jpg' },
+  { name: 'Agostino Esposito', role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
+  { name: 'Paolino Franzese',  role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
+  { name: 'Davide Esposito',   role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
+  { name: 'Giacomo Mascolo',   role: 'Allenatore Minibasket',                 image: '/images/contact-hero.jpg' },
+];
 
-  const methodologies = [
-    {
-      title: "Approccio Progressivo",
-      description: "Programmi di allenamento adattati all'età e al livello di sviluppo psicofisico",
-      icon: "📈"
-    },
-    {
-      title: "Sviluppo Completo",
-      description: "Attenzione agli aspetti tecnici, fisici e mentali del giocatore",
-      icon: "🧠"
-    },
-    {
-      title: "Valori Educativi",
-      description: "Rispetto, disciplina e spirito di squadra come pilastri fondamentali",
-      icon: "🤝"
-    }
-  ];
+const METHODOLOGIES = [
+  {
+    num: '01',
+    title: 'Approccio Progressivo',
+    description: "Programmi di allenamento adattati all'età e al livello di sviluppo psicofisico di ogni bambino.",
+  },
+  {
+    num: '02',
+    title: 'Sviluppo Completo',
+    description: 'Attenzione agli aspetti tecnici, fisici e mentali del giocatore per una crescita armoniosa.',
+  },
+  {
+    num: '03',
+    title: 'Valori Educativi',
+    description: 'Rispetto, disciplina e spirito di squadra come pilastri fondamentali del percorso sportivo.',
+  },
+];
 
-  const settoreStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Settore Giovanile - Hyria Basket",
-    "description": "Scopri il settore giovanile di Hyria Basket. Corsi, allenamenti e sviluppo per giovani talenti del basket a Nola.",
-    "url": "https://hyriabasket.it/settore-giovanile"
-  };
+const FAQS = [
+  {
+    question: 'Come posso iscrivere mio figlio/a?',
+    answer: 'Per iscrivere tuo figlio/a al minibasket di Hyria Basket, puoi contattarci tramite i nostri profili social o telefonicamente. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico sportivo valido.',
+  },
+  {
+    question: 'Quali sono i costi di iscrizione?',
+    answer: 'I costi variano in base alla categoria e comprendono il kit di abbigliamento e la tessera FIP. Contattaci per informazioni dettagliate e sulle eventuali facilitazioni per famiglie con più figli iscritti.',
+  },
+  {
+    question: 'È possibile effettuare allenamenti di prova?',
+    answer: "Certamente! Offriamo la possibilità di effettuare fino a 3 allenamenti di prova gratuiti per consentire ai ragazzi di conoscere l'ambiente prima di procedere all'iscrizione.",
+  },
+  {
+    question: 'Dove si svolgono gli allenamenti?',
+    answer: 'Gli allenamenti si svolgono presso il nostro impianto principale di Nola e in altre strutture convenzionate nella zona. Gli indirizzi vengono comunicati al momento dell\'iscrizione.',
+  },
+];
 
+const SettoreGiovanile: React.FC = () => {
   return (
     <>
       <PageHead
@@ -88,216 +108,296 @@ const SettoreGiovanile: React.FC = () => {
         ogDescription="Il settore giovanile di Hyria Basket offre corsi di basket per tutte le età. Allenamenti qualificati e sviluppo dei giovani talenti a Nola."
         ogUrl="https://hyriabasket.it/settore-giovanile"
         canonicalUrl="https://hyriabasket.it/settore-giovanile"
-        structuredData={settoreStructuredData}
+        structuredData={SETTORE_STRUCTURED_DATA}
       />
-      
-      <div className="settore-giovanile-page">
-        <PageHero
-          backgroundImage="/images/contact-hero.jpg"
-          normalText="SETTORE"
-          coloredText="GIOVANILE"
-          subtitle="Il futuro del basket parte da qui"
-        />
 
-        {/* Intro Section */}
-        <section className="cta-section section-padding">
-          <div className="container">
-            <SectionTitle
-              title="IL NOSTRO PROGETTO"
-              subtitle="Formiamo i campioni del domani sul campo e nella vita"
+      <div className="settore-giovanile-page settore-bolder">
+
+        {/* Hero */}
+        <section className="hero-section settore-hero">
+          <div className="hero-background">
+            <img
+              src="/images/contact-hero.jpg"
+              alt="Giovani atleti Hyria Basket"
+              className="hero-bg-image"
+              width={1920}
+              height={1080}
+              decoding="async"
+              fetchPriority="high"
             />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-12">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                style={{ textShadow: 'center' }}
-              >
-                <p className="text-lg mb-6" style={{ color: '#d96c00' }}>
-                  Il minibasket rappresenta il cuore del progetto futuro Hyria Basket. Crediamo fermamente che la crescita di una società sportiva passi attraverso lo sviluppo dei giovani atleti del territorio.
-                </p>
-                <p className="text-lg mb-6" style={{ color: '#d96c00' }}>
-                  Il nostro programma è strutturato per accompagnare bambini e ragazzi in un percorso di crescita sportiva e personale, dal Minibasket fino alle soglie della prima squadra.
-                </p>
-                <p className="text-lg" style={{ color: '#d96c00' }}>
-                  Ogni categoria ha obiettivi specifici e programmi di allenamento adeguati all'età e al livello tecnico, ma tutti condividono la stessa filosofia: insegnare il basket come scuola di vita, trasmettendo valori come rispetto, impegno e spirito di squadra.
-                </p>
-              </motion.div>
-            </div>
+            <div className="hero-overlay"></div>
+          </div>
+          <div className="hero-content">
+            <motion.div
+              variants={heroContainer}
+              initial="hidden"
+              animate="visible"
+              className="hero-text-container"
+            >
+              <motion.p variants={heroItem} className="hero-kicker">
+                NOLA · MINIBASKET
+              </motion.p>
+              <motion.h1 variants={heroItem} className="hero-title">
+                SETTORE <span className="hero-accent">GIOVANILE</span>
+              </motion.h1>
+              <motion.p variants={heroItem} className="settore-hero-lead">
+                Il futuro del basket parte da qui.
+              </motion.p>
+            </motion.div>
           </div>
         </section>
 
-        {/* Methodology Section */}
-        <section className="about-section section-padding bg-gray-100">
+        {/* Intro — editorial 2-col */}
+        <section className="about-section section-padding">
           <div className="container">
-            <SectionTitle
-              title="IL NOSTRO METODO"
-              subtitle="Un approccio innovativo alla formazione dei giovani atleti"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-              {methodologies.map((method, index) => (
-                <motion.div
-                  key={method.title}
-                  className="bg-white p-6 rounded-lg shadow-md"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <h3 className="text-xl font-bold mb-2" style={{ color: '#d96c00' }}>{method.icon} {method.title}</h3>
-                  <p className="text-gray-600" style={{ color: 'white' }}>{method.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Categories Section */}
-        <section className="cta-section section-padding">
-          <div className="container">
-            <SectionTitle
-              title="LE NOSTRE CATEGORIE"
-              subtitle="Un percorso completo dalla scuola minibasket alle soglie della prima squadra"
-            />
-
-            <div className="space-y-20 mt-12">
-              {categories.map((category, index) => (
-                <motion.div
-                  key={category.name}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
-                  style={{ direction: index % 2 === 0 ? 'ltr' : 'rtl' }}
-                >
-                  <div className="space-y-4" style={{ direction: 'ltr' }}>
-                    <h3 className="text-2xl font-bold " style={{ color: '#5e0303' }}>{category.name}</h3>
-                    <div className="inline-block px-3 py-1 bg-hyria-tertiary text-white rounded-full text-sm" style={{ color: 'white' }}>
-                      {category.ageRange}
-                    </div>
-                    <p className="text-lg" style={{ color: 'white' }}>{category.description}</p>
-
-                    <div className="flex items-center mt-4">
-                      <strong style={{ color: '#5e0303' }}>Allenamenti:</strong>
-                      <p style={{ color: '#d96c00' }}>{category.schedule}</p>
-                    </div>
-
-                    {category.groups && (
-                      <div className="mt-4"  style={{textAlign:'center'}}>
-                        <h4 className="font-bold mb-2" style={{ color: '#5e0303' }}>Gruppi:</h4>
-                        <div className="flex flex-wrap gap-2"  style={{textAlign:'center'}}>
-                          <ul style={{ textAlign: 'center' }}>
-                            {category.groups.map((group) => (
-                              <li style={{textAlign:'left'}}>
-                                <span
-                                key={group} style={{ color: 'white' }}
-                                className="px-2 py-1 bg-gray-200 rounded-md text-sm"
-                              >
-                                {group}
-                              </span></li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-
-                    <motion.button
-                      className="btn-primary mt-6"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => window.location.href = '/contatti'}
-                    >
-                      INFORMAZIONI E ISCRIZIONI
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Coaches Section */}
-        <section className="about-section section-padding bg-gray-100" style={{height:'230vh!important;'}}>
-          <div className="container">
-            <SectionTitle
-              title="IL NOSTRO STAFF TECNICO"
-              subtitle="Professionisti qualificati e appassionati"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-              {coaches.map((coach, index) => (
-                <motion.div
-                  key={coach.name}
-                  className="bg-white rounded-lg shadow-md overflow-hidden"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  style={{ textAlign: 'center',color:'white' }}
-                >
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={coach.image}
-                      alt={''}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4 text-center">
-                  <p className="text-sm text-gray-600" style={ {color:'#5e0303'}}>{coach.role}</p>
-                    <h3 className="font-bold text-lg" style={ {color:'#d96c00'}}>{coach.name}</h3>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="cta-section section-padding bg-gray-100">
-          <div className="container">
-            <SectionTitle
-              title="DOMANDE FREQUENTI"
-              subtitle="Tutto quello che devi sapere sul nostro minibasket"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-              {[
-                {
-                  question: "Come posso iscrivere mio figlio/a?",
-                  answer: "Per iscrivere tuo figlio/a al minibasket di Hyria Basket, puoi contattarci tramite i nostri profili social  o contattarci telefonicamente. Sarà necessario compilare il modulo di iscrizione e presentare un certificato medico sportivo valido."
-                },
-                {
-                  question: "Quali sono i costi di iscrizione?",
-                  answer: "I costi variano in base alla categoria e comprendono il kit di abbigliamento e la tessera FIP. Contattaci per ricevere informazioni dettagliate sui costi per la stagione in corso e sulle eventuali facilitazioni per famiglie con più figli iscritti."
-                },
-                {
-                  question: "È possibile effettuare allenamenti di prova?",
-                  answer: "Certamente! Offriamo la possibilità di effettuare fino a 3 allenamenti di prova gratuiti per consentire ai ragazzi di conoscere l'ambiente e la metodologia di allenamento prima di procedere all'iscrizione."
-                },
-                {
-                  question: "Dove si svolgono gli allenamenti?",
-                  answer: "Gli allenamenti si svolgono presso il nostro impianto principale di Nola e in altre strutture convenzionate nella zona. Gli indirizzi esatti vengono comunicati al momento dell'iscrizione in base alla categoria di appartenenza."
-                },
-              ].map((faq, index) => (
-                <motion.div
-                  key={index}
+            <div className="settore-intro-grid">
+              <div className="settore-intro-main">
+                <motion.h2
+                  className="section-title"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white p-6 rounded-lg shadow-md"
+                  transition={revealTransition}
                 >
-                  <h3 className="text-lg font-bold mb-3" style={{color:'#5e0303'}}>{faq.question}</h3>
-                  <p className="text-gray-600" style={{color:'white'}}>{faq.answer}</p>
+                  IL NOSTRO PROGETTO
+                </motion.h2>
+                <motion.div
+                  className="section-divider"
+                  variants={scaleReveal}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  style={{ transformOrigin: 'left center' }}
+                />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ ...revealTransition, delay: 0.1 }}
+                >
+                  <p className="text-lg mb-6 text-white/85">
+                    Il minibasket rappresenta il cuore del progetto futuro Hyria Basket. Crediamo fermamente che la crescita di una società sportiva passi attraverso lo sviluppo dei giovani atleti del territorio.
+                  </p>
+                  <p className="text-lg mb-6 text-white/85">
+                    Il nostro programma è strutturato per accompagnare bambini e ragazzi in un percorso di crescita sportiva e personale, dal Minibasket fino alle soglie della prima squadra.
+                  </p>
+                  <p className="text-lg text-white/85">
+                    Ogni categoria ha obiettivi specifici e programmi adeguati all'età e al livello tecnico, ma tutti condividono la stessa filosofia: insegnare il basket come scuola di vita.
+                  </p>
                 </motion.div>
-              ))}
+              </div>
+              <motion.aside
+                className="settore-intro-aside"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={revealTransition}
+              >
+                <blockquote className="settore-pull-quote">
+                  <span>Formiamo campioni</span>
+                  sul campo e nella vita.
+                </blockquote>
+                <div className="settore-age-badge">5–11 ANNI</div>
+              </motion.aside>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Methodology — numbered editorial rows */}
+        <section className="features-section section-padding">
+          <div className="container">
+            <motion.h2
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition}
+            >
+              IL NOSTRO METODO
+            </motion.h2>
+            <motion.div
+              className="section-divider"
+              variants={scaleReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ transformOrigin: 'left center' }}
+            />
+            <motion.div
+              className="settore-method-list"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {METHODOLOGIES.map((m) => (
+                <motion.div key={m.num} className="settore-method-row" variants={fadeInUp}>
+                  <span className="settore-method-num">{m.num}</span>
+                  <div className="settore-method-body">
+                    <h3 className="settore-method-title">{m.title}</h3>
+                    <p className="settore-method-desc">{m.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Categories — featured card */}
+        <section className="about-section section-padding">
+          <div className="container">
+            <motion.h2
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition}
+            >
+              LE NOSTRE CATEGORIE
+            </motion.h2>
+            <motion.div
+              className="section-divider"
+              variants={scaleReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ transformOrigin: 'left center' }}
+            />
+            {CATEGORIES.map((cat) => (
+              <motion.div
+                key={cat.name}
+                className="settore-category-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={revealTransition}
+              >
+                <div className="settore-category-header">
+                  <div className="settore-category-name-wrap">
+                    <h3 className="settore-category-name">{cat.name}</h3>
+                    <span className="settore-category-age">{cat.ageRange}</span>
+                  </div>
+                  <div className="settore-category-schedule">
+                    <span className="settore-schedule-label">FREQUENZA</span>
+                    <span className="settore-schedule-value">{cat.schedule}</span>
+                  </div>
+                </div>
+                <p className="settore-category-desc">{cat.description}</p>
+                {cat.groups && (
+                  <div className="settore-groups">
+                    {cat.groups.map((g) => (
+                      <span key={g} className="settore-group-pill">{g}</span>
+                    ))}
+                  </div>
+                )}
+                <MotionLink
+                  to="/contatti"
+                  className="btn-primary settore-category-cta"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  INFORMAZIONI E ISCRIZIONI
+                </MotionLink>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Coaches */}
+        <section className="teams-section section-padding">
+          <div className="container">
+            <motion.h2
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition}
+            >
+              STAFF TECNICO
+            </motion.h2>
+            <motion.div
+              className="section-divider"
+              variants={scaleReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ transformOrigin: 'left center' }}
+            />
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {COACHES.map((coach, index) => (
+                <motion.div
+                  key={coach.name}
+                  className={`card p-6 text-center${index === 0 ? ' settore-coach-featured' : ''}`}
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                  style={{ willChange: 'transform' }}
+                >
+                  <div className="mb-4 rounded-full overflow-hidden w-40 h-40 mx-auto">
+                    <img
+                      src={coach.image}
+                      alt={coach.name}
+                      className="w-full h-full object-cover"
+                      width={160}
+                      height={160}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-hyria-secondary text-center">{coach.name}</h3>
+                  <p className="text-sm font-medium text-center text-white/60">{coach.role}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* FAQ — numbered rows */}
+        <section className="features-section section-padding">
+          <div className="container">
+            <motion.h2
+              className="section-title"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition}
+            >
+              DOMANDE FREQUENTI
+            </motion.h2>
+            <motion.div
+              className="section-divider"
+              variants={scaleReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ transformOrigin: 'left center' }}
+            />
+            <motion.div
+              className="settore-faq-list"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {FAQS.map((faq, index) => (
+                <motion.div key={index} className="settore-faq-row" variants={fadeInUp}>
+                  <span className="settore-faq-num">0{index + 1}</span>
+                  <div className="settore-faq-body">
+                    <h3 className="settore-faq-question">{faq.question}</h3>
+                    <p className="settore-faq-answer">{faq.answer}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* CTA */}
         <section className="cta-section">
           <div className="container">
             <motion.div
@@ -307,24 +407,23 @@ const SettoreGiovanile: React.FC = () => {
               className="cta-content"
             >
               <h2 className="cta-title">
-                Unisciti al nostro <span className="gradient-text">minibasket</span>
+                Porta il tuo bambino a <span className="settore-cta-accent">giocare con noi</span>
               </h2>
               <p className="cta-description">
-                Scopri il divertimento e i benefici di giocare a basket con Hyria
+                3 allenamenti di prova gratuiti — nessun impegno, solo divertimento
               </p>
-              <div className="flex flex-wrap gap-4 justify-center mt-6">
-                <motion.button
-                  className="btn-secondary"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.location.href = '/contatti'}
-                >
-                  PRENOTA UNA PROVA GRATUITA
-                </motion.button>
-              </div>
+              <MotionLink
+                to="/contatti"
+                className="btn-primary"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                PRENOTA UNA PROVA GRATUITA
+              </MotionLink>
             </motion.div>
           </div>
         </section>
+
       </div>
     </>
   );
