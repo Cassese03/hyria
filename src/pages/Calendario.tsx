@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import PageHead from '../components/PageHead';
 import PageHero from '../components/PageHero';
-import { fadeInUp, staggerContainer, revealTransition } from '../utils/animations';
+import { fadeInUp } from '../utils/animations';
 
 const Calendario = () => {
   const [classifica, setClassifica] = useState<any[]>([]);
-  const [risultati, setRisultati] = useState<any[]>([]);
-  const [prossimiMatch, setProssimiMatch] = useState<any[]>([]);
+  //const [risultati, setRisultati] = useState<any[]>([]);
+  //const [prossimiMatch, setProssimiMatch] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   // LINK AGGIORNATI
