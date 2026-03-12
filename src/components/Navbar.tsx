@@ -19,6 +19,7 @@ const Navbar = () => {
       ],
     },
     { name: 'minibasket', href: '/settore-giovanile' },
+    { name: 'calendario', href: '/calendario' },
     // { name: 'STORE', href: '/store' },
     { name: 'SPONSOR', href: '/sponsor' }, 
     { name: 'CONTATTI', href: '/contatti' },

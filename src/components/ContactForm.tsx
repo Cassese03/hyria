@@ -1,5 +1,6 @@
 import React, { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { shakeVariant } from "../utils/animations";
 
 interface FormData {
   name: string;
@@ -28,6 +29,10 @@ const ContactForm: React.FC = () => {
 
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
+
+  // Validation shake state
+  const [isShaking, setIsShaking] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
   // Handle input changes
   const handleChange = (
@@ -70,14 +75,13 @@ const ContactForm: React.FC = () => {
       !formData.reason ||
       !formData.message
     ) {
-      setStatus({
-        submitted: true,
-        success: false,
-        message: "Per favore, compila tutti i campi obbligatori.",
-      });
+      setValidationError("Per favore, compila tutti i campi obbligatori.");
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 600);
       setIsLoading(false);
       return;
     }
+    setValidationError("");
 
     try {
       
@@ -133,9 +137,10 @@ const ContactForm: React.FC = () => {
         {!status.submitted ? (
           <motion.form
             key="form"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            variants={shakeVariant}
+            initial="idle"
+            animate={isShaking ? "shake" : "idle"}
+            exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
             className="contact-form bg-[#600000] p-4 md:p-6 rounded-lg flex flex-col gap-4 w-full mx-auto"
             style={{
               boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
@@ -310,6 +315,16 @@ const ContactForm: React.FC = () => {
             <p className="text-center text-xs text-[#ffd699] mt-2">
               * Campi obbligatori - Ti risponderemo entro 24 ore
             </p>
+            {validationError && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center text-sm font-semibold mt-1"
+                style={{ color: '#f87171' }}
+              >
+                {validationError}
+              </motion.p>
+            )}
           </motion.form>
         ) : (
           <motion.div

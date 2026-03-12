@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import PageHead from '../components/PageHead';
+import { heroContainer, heroItem, staggerContainer, fadeInUp, fadeInLeft, scaleReveal, revealTransition } from '../utils/animations';
 
 const About: React.FC = () => {
   const chisianoStructuredData = {
@@ -33,15 +34,19 @@ const About: React.FC = () => {
         </div>
         <div className="hero-content">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            variants={heroContainer}
+            initial="hidden"
+            animate="visible"
             className="hero-text-container"
           >
-            <h1 className="hero-title">
+            <motion.h1 variants={heroItem} className="hero-title">
               CHI <span className="gradient-text">SIAMO</span>
-            </h1>
-            <div className="section-divider"></div>
+            </motion.h1>
+            <motion.div
+              variants={scaleReveal}
+              className="section-divider"
+              style={{ transformOrigin: 'center' }}
+            />
           </motion.div>
         </div>
       </section>
@@ -54,18 +59,26 @@ const About: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={revealTransition}
               style={{ color: '#d96c00', }}
           >
             LA NOSTRA STORIA
           </motion.h2>
-          <div className="section-divider"></div>
+          <motion.div
+            className="section-divider"
+            variants={scaleReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            style={{ transformOrigin: 'left center' }}
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              variants={fadeInLeft}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
               className="text-white"
               style={{ color: 'white', }}
             >
@@ -91,20 +104,35 @@ const About: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={revealTransition}
           >
             I NOSTRI VALORI
           </motion.h2>
-          <div className="section-divider"></div>
+          <motion.div
+            className="section-divider"
+            variants={scaleReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            style={{ transformOrigin: 'left center' }}
+          />
           <motion.p 
             className="section-subtitle"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ ...revealTransition, delay: 0.12 }}
           >
             Alla base del nostro progetto ci sono valori fondamentali che guidano ogni nostra azione
           </motion.p>
 
-          <div className="features-grid">
+          <motion.div
+            className="features-grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {[
               {
                 title: "Passione",
@@ -126,21 +154,19 @@ const About: React.FC = () => {
                 description: "Investiamo nello sviluppo tecnico e umano di ogni atleta, a qualsiasi livello",
                 icon: "📈"
               }
-            ].map((item, index) => (
+            ].map((item) => (
               <motion.div 
                 key={item.title}
                 className="feature-card"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
                 <div className="feature-icon text-4xl mb-4">{item.icon}</div>
                 <h3 className="feature-title">{item.title}</h3>
                 <p className="feature-description">{item.description}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -152,20 +178,35 @@ const About: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={revealTransition}
           >
             IL NOSTRO STAFF
           </motion.h2>
-          <div className="section-divider"></div>
+          <motion.div
+            className="section-divider"
+            variants={scaleReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            style={{ transformOrigin: 'left center' }}
+          />
           <motion.p 
             className="section-subtitle"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ ...revealTransition, delay: 0.12 }}
           >
             La forza di Hyria Basket sta nelle persone che ogni giorno contribuiscono al progetto
           </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {[
               { name: "Attilio De Sena", role: "Presidente", image: "/images/contact-hero.jpg" },
               { name: "Paolino Franzese", role: "Vice Presidente",image: "/images/contact-hero.jpg" },
@@ -175,14 +216,12 @@ const About: React.FC = () => {
               { name: "Agostino Esposito", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
               { name: "Giacomo Mascolo", role: "Socio Fondatore", image: "/images/contact-hero.jpg" },
 
-            ].map((member, index) => (
+            ].map((member) => (
               <motion.div
                 key={member.name}
                 className="card p-6 text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
                 <div className="mb-4 rounded-full overflow-hidden w-40 h-40 mx-auto">
                   <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
@@ -191,7 +230,7 @@ const About: React.FC = () => {
                 <h4 style={{color:'#0F0615',textAlign:'center'}}>{member.role}</h4>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -212,8 +251,8 @@ const About: React.FC = () => {
             </p>
             <motion.button
               className="btn-primary"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => window.location.href = '/contatti'}
             >
               CONTATTACI ORA

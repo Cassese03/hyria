@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import PageHead from '../components/PageHead';
+import { heroContainer, heroItem, staggerContainer, fadeInUp, revealTransition, scaleReveal } from '../utils/animations';
 
 const Home: React.FC = () => {
   const homeStructuredData = {
@@ -44,37 +45,37 @@ const Home: React.FC = () => {
           </div>
           <div className="hero-content px-4 sm:px-6">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              variants={heroContainer}
+              initial="hidden"
+              animate="visible"
               className="hero-text-container"
             >
-              <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl">
+              <motion.h1 variants={heroItem} className="hero-title text-4xl sm:text-5xl md:text-6xl">
                 HYRIA <span style={{color:'#d96c00'}}>BASKET</span>
-              </h1>
-              <p className="hero-description text-base md:text-lg">
+              </motion.h1>
+              <motion.p variants={heroItem} className="hero-description text-base md:text-lg">
                 Una squadra di basket giovane, nata dal progetto di giovani imprenditori 
                 convinti che un'atmosfera familiare e attenta al lato umano e allo spirito di squadra 
                 possa conciliarsi perfettamente con la tecnologia più avanzata e i giovani talenti del territorio.
-              </p>
-              <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
+              </motion.p>
+              <motion.div variants={heroItem} className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.button 
                   className="btn-primary w-full sm:w-auto"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={() => window.location.href = '/chi-siamo'}
                 >
                   SCOPRI DI PIÙ
                 </motion.button>
                 <motion.button 
                   className="btn-secondary w-full sm:w-auto"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={() => window.location.href = '/contatti'}
                 >
                   UNISCITI A NOI
                 </motion.button>
-              </div>
+              </motion.div>
             </motion.div>
             <motion.div 
               className="scroll-indicator"
@@ -148,26 +149,39 @@ const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={revealTransition}
             >
               SPORT E TECNOLOGIA
             </motion.h2>
-            <div className="section-divider"></div>
+            <motion.div
+              className="section-divider"
+              variants={scaleReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ transformOrigin: 'left center' }}
+            />
             <motion.h3 
               className="section-subtitle"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ ...revealTransition, delay: 0.12 }}
             >
               I NOSTRI 3 PILASTRI
             </motion.h3>
 
-            <div className="features-grid">
+            <motion.div
+              className="features-grid"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+            >
               <motion.div 
                 className="feature-card"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
                 <div className="feature-icon">
                   <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,10 +194,8 @@ const Home: React.FC = () => {
               
               <motion.div 
                 className="feature-card"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
                 <div className="feature-icon">
                   <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -196,10 +208,8 @@ const Home: React.FC = () => {
               
               <motion.div 
                 className="feature-card"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
               >
                 <div className="feature-icon">
                   <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -209,7 +219,7 @@ const Home: React.FC = () => {
                 <h3 className="feature-title">Sostenibilità</h3>
                 <p className="feature-description">Gestione trasparente e sostenibile per garantire un futuro solido al nostro club.</p>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -249,7 +259,7 @@ const Home: React.FC = () => {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ ...revealTransition, delay: index * 0.1 }}
                 >
                   <div className="team-image-container">
                     <img src={team.image} alt={team.name} className="team-image" />
@@ -282,7 +292,7 @@ const Home: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ ...revealTransition, delay: index * 0.1 }}
                 >
                   <div className="stat-value">{stat.value}</div>
                   <div className="stat-label">{stat.label}</div>
