@@ -103,7 +103,7 @@ const Sponsor: React.FC = () => {
       name: "Gold Sponsor",
       price: "Da €2.000/anno (esclusa IVA)",
       benefits: [
-        "Logo sulla parte frontale delle divise da gioco",
+        "Logo sulle divise da gioco",
         "Banner pubblicitario principale nel palazzetto",
         "Visibilità prioritaria sul sito web e social media",
         "Logo su borsone e maglie di allenamento/riscaldamento della squadra",
