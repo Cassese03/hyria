@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
+import { useCart } from '../contexts/CartContext';
+import type { CartItem } from '../contexts/CartContext';
 import '../styles/store.css'; // Importiamo il nuovo file CSS
 
 // Tipi per i prodotti
@@ -18,6 +21,9 @@ interface Product {
 }
 
 const Store: React.FC = () => {
+  const navigate = useNavigate();
+  const { addToCart: addToCartContext } = useCart();
+
   // Categorie di prodotti
   const categories = [
     { id: 'all', name: 'Tutti i Prodotti' },
@@ -119,8 +125,7 @@ const Store: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<{id: number, quantity: number}[]>([]);
-  const [] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string>('M');
   
   // Filtraggio dei prodotti in base alla categoria selezionata e termine di ricerca
   const filteredProducts = products
@@ -133,31 +138,18 @@ const Store: React.FC = () => {
   
   // Prodotti in evidenza
   const featuredProducts = products.filter(product => product.isFeatured);
-  
-  // Aggiungi al carrello
-  const addToCart = (productId: number) => {
-    const existingItem = cartItems.find(item => item.id === productId);
-    
-    if (existingItem) {
-      setCartItems(
-        cartItems.map(item => 
-          item.id === productId 
-            ? { ...item, quantity: item.quantity + 1 } 
-            : item
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { id: productId, quantity: 1 }]);
-    }
-    
-    // Effetto visivo di conferma
-    const productElement = document.getElementById(`product-${productId}`);
-    if (productElement) {
-      productElement.classList.add('added-to-cart');
-      setTimeout(() => {
-        productElement.classList.remove('added-to-cart');
-      }, 1000);
-    }
+
+  // Funzione per aggiungere al carrello
+  const handleAddToCart = (product: Product, size?: string) => {
+    const cartItem: CartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.isOnSale ? product.price * (1 - (product.discount || 0) / 100) : product.price,
+      image: product.image,
+      quantity: 1,
+      size: size || selectedSize
+    };
+    addToCartContext(cartItem);
   };
 
   // Funzione per l'apertura del modal con dettagli prodotto
@@ -185,7 +177,7 @@ const Store: React.FC = () => {
   return (
     <div className="store-page">
       {/* Hero Section con sfondo animato */}
-      <div className="contact-hero">
+      <div className="store-hero">
         <div className="store-hero-content">
           <motion.h1 
             className="store-hero-title text-white"
@@ -237,11 +229,11 @@ const Store: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {featuredProducts.map((product, index) => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 product={product}
                 onClick={() => openProductModal(product)}
-                onAddToCart={addToCart}
+                onAddToCart={handleAddToCart}
                 delay={index * 0.1}
               />
             ))}
@@ -318,11 +310,11 @@ const Store: React.FC = () => {
           {/* Lista Prodotti con layout migliorato */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product, index) => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 product={product}
                 onClick={() => openProductModal(product)}
-                onAddToCart={addToCart}
+                onAddToCart={handleAddToCart}
                 delay={index * 0.05}
               />
             ))}
@@ -527,22 +519,28 @@ const Store: React.FC = () => {
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Taglie disponibili</h3>
                   <div className="flex space-x-2">
                     {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-                      <button 
+                      <button
                         key={size}
-                        className="w-10 h-10 border rounded-md flex items-center justify-center text-sm font-medium hover:border-hyria-secondary hover:text-hyria-secondary transition-colors"
+                        onClick={() => setSelectedSize(size)}
+                        className={`w-10 h-10 border rounded-md flex items-center justify-center text-sm font-medium transition-colors ${
+                          selectedSize === size
+                            ? 'border-hyria-secondary bg-hyria-secondary text-white'
+                            : 'border-gray-300 hover:border-hyria-secondary hover:text-hyria-secondary'
+                        }`}
                       >
                         {size}
                       </button>
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Pulsante acquista */}
-                <button 
+                <button
                   className="buy-button w-full py-3 text-lg"
                   onClick={() => {
-                    addToCart(selectedProduct.id);
+                    handleAddToCart(selectedProduct, selectedSize);
                     closeProductModal();
+                    navigate('/carrello');
                   }}
                 >
                   AGGIUNGI AL CARRELLO
@@ -573,14 +571,16 @@ const Store: React.FC = () => {
 };
 
 // Componente ProductCard con design migliorato
-const ProductCard: React.FC<{ 
+const ProductCard: React.FC<{
   product: Product,
   onClick: () => void,
-  onAddToCart: (id: number) => void,
+  onAddToCart: (product: Product, size?: string) => void,
   delay?: number
 }> = ({ product, onClick, onAddToCart, delay = 0 }) => {
+  const navigate = useNavigate();
+
   return (
-    <motion.div 
+    <motion.div
       id={`product-${product.id}`}
       className="product-card"
       initial={{ opacity: 0, y: 20 }}
@@ -589,13 +589,13 @@ const ProductCard: React.FC<{
       transition={{ duration: 0.5, delay }}
     >
       <div className="product-image-container" onClick={onClick}>
-        <img 
-          src={product.image} 
-          alt={product.name} 
+        <img
+          src={product.image}
+          alt={product.name}
           className="product-image"
         />
         <div className="overlay"></div>
-        
+
         {/* Badge per prodotti nuovi o in saldo */}
         {product.isNew && (
           <div className="product-badge new">Nuovo</div>
@@ -604,7 +604,7 @@ const ProductCard: React.FC<{
           <div className="product-badge sale">-{product.discount}%</div>
         )}
       </div>
-      
+
       <div className="product-details">
         <h3 className="product-title" onClick={onClick}>{product.name}</h3>
         <div className="flex justify-between items-center mt-2">
@@ -618,12 +618,14 @@ const ProductCard: React.FC<{
               <span className="current-price">€{product.price.toFixed(2)}</span>
             )}
           </div>
-          
-          <button 
+
+          <button
+            type="button"
             className="buy-button"
             onClick={(e) => {
               e.stopPropagation();
-              onAddToCart(product.id);
+              onAddToCart(product);
+              navigate('/carrello');
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
