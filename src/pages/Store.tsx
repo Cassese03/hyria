@@ -13,6 +13,7 @@ interface Product {
   price: number;
   image: string;
   category: string;
+  sizes: string[];
   description?: string;
   isFeatured?: boolean;
   isNew?: boolean;
@@ -41,6 +42,7 @@ const Store: React.FC = () => {
       price: 59.90,
       image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=500&h=350&fit=crop&q=80",
       category: "jersey",
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       description: "Maglia ufficiale Hyria Basket per le partite in casa della stagione 2023/24. Design esclusivo con tessuto traspirante.",
       isFeatured: true,
       isNew: true
@@ -49,8 +51,9 @@ const Store: React.FC = () => {
       id: 2,
       name: "Maglia Gara Away 2023/24",
       price: 59.90,
-      image: "https://images.unsplash.com/photo-1518065896235-a4c693a405e6?w=500&h=350&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1776179342972-875cbbcdd32f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "jersey",
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       description: "Maglia ufficiale da trasferta dell'Hyria Basket per la stagione 2023/24. Colori audaci e tessuto ultraleggero.",
       isFeatured: true
     },
@@ -58,8 +61,9 @@ const Store: React.FC = () => {
       id: 3,
       name: "Pantaloncini Gara Pro",
       price: 34.90,
-      image: "https://images.unsplash.com/photo-1562451855-631fd2718c1a?w=500&h=350&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1656645123173-f98a07459f49?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "jersey",
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       description: "Pantaloncini ufficiali da gara con tecnologia Dry-Fit per mantenere il corpo asciutto durante l'attività sportiva.",
       isFeatured: true
     },
@@ -69,6 +73,7 @@ const Store: React.FC = () => {
       price: 29.90,
       image: "https://images.unsplash.com/photo-1581952976147-5a2d15560349?w=500&h=350&fit=crop&q=80",
       category: "training",
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       description: "T-shirt tecnica per gli allenamenti quotidiani. Tessuto anti-sudore e tecnologia anti-odore.",
       isFeatured: false
     },
@@ -78,6 +83,7 @@ const Store: React.FC = () => {
       price: 49.90,
       image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=350&fit=crop&q=80",
       category: "leisure",
+      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       description: "Felpa con cappuccio e logo Hyria Basket ricamato. Perfetta per il pre e post allenamento.",
       isFeatured: true,
       isOnSale: true,
@@ -89,6 +95,7 @@ const Store: React.FC = () => {
       price: 39.90,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=350&fit=crop&q=80",
       category: "accessories",
+      sizes: ['One Size'],
       description: "Zaino ufficiale con scomparto dedicato per la palla e spazio per le scarpe. Design ergonomico e materiali premium.",
       isFeatured: false
     },
@@ -98,6 +105,7 @@ const Store: React.FC = () => {
       price: 24.90,
       image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=500&h=350&fit=crop&q=80",
       category: "accessories",
+      sizes: ['One Size'],
       description: "Pallone da basket ufficiale utilizzato durante le partite casalinghe. Grip ottimizzato per prestazioni superiori.",
       isNew: true
     },
@@ -107,6 +115,7 @@ const Store: React.FC = () => {
       price: 29.90,
       image: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=500&h=350&fit=crop&q=80",
       category: "accessories",
+      sizes: ['One Size'],
       description: "Cappellino ufficiale New Era con logo Hyria Basket ricamato. Design esclusivo e vestibilità perfetta.",
       isFeatured: true
     }
@@ -154,6 +163,7 @@ const Store: React.FC = () => {
 
   // Funzione per l'apertura del modal con dettagli prodotto
   const openProductModal = (product: Product) => {
+    console.log('Opening modal for product:', product.name);
     setSelectedProduct(product);
     setIsModalOpen(true);
     // Blocca lo scroll del body
@@ -227,7 +237,7 @@ const Store: React.FC = () => {
             subtitle="I prodotti più popolari del nostro store"
           />
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          <div className="products-grid" style={{marginTop: '3rem'}}>
             {featuredProducts.map((product, index) => (
               <ProductCard
                 key={product.id}
@@ -249,9 +259,9 @@ const Store: React.FC = () => {
             subtitle="Esplora la nostra collezione per categoria"
           />
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          <div className="categories-grid" style={{marginTop: '3rem'}}>
             {Object.entries(categoryIcons).map(([key, icon], index) => (
-              <motion.div 
+              <motion.div
                 key={key}
                 className="category-box"
                 initial={{ opacity: 0, y: 20 }}
@@ -308,7 +318,7 @@ const Store: React.FC = () => {
           </div>
           
           {/* Lista Prodotti con layout migliorato */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="products-grid" style={{marginTop: '2rem'}}>
             {filteredProducts.map((product, index) => (
               <ProductCard
                 key={product.id}
@@ -360,7 +370,7 @@ const Store: React.FC = () => {
             subtitle="Tutto ciò che devi sapere per acquistare"
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div className="how-it-works-grid" style={{marginTop: '3rem'}}>
             <motion.div
               className="how-it-works-card"
               initial={{ opacity: 0, y: 20 }}
@@ -398,12 +408,13 @@ const Store: React.FC = () => {
           </div>
           
           <motion.div 
-            className="mt-12 glass-card p-6 rounded-lg"
+            className="mt-12 p-6 rounded-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-          >
+          > 
+          <br></br>
             <h3 className="text-xl font-bold mb-4 text-white">Informazioni Importanti</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -443,16 +454,8 @@ const Store: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <motion.a
-                href="#all-products"
-                className="buy-button min-w-[180px] py-3"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                ESPLORA IL CATALOGO
-              </motion.a>
-              <motion.a
                 href="/contatti"
-                className="bg-transparent border-2 border-hyria-secondary text-white rounded-md px-6 py-3 font-semibold min-w-[180px] inline-flex justify-center hover:bg-hyria-secondary/20 transition-all"
+                className="buy-button min-w-[180px] py-3"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -465,12 +468,30 @@ const Store: React.FC = () => {
 
       {/* Modal Prodotto */}
       {isModalOpen && selectedProduct && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4 py-6">
-          <motion.div 
-            className="bg-white rounded-lg overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '1rem'
+        }}>
+          <div
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '12px',
+              maxWidth: '900px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              zIndex: 10000,
+              position: 'relative'
+            }}
           >
             {/* Bottone per chiudere */}
             <button 
@@ -517,12 +538,12 @@ const Store: React.FC = () => {
                 {/* Taglie */}
                 <div className="mb-6">
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Taglie disponibili</h3>
-                  <div className="flex space-x-2">
-                    {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                  <div className="flex space-x-2 flex-wrap">
+                    {selectedProduct.sizes.map((size) => (
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`w-10 h-10 border rounded-md flex items-center justify-center text-sm font-medium transition-colors ${
+                        className={`px-3 py-2 border rounded-md flex items-center justify-center text-sm font-medium transition-colors ${
                           selectedSize === size
                             ? 'border-hyria-secondary bg-hyria-secondary text-white'
                             : 'border-gray-300 hover:border-hyria-secondary hover:text-hyria-secondary'
@@ -563,7 +584,7 @@ const Store: React.FC = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
     </div>
@@ -624,14 +645,13 @@ const ProductCard: React.FC<{
             className="buy-button"
             onClick={(e) => {
               e.stopPropagation();
-              onAddToCart(product);
-              navigate('/carrello');
+              onClick();
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-            Acquista
+            Aggiungi al Carrello
           </button>
         </div>
       </div>

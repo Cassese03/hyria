@@ -92,8 +92,15 @@ const Cart: React.FC = () => {
                           <button
                             className="qty-btn"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            title={item.quantity === 1 ? "Rimuovi dal carrello" : "Diminuisci quantità"}
                           >
-                            −
+                            {item.quantity === 1 ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="white">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            ) : (
+                              '−'
+                            )}
                           </button>
                           <input
                             type="number"
@@ -127,7 +134,7 @@ const Cart: React.FC = () => {
                     ))}
                   </div>
 
-                  <motion.div
+                  {/* <motion.div
                     className="mt-8 text-right"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -139,7 +146,7 @@ const Cart: React.FC = () => {
                     >
                       Svuota carrello
                     </button>
-                  </motion.div>
+                  </motion.div> */}
                 </div>
 
                 {/* Riepilogo Ordine */}
@@ -162,10 +169,9 @@ const Cart: React.FC = () => {
                     <div className="summary-row">
                       <span className="text-gray-300">
                         Spedizione:
-                        {shippingCost === 0 && <span className="text-hyria-secondary ml-2 text-xs">GRATIS!</span>}
                       </span>
                       <span className={shippingCost === 0 ? "text-hyria-secondary font-bold" : "text-white font-bold"}>
-                        €{shippingCost.toFixed(2)}
+                         Da concordare con lo staff! {/*€{shippingCost.toFixed(2)} */}
                       </span>
                     </div>
 
@@ -180,18 +186,26 @@ const Cart: React.FC = () => {
                       <span className="text-2xl font-black text-hyria-secondary">€{finalTotal.toFixed(2)}</span>
                     </div>
 
-                    <motion.button
-                      className="buy-button w-full mt-6 py-3 text-lg"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => alert('Checkout non ancora disponibile. Presto!')}
-                    >
-                      PROCEDI AL CHECKOUT
-                    </motion.button>
-
-                    <Link to="/store" className="block text-center text-gray-400 hover:text-hyria-secondary transition-colors mt-4 text-sm">
-                      Continua lo shopping
-                    </Link>
+                    <div style={{display:'flex','justifyContent':'space-between'}}>
+                     <motion.button
+                        className="buy-button w-full mt-6 py-3 text-lg"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Link to="/store" className="block text-center text-gray-400 hover:text-hyria-secondary transition-colors mt-4 text-sm">
+                          Continua lo shopping
+                        </Link>
+                      </motion.button>
+  
+                      <motion.button
+                        className="buy-button w-full mt-6 py-3 text-lg"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => alert('Checkout non ancora disponibile. Presto!')}
+                      >
+                        PROCEDI AL CHECKOUT
+                      </motion.button>
+                    </div>
                   </motion.div>
 
                   {/* Info Spedizione */}
@@ -200,6 +214,7 @@ const Cart: React.FC = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
+                    style={{margin: '1rem'}}
                   >
                     <h4 className="font-bold text-white mb-3">Informazioni Importanti</h4>
                     <ul className="space-y-2 text-sm text-gray-300">
