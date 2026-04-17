@@ -474,7 +474,7 @@ const Store: React.FC = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.9)',
+          backgroundColor: 'rgba(0,0,0,0.92)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -483,104 +483,271 @@ const Store: React.FC = () => {
         }}>
           <div
             style={{
-              backgroundColor: 'white',
-              borderRadius: '12px',
+              backgroundColor: '#5e0303',
+              borderRadius: '16px',
               maxWidth: '900px',
               width: '100%',
               maxHeight: '90vh',
               overflowY: 'auto',
               zIndex: 10000,
-              position: 'relative'
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'row',
+              overflow: 'hidden',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
             }}
           >
-            {/* Bottone per chiudere */}
-            <button 
-              className="absolute top-4 right-4 bg-hyria-primary rounded-full p-2 text-white z-10"
+            {/* Bottone per chiudere - FISSO */}
+            <button
+              className="absolute top-4 right-4 rounded-full p-2 text-white z-50"
               onClick={closeProductModal}
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                border: 'none',
+                cursor: 'pointer',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backdropFilter: 'blur(10px)'
+              }}
+              title="Chiudi"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
-            <div className="flex flex-col md:flex-row">
-              {/* Immagine prodotto */}
-              <div className="md:w-1/2">
-                <img 
-                  src={selectedProduct.image} 
-                  alt={selectedProduct.name} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Dettagli prodotto */}
-              <div className="md:w-1/2 p-6">
-                {selectedProduct.isNew && (
-                  <span className="inline-block bg-hyria-secondary text-white text-xs px-3 py-1 rounded-full mb-4">
-                    Nuovo
+
+            {/* Immagine - SINISTRA */}
+            <div style={{
+              flex: '0 0 40%',
+              backgroundColor: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              minHeight: '400px'
+            }}>
+              <img
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  borderRadius: '12px'
+                }}
+              />
+            </div>
+
+            {/* Dettagli - DESTRA */}
+            <div style={{
+              flex: '1',
+              padding: '3rem 2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              color: 'white',
+              overflowY: 'auto'
+            }}>
+              {selectedProduct.isNew && (
+                <span style={{
+                  display: 'inline-block',
+                  backgroundColor: '#d96c00',
+                  color: 'white',
+                  fontSize: '0.75rem',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '20px',
+                  marginBottom: '1rem',
+                  width: 'fit-content',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}>
+                  Nuovo
+                </span>
+              )}
+
+              <h2 style={{
+                fontSize: '2rem',
+                fontWeight: '900',
+                marginBottom: '1rem',
+                fontFamily: 'Arvo, serif',
+                lineHeight: '1.2'
+              }}>
+                {selectedProduct.name}
+              </h2>
+
+              <p style={{
+                fontSize: '1rem',
+                color: 'rgba(255,255,255,0.8)',
+                marginBottom: '2rem',
+                lineHeight: '1.6'
+              }}>
+                {selectedProduct.description}
+              </p>
+
+              {/* Prezzo */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '2rem',
+                paddingBottom: '2rem',
+                borderBottom: '1px solid rgba(255,255,255,0.2)'
+              }}>
+                {selectedProduct.isOnSale ? (
+                  <>
+                    <span style={{
+                      fontSize: '2rem',
+                      fontWeight: '900',
+                      color: '#d96c00'
+                    }}>
+                      €{(selectedProduct.price * (1 - (selectedProduct.discount || 0) / 100)).toFixed(2)}
+                    </span>
+                    <span style={{
+                      fontSize: '1rem',
+                      textDecoration: 'line-through',
+                      color: 'rgba(255,255,255,0.5)'
+                    }}>
+                      €{selectedProduct.price.toFixed(2)}
+                    </span>
+                    <span style={{
+                      backgroundColor: '#ef4444',
+                      color: 'white',
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '4px',
+                      fontSize: '0.875rem',
+                      fontWeight: 'bold'
+                    }}>
+                      -{selectedProduct.discount}%
+                    </span>
+                  </>
+                ) : (
+                  <span style={{
+                    fontSize: '2rem',
+                    fontWeight: '900',
+                    color: '#d96c00'
+                  }}>
+                    €{selectedProduct.price.toFixed(2)}
                   </span>
                 )}
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">{selectedProduct.name}</h2>
-                <p className="text-gray-600 mb-4">{selectedProduct.description}</p>
-                
-                <div className="flex items-center mb-6">
-                  {selectedProduct.isOnSale ? (
-                    <>
-                      <span className="text-2xl font-bold text-gray-800">€{(selectedProduct.price * (1 - (selectedProduct.discount || 0) / 100)).toFixed(2)}</span>
-                      <span className="text-sm line-through text-gray-500 ml-2">€{selectedProduct.price.toFixed(2)}</span>
-                      <span className="ml-2 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">-{selectedProduct.discount}%</span>
-                    </>
-                  ) : (
-                    <span className="text-2xl font-bold text-gray-800">€{selectedProduct.price.toFixed(2)}</span>
-                  )}
-                </div>
-                
-                {/* Taglie */}
-                <div className="mb-6">
-                  <h3 className="text-sm font-medium text-gray-700 mb-2">Taglie disponibili</h3>
-                  <div className="flex space-x-2 flex-wrap">
-                    {selectedProduct.sizes.map((size) => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`px-3 py-2 border rounded-md flex items-center justify-center text-sm font-medium transition-colors ${
-                          selectedSize === size
-                            ? 'border-hyria-secondary bg-hyria-secondary text-white'
-                            : 'border-gray-300 hover:border-hyria-secondary hover:text-hyria-secondary'
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              </div>
 
-                {/* Pulsante acquista */}
-                <button
-                  className="buy-button w-full py-3 text-lg"
-                  onClick={() => {
-                    handleAddToCart(selectedProduct, selectedSize);
-                    closeProductModal();
-                    navigate('/carrello');
-                  }}
-                >
-                  AGGIUNGI AL CARRELLO
-                </button>
-                
-                {/* Info aggiuntive */}
-                <div className="mt-8 space-y-3">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="h-5 w-5 text-hyria-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Disponibile
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="h-5 w-5 text-hyria-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                    </svg>
-                    Consegna in 3-5 giorni lavorativi
-                  </div>
+              {/* Taglie */}
+              <div style={{marginBottom: '2rem'}}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  color: '#d96c00'
+                }}>
+                  Scegli Taglia
+                </h3>
+                <div style={{
+                  display: 'flex',
+                  gap: '0.75rem',
+                  flexWrap: 'wrap'
+                }}>
+                  {selectedProduct.sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      style={{
+                        padding: '0.75rem 1.25rem',
+                        border: selectedSize === size ? 'none' : '2px solid rgba(255,255,255,0.3)',
+                        backgroundColor: selectedSize === size ? '#d96c00' : 'transparent',
+                        color: 'white',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedSize !== size) {
+                          e.currentTarget.style.borderColor = '#d96c00';
+                          e.currentTarget.style.backgroundColor = 'rgba(217, 108, 0, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedSize !== size) {
+                          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }
+                      }}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pulsante acquista */}
+              <button
+                onClick={() => {
+                  handleAddToCart(selectedProduct, selectedSize);
+                  closeProductModal();
+                  navigate('/carrello');
+                }}
+                style={{
+                  backgroundColor: '#d96c00',
+                  color: 'white',
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  cursor: 'pointer',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  marginBottom: '1rem',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(217, 108, 0, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#c9620a';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(217, 108, 0, 0.5)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#d96c00';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(217, 108, 0, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                Aggiungi al Carrello
+              </button>
+
+              {/* Info spedizione */}
+              <div style={{
+                backgroundColor: 'rgba(255,255,255,0.05)',
+                borderLeft: '4px solid #d96c00',
+                padding: '1rem',
+                borderRadius: '8px',
+                marginTop: 'auto'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                  fontSize: '0.875rem'
+                }}>
+                  <span style={{color: '#d96c00'}}>✓</span>
+                  <span>Disponibile</span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  fontSize: '0.875rem'
+                }}>
+                  <span style={{color: '#d96c00'}}>✓</span>
+                  <span>Consegna 3-5 giorni</span>
                 </div>
               </div>
             </div>
