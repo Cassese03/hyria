@@ -207,6 +207,19 @@ const Store: React.FC = () => {
     };
   }, []);
 
+  // Forzare dark mode sulla pagina dello store
+  useEffect(() => {
+    document.documentElement.classList.add("dark-mode-forced");
+    document.body.style.backgroundColor = "#5e0303";
+    document.body.style.color = "#ffffff";
+
+    return () => {
+      document.documentElement.classList.remove("dark-mode-forced");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
+    };
+  }, []);
+
   return (
     <div className="store-page">
       {/* Hero Section con sfondo animato */}
@@ -564,41 +577,59 @@ const Store: React.FC = () => {
             bottom: 0,
             backgroundColor: "rgba(0,0,0,0.92)",
             display: "flex",
-            alignItems: "center",
+            alignItems: window.innerWidth < 768 ? "flex-end" : "center",
             justifyContent: "center",
             zIndex: 9999,
-            padding: "1rem",
+            padding: window.innerWidth < 768 ? "0" : "1rem",
           }}
         >
-          <div
+          <motion.div
+            initial={
+              window.innerWidth < 768
+                ? { opacity: 0, y: window.innerHeight }
+                : { opacity: 0, scale: 0.9 }
+            }
+            animate={
+              window.innerWidth < 768
+                ? { opacity: 1, y: 0 }
+                : { opacity: 1, scale: 1 }
+            }
+            exit={
+              window.innerWidth < 768
+                ? { opacity: 0, y: window.innerHeight }
+                : { opacity: 0, scale: 0.9 }
+            }
+            transition={{ duration: 0.3, ease: "easeOut" }}
             style={{
               backgroundColor: "#5e0303",
-              borderRadius: "16px",
-              maxWidth: "900px",
-              width: "100%",
-              maxHeight: "90vh",
+              borderRadius: window.innerWidth < 768 ? "16px 16px 0 0" : "16px",
+              maxWidth: window.innerWidth < 768 ? "100%" : "900px",
+              width:
+                window.innerWidth < 768 ? "100vw" : "100%",
+              maxHeight: window.innerWidth < 768 ? "85vh" : "90vh",
               overflowY: "auto",
               zIndex: 10000,
               position: "relative",
               display: "flex",
-              flexDirection: "row",
+              flexDirection: window.innerWidth < 768 ? "column" : "row",
               overflow: "hidden",
               boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
             }}
           >
             {/* Bottone per chiudere - FISSO */}
-            
 
-            {/* Immagine - SINISTRA */}
+
+            {/* Immagine - SINISTRA (desktop) / TOP (mobile) */}
             <div
               style={{
-                flex: "0 0 40%",
+                flex: window.innerWidth < 768 ? "0 0 auto" : "0 0 40%",
                 backgroundColor: "#000",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "2rem",
-                minHeight: "400px",
+                minHeight: window.innerWidth < 768 ? "200px" : "400px",
+                width: window.innerWidth < 768 ? "100%" : "auto",
               }}
             >
               <img
@@ -613,11 +644,11 @@ const Store: React.FC = () => {
               />
             </div>
 
-            {/* Dettagli - DESTRA */}
+            {/* Dettagli - DESTRA (desktop) / BOTTOM (mobile) */}
             <div
               style={{
                 flex: "1",
-                padding: "3rem 2rem",
+                padding: window.innerWidth < 768 ? "2rem 1.5rem" : "3rem 2rem",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-start",
@@ -894,7 +925,7 @@ const Store: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

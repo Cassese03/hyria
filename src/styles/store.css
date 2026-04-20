@@ -556,3 +556,56 @@
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.6);
 }
+
+/* Dark mode enforcement */
+:root.dark-mode-forced {
+  --color-primary: #5e0303;
+  --color-dark: #020617;
+  --color-secondary: #d96c00;
+  --color-tertiary: #ffffff;
+  --color-light: #f8fafc;
+}
+
+/* Store page dark mode */
+.store-page {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+}
+
+/* Responsive modal - Mobile bottom sheet */
+@media (max-width: 768px) {
+  /* Product details card per mobile */
+  .product-details {
+    background-color: #5e0303;
+    color: white;
+  }
+
+  .product-title {
+    color: white;
+  }
+
+  .product-title:hover {
+    color: var(--color-secondary);
+  }
+
+  .current-price {
+    color: var(--color-secondary);
+  }
+
+  .original-price {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Category buttons per mobile */
+  .category-button:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .category-button:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: none;
+  }
+}
