@@ -569,6 +569,7 @@ const Store: React.FC = () => {
       {/* Modal Prodotto */}
       {isModalOpen && selectedProduct && (
         <div
+          onClick={closeProductModal}
           style={{
             position: "fixed",
             top: 0,
@@ -584,6 +585,7 @@ const Store: React.FC = () => {
           }}
         >
           <motion.div
+            onClick={(e) => e.stopPropagation()}
             initial={
               window.innerWidth < 768
                 ? { opacity: 0, y: window.innerHeight }

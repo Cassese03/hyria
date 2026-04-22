@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
@@ -7,6 +7,18 @@ import PageHead from '../components/PageHead';
 
 const Cart: React.FC = () => {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice} = useCart();
+
+  useEffect(() => {
+    document.documentElement.classList.add("dark-mode-forced");
+    document.body.style.backgroundColor = "#5e0303";
+    document.body.style.color = "#ffffff";
+
+    return () => {
+      document.documentElement.classList.remove("dark-mode-forced");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
+    };
+  }, []);
 
   const itemCount = cartItems.length;
   const totalPrice = getTotalPrice();
@@ -205,19 +217,19 @@ const Cart: React.FC = () => {
                     transition={{ delay: 0.3 }}
                     style={{margin: '1rem'}}
                   >
-                    <h4 className="font-bold text-white mb-3">Informazioni Importanti</h4>
+                    <h4 className="font-bold text-white mb-3">Termini e Condizioni</h4>
                     <ul className="space-y-2 text-sm text-gray-300">
                       <li className="flex items-start gap-2">
                         <span className="text-hyria-secondary mt-1">✓</span>
-                        <span>Spedizione gratuita per ordini superiori a €50</span>
+                        <span> Ogni acquisto sul nostro sito sostiene direttamente la nostra ASD. I fondi raccolti non hanno scopo di lucro: confluiscono interamente nelle casse della società per finanziare progetti sportivi e promuovere i valori del basket nel sociale.</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-hyria-secondary mt-1">✓</span>
-                        <span>Consegna in 3-5 giorni lavorativi</span>
+                        <span> Consegna in 7-10 giorni lavorativi</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-hyria-secondary mt-1">✓</span>
-                        <span>Reso gratuito entro 14 giorni</span>
+                        <span> Offriamo rimborsi entro 14 giorni per resi o problemi con l'ordine. Grazie per supportare la nostra comunità!</span>
                       </li>
                     </ul>
                   </motion.div>
