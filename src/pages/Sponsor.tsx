@@ -33,7 +33,9 @@ const Sponsor: React.FC = () => {
       fit: "scale-down",
     },
   ];
-  const goldSponsors = [
+  // const goldSponsors = [];
+
+  const silverSponsors = [
     {
       name: "Hyria Consulting",
       image:
@@ -41,10 +43,17 @@ const Sponsor: React.FC = () => {
       website: "https://www.hyriaconsulting.it/",
       fit: "scale-down",
     },
+
   ];
 
-  const silverSponsors = [
-
+  const bronzeSponsors = [
+    {
+      name: "Citroen",
+      image:
+        "https://www.brandforum.it/wp-content/uploads/2019/03/40720191021024957.png",
+      website: "https://concessionari.citroen.it/officinaianniciello",
+      fit: "contain",
+    },
     {
       name: "DilamaBaby",
       image:
@@ -71,16 +80,6 @@ const Sponsor: React.FC = () => {
       name: "Studio Napolitano Associati",
       image: "/images/StudioNapolitano.jpg",
       website: "",
-      fit: "contain",
-    },
-  ];
-
-  const bronzeSponsors = [
-    {
-      name: "Citroen",
-      image:
-        "https://www.brandforum.it/wp-content/uploads/2019/03/40720191021024957.png",
-      website: "https://concessionari.citroen.it/officinaianniciello",
       fit: "contain",
     },
   ];
@@ -327,7 +326,7 @@ const Sponsor: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Gold Sponsors ────────────────────────────────────── */}
+        {/* ── Gold Sponsors ────────────────────────────────────── 
         <section className="features-section section-padding">
           <div className="container">
             <motion.h2
@@ -389,7 +388,7 @@ const Sponsor: React.FC = () => {
             </motion.div>
           </div>
         </section>
-
+ */}
         {/* ── Silver Sponsors ──────────────────────────────────── */}
         <section className="about-section section-padding">
           <div className="container">
