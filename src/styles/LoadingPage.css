@@ -1,85 +1,94 @@
 .loading-container {
-  position: fixed;
-  inset: 0;
-  background-color: #5e0303; /* Puoi anche usare un colore più soft */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  z-index: 9999; /* Copre tutto */
-  pointer-events: all; /* Blocca interazioni sotto */
+    position: fixed;
+    inset: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Nasconde i quadrati extra generati da React */
+    z-index: 9999;
+    pointer-events: all;
 }
 
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
+/* Impostazione base: perfetta per i dispositivi Mobile */
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    /* Su mobile i quadrati partono da 120px */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    align-content: start;
+    z-index: 1;
 }
 
-.logo {
-  width: 150px;
-  height: auto;
-  position: relative;
-  z-index: 10;
-  animation: logoPulse 2s infinite ease-in-out;
+/* Impostazione per Desktop e Tablet (schermi larghi almeno 768px) */
+@media (min-width: 768px) {
+    .grid-overlay {
+        /* Su desktop i quadrati diventano molto più grandi (es. 250px, puoi alzarlo ancora se vuoi) */
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    }
 }
 
-.white-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #5e0303;
-  pointer-events: all;
+/* Il singolo quadretto */
+.grid-cell {
+    background-color: #5e0303;
+
+    /* Inseriamo il logo dentro i quadrati */
+    background-image: url('/images/logo-hyria.png');
+    background-size: 60%;
+    /* Regola questo per fare il logo più grande o più piccolo nel quadrato */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Il trucco per avere il quadrato perfetto indipendentemente dallo schermo */
+    aspect-ratio: 1 / 1;
+    width: 100%;
+
+    /* Effetto 3D e dissolvenza quando sparisce */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
 }
 
-/* Entrata */
-.white-mask.slide-down {
-  animation: slideDown 0.01s forwards ease-in-out;
+/* Quando la pagina ha finito di caricare */
+.grid-cell.exit {
+    transform: scale(0) rotate(15deg);
+    /* Aggiunta una leggera rotazione per un effetto extra, rimuovila se non ti piace */
+    opacity: 0;
 }
 
-/* Uscita */
-.white-mask.slide-up {
-  animation: slideUp 0.99s forwards ease-in-out;
+/* Gestione del Logo Centrale (opzionale) */
+.logo-centrale {
+    width: 250px;
+    /* Più grande per staccare dai quadretti */
+    height: auto;
+    position: relative;
+    z-index: 10;
+    animation: logoPulse 2s infinite ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+    /* Aggiunta di una piccola ombra per farlo risaltare sopra la griglia */
+    filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
 }
 
-@keyframes slideDown {
-  0% {
-    top: 0%;
-  }
-  100% {
-    top: 0%;
-  }
-}
-
-@keyframes slideUp {
-  0% {
-    top: 0%;
-  }
-  100% {
-    top: -100%;
-  }
+.logo-centrale.fade-out {
+    opacity: 0;
 }
 
 @keyframes logoPulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
