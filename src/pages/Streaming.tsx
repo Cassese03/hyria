@@ -34,7 +34,7 @@ const LiveBasketMatch: React.FC<{ streamUrl: string }> = ({ streamUrl }) => {
   // Costruiamo l'URL per l'iframe. 
   // IMPORTANTE: Quando pubblicherai il sito, aggiungi il tuo dominio reale. 
   // Esempio: &parent=localhost&parent=www.iltuosito.it
-  const twitchSrc = `https://player.twitch.tv/?channel=${channelName}&parent=localhost`;
+  const twitchSrc = `https://player.twitch.tv/?channel=${channelName}&parent=hyriabasket.it&parent=www.hyriabasket.it&parent=localhost`;
 
   return (
     <div className="video-player-wrapper" style={{ position: "relative", paddingTop: "56.25%", backgroundColor: "#000" }}>
