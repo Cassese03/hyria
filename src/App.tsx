@@ -10,6 +10,7 @@ import './styles/responsive.css';
 import './styles/overflow-fix.css';
 import './styles/store.css';
 import './styles/cart.css';
+import './styles/streaming.css';
 import LoadingPage from './components/LoadingPage';
 
 const Teams = lazy(() => import('./pages/Teams'));
@@ -20,6 +21,7 @@ const Sponsor = lazy(() => import('./pages/Sponsor'));
 const Store = lazy(() => import('./pages/Store'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Calendario = lazy(() => import('./pages/Calendario'));
+const Streaming = lazy(() => import('./pages/Streaming'));
 
 const AppContent = () => {
   const location = useLocation();
@@ -64,6 +66,7 @@ const AppContent = () => {
               <Route path="/carrello" element={<Cart />} />
               <Route path="/calendario" element={<Calendario />} />
               <Route path="/contatti" element={<Contact />} />
+              <Route path="/streaming" element={<Streaming />} />
             </Routes>
           </Suspense>
         </main>

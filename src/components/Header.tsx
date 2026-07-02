@@ -47,13 +47,18 @@ const Header = () => {
       <div className="header-inner">
         <div className="header-logo" >
           <a href="/">
-            <img src="/images/logo-hyria.png" alt="Hyria Basket" style={{height:'60px'}}/>
+            <img src="/images/logo-hyria.png" alt="Hyria Basket" style={{ height: '60px' }} />
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="main-navigation desktop-nav">
           <ul className="nav-menu">
+            {/* <li className="menu-item">
+              <a href="/streaming" style={{ display: 'flex', alignItems: 'center' }}>
+                LIVE <span className="pulse-dot-red"></span>
+              </a>
+            </li> */}
             <li className="menu-item">
               <a href="/">HOME</a>
             </li>
@@ -82,7 +87,7 @@ const Header = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
           className={`mobile-menu-button ${isOpen ? 'is-open' : ''}`}
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Menu principale"
@@ -112,6 +117,11 @@ const Header = () => {
               </li>
               <li className="mobile-menu-item">
                 <a href="/calendario" onClick={() => setIsOpen(false)}>Classifica</a>
+              </li>
+              <li className="mobile-menu-item">
+                <a href="/streaming" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
+                  LIVE <span className="pulse-dot-red"></span>
+                </a>
               </li>
               {/* <li className="mobile-menu-item">
                 <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
