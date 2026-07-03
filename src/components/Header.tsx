@@ -47,7 +47,7 @@ const Header = () => {
       <div className="header-inner">
         <div className="header-logo" >
           <a href="/">
-            <img src="/images/logo-hyria.png" alt="Hyria Basket" style={{ height: '60px' }} />
+            <img src="/images/logo-hyria.png" alt="Hyria Basket" className="h-10 md:h-12 w-auto object-contain" />
           </a>
         </div>
 
