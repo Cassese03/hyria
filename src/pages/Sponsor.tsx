@@ -6,12 +6,12 @@ import { heroContainer, heroItem, staggerContainer, fadeInUp, fadeInLeft, scaleR
 
 const Sponsor: React.FC = () => {
   const mainSponsors = [
-    {
-      name: "InItaly",
-      image: "https://www.initaly.it/statics/website/logo.png",
-      website: "https://www.initaly.it/it",
-      fit: "contain",
-    },
+    // {
+    //   name: "InItaly",
+    //   image: "https://www.initaly.it/statics/website/logo.png",
+    //   website: "https://www.initaly.it/it",
+    //   fit: "contain",
+    // },
     {
       name: "McDonald's",
       image: "/images/McDonalds.jpg",
@@ -25,13 +25,13 @@ const Sponsor: React.FC = () => {
       website: "https://casamicaservizi.it/",
       fit: "scale-down",
     },
-    {
-      name: "I mobili",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2o2WCJrl0vaU4ae7_3IpyPOjCErE1HqAGNQ&s",
-      website: "https://www.imobiliarredamenti.it/",
-      fit: "scale-down",
-    },
+    // {
+    //   name: "I mobili",
+    //   image:
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2o2WCJrl0vaU4ae7_3IpyPOjCErE1HqAGNQ&s",
+    //   website: "https://www.imobiliarredamenti.it/",
+    //   fit: "scale-down",
+    // },
   ];
   // const goldSponsors = [];
 
@@ -47,13 +47,13 @@ const Sponsor: React.FC = () => {
   ];
 
   const bronzeSponsors = [
-    {
-      name: "Citroen",
-      image:
-        "https://www.brandforum.it/wp-content/uploads/2019/03/40720191021024957.png",
-      website: "https://concessionari.citroen.it/officinaianniciello",
-      fit: "contain",
-    },
+    // {
+    //   name: "Citroen",
+    //   image:
+    //     "https://www.brandforum.it/wp-content/uploads/2019/03/40720191021024957.png",
+    //   website: "https://concessionari.citroen.it/officinaianniciello",
+    //   fit: "contain",
+    // },
     {
       name: "DilamaBaby",
       image:
