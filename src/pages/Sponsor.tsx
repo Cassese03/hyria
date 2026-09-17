@@ -25,13 +25,13 @@ const Sponsor: React.FC = () => {
       website: "https://casamicaservizi.it/",
       fit: "scale-down",
     },
-    // {
-    //   name: "I mobili",
-    //   image:
-    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2o2WCJrl0vaU4ae7_3IpyPOjCErE1HqAGNQ&s",
-    //   website: "https://www.imobiliarredamenti.it/",
-    //   fit: "scale-down",
-    // },
+    {
+      name: "I mobili",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2o2WCJrl0vaU4ae7_3IpyPOjCErE1HqAGNQ&s",
+      website: "https://www.imobiliarredamenti.it/",
+      fit: "scale-down",
+    },
   ];
   // const goldSponsors = [];
 
