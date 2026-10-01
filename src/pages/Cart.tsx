@@ -1,29 +1,125 @@
-import React, { useEffect } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import SectionTitle from '../components/SectionTitle';
+import { TrashIcon, PlusIcon, MinusIcon, ShieldCheckIcon, TruckIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
+import type { CartItem } from '../contexts/CartContext';
 import PageHead from '../components/PageHead';
+import '../styles/cart.css';
+
+interface CartItemRowProps {
+  item: CartItem;
+  index: number;
+  onUpdateQuantity: (id: number, qty: number) => void;
+  onRemove: (id: number) => void;
+}
+
+const CartItemRow: React.FC<CartItemRowProps> = React.memo(
+  ({ item, index, onUpdateQuantity, onRemove }) => {
+    return (
+      <motion.div
+        className="cart-item-card"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.2) }}
+      >
+        <img
+          src={item.image}
+          alt={item.name}
+          className="cart-item-image"
+          loading="lazy"
+          decoding="async"
+        />
+
+        <div className="cart-item-info">
+          <h3 className="cart-item-name font-heading">{item.name}</h3>
+          {item.size && (
+            <p className="cart-item-size">
+              Taglia: <span className="font-semibold text-white">{item.size}</span>
+            </p>
+          )}
+          <p className="cart-item-unit-price">€{item.price.toFixed(2)}</p>
+        </div>
+
+        <div className="cart-item-quantity" role="group" aria-label={`Quantità per ${item.name}`}>
+          <button
+            type="button"
+            className="qty-btn"
+            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            aria-label={item.quantity === 1 ? `Rimuovi ${item.name} dal carrello` : `Diminuisci quantità per ${item.name}`}
+            title={item.quantity === 1 ? 'Rimuovi' : 'Diminuisci'}
+          >
+            {item.quantity === 1 ? (
+              <TrashIcon className="w-4 h-4 text-red-400" aria-hidden="true" />
+            ) : (
+              <MinusIcon className="w-3.5 h-3.5" aria-hidden="true" />
+            )}
+          </button>
+          <span className="qty-value" aria-label={`Quantità: ${item.quantity}`}>
+            {item.quantity}
+          </span>
+          <button
+            type="button"
+            className="qty-btn"
+            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+            aria-label={`Aumenta quantità per ${item.name}`}
+            title="Aumenta"
+          >
+            <PlusIcon className="w-3.5 h-3.5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="cart-item-total">
+          <p>€{(item.price * item.quantity).toFixed(2)}</p>
+        </div>
+
+        <button
+          type="button"
+          className="cart-item-remove"
+          onClick={() => onRemove(item.id)}
+          aria-label={`Rimuovi ${item.name} dal carrello`}
+          title="Rimuovi dal carrello"
+        >
+          <TrashIcon className="w-5 h-5 text-red-400 hover:text-red-300 transition-colors" aria-hidden="true" />
+        </button>
+      </motion.div>
+    );
+  }
+);
+
+CartItemRow.displayName = 'CartItemRow';
 
 const Cart: React.FC = () => {
-  const { cartItems, removeFromCart, updateQuantity, getTotalPrice} = useCart();
+  const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
 
-  useEffect(() => {
-    document.documentElement.classList.add("dark-mode-forced");
-    document.body.style.backgroundColor = "#5e0303";
-    document.body.style.color = "#ffffff";
-
-    return () => {
-      document.documentElement.classList.remove("dark-mode-forced");
-      document.body.style.backgroundColor = "";
-      document.body.style.color = "";
+  const { itemCount, totalUnits, totalPrice, shippingCost, finalTotal } = useMemo(() => {
+    const items = cartItems || [];
+    const count = items.length;
+    const units = items.reduce((acc, item) => acc + (item.quantity || 0), 0);
+    const price = typeof getTotalPrice === 'function' ? getTotalPrice() : 0;
+    const shipping = price > 50 || price === 0 ? 0 : 9.99;
+    return {
+      itemCount: count,
+      totalUnits: units,
+      totalPrice: price,
+      shippingCost: shipping,
+      finalTotal: price + shipping,
     };
-  }, []);
+  }, [cartItems, getTotalPrice]);
 
-  const itemCount = cartItems.length;
-  const totalPrice = getTotalPrice();
-  const shippingCost = totalPrice > 50 ? 0 : 9.99;
-  const finalTotal = totalPrice + shippingCost;
+  const handleUpdateQuantity = useCallback(
+    (id: number, qty: number) => {
+      updateQuantity(id, qty);
+    },
+    [updateQuantity]
+  );
+
+  const handleRemove = useCallback(
+    (id: number) => {
+      removeFromCart(id);
+    },
+    [removeFromCart]
+  );
 
   return (
     <>
@@ -34,205 +130,131 @@ const Cart: React.FC = () => {
       />
 
       <div className="cart-page">
-        {/* Hero Section */}
-        <div className="store-hero">
-          <div className="store-hero-content">
-            <motion.h1
-              className="store-hero-title text-white"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              IL TUO <span className="gradient-text">CARRELLO</span>
-            </motion.h1>
-            <motion.p
-              className="store-hero-subtitle text-white"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+        {/* Compact Hero Section */}
+        <div className="cart-hero">
+          <div className="container text-center">
+            <h1 className="cart-hero-title font-heading text-white">
+              Il Tuo <span className="text-hyria-orange">Carrello</span>
+            </h1>
+            <p className="cart-hero-subtitle">
               {itemCount === 0
-                ? 'Il tuo carrello è vuoto'
-                : `${itemCount} ${itemCount === 1 ? 'articolo' : 'articoli'} nel carrello`}
-            </motion.p>
+                ? 'Nessun prodotto selezionato'
+                : `${totalUnits} ${totalUnits === 1 ? 'capo' : 'capi'} per sostenere i colori di Hyria`}
+            </p>
           </div>
         </div>
 
-        {/* Carrello Content */}
-        <section className="section-padding">
+        {/* Main Content */}
+        <section className="section-padding py-10">
           <div className="container">
-            {cartItems.length === 0 ? (
+            {itemCount === 0 ? (
               <motion.div
-                className="text-center py-20"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                className="cart-empty-box"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                <h3 className="mt-4 text-2xl font-bold text-white mb-2">Carrello Vuoto</h3>
-                <p className="text-gray-400 mb-8">Non hai ancora aggiunto articoli al carrello. Scopri i nostri prodotti!</p>
-                <Link to="/store" className="buy-button inline-block">
-                  TORNA AL NEGOZIO
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-hyria-orange/10 border border-hyria-orange/30 flex items-center justify-center text-hyria-orange">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-2 font-heading">Carrello Vuoto</h2>
+                <p className="text-gray-300 text-sm mb-6">
+                  Scopri la nuova collezione ufficiale: divise da gara, abbigliamento tecnico e accessori.
+                </p>
+                <Link to="/store" className="buy-button inline-flex items-center gap-2 px-8 py-3">
+                  <span>Esplora lo Store</span>
+                  <span aria-hidden="true">→</span>
                 </Link>
               </motion.div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Articoli */}
-                <div className="lg:col-span-2">
-                  <SectionTitle title="ARTICOLI DEL CARRELLO" subtitle={`${itemCount} ${itemCount === 1 ? 'articolo' : 'articoli'}`} />
-
-                  <div className="space-y-4 mt-8">
-                    {cartItems.map((item, index) => (
-                      <motion.div
-                        key={`${item.id}-${item.size}`}
-                        className="cart-item-card"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        <img src={item.image} alt={item.name} className="cart-item-image" />
-
-                        <div className="cart-item-info">
-                          <h3 className="text-lg font-bold text-white">{item.name}</h3>
-                          {item.size && <p className="text-sm text-gray-400">Taglia: {item.size}</p>}
-                          <p className="text-hyria-secondary font-bold mt-2">€{item.price.toFixed(2)}</p>
-                        </div>
-
-                        <div className="cart-item-quantity">
-                          <button
-                            className="qty-btn"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            title={item.quantity === 1 ? "Rimuovi dal carrello" : "Diminuisci quantità"}
-                          >
-                            {item.quantity === 1 ? '🗑️' : '−'}
-                          </button>
-                          <input
-                            type="number"
-                            min="1"
-                            value={item.quantity}
-                            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                            className="qty-input"
-                          />
-                          <button
-                            className="qty-btn"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        <div className="cart-item-total">
-                          <p className="text-white font-bold">€{(item.price * item.quantity).toFixed(2)}</p>
-                        </div>
-
-                        <button
-                          className="cart-item-remove"
-                          onClick={() => removeFromCart(item.id)}
-                          title="Rimuovi dal carrello"
-                        >
-                          🗑️
-                        </button>
-                      </motion.div>
-                    ))}
+              <div className="cart-layout-grid">
+                {/* Articoli List */}
+                <div className="cart-items-section">
+                  <div className="cart-items-header">
+                    <h2 className="cart-items-title font-heading">
+                      Prodotti ({totalUnits})
+                    </h2>
+                    <Link to="/store" className="cart-continue-link">
+                      + Aggiungi altri articoli
+                    </Link>
                   </div>
 
-                  {/* <motion.div
-                    className="mt-8 text-right"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <button
-                      className="text-gray-400 hover:text-hyria-secondary transition-colors"
-                      onClick={clearCart}
-                    >
-                      Svuota carrello
-                    </button>
-                  </motion.div> */}
+                  <div className="cart-items-list">
+                    {cartItems.map((item, index) => (
+                      <CartItemRow
+                        key={`${item.id}-${item.size}`}
+                        item={item}
+                        index={index}
+                        onUpdateQuantity={handleUpdateQuantity}
+                        onRemove={handleRemove}
+                      />
+                    ))}
+                  </div>
                 </div>
 
-                {/* Riepilogo Ordine */}
-                <div>
-                  <SectionTitle title="RIEPILOGO" subtitle="Dettagli del tuo ordine" />
+                {/* Riepilogo & Checkout */}
+                <div className="cart-summary-wrapper sticky top-24">
+                  <div className="cart-summary">
+                    <h2 className="cart-summary-title font-heading">
+                      Riepilogo Ordine
+                    </h2>
 
-                  <motion.div
-                    className="cart-summary glass-card mt-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <div className="summary-row">
-                      <span className="text-gray-300">Subtotale:</span>
-                      <span className="text-white font-bold">€{totalPrice.toFixed(2)}</span>
+                    <div className="cart-summary-rows">
+                      <div className="cart-summary-row">
+                        <span>Subtotale</span>
+                        <span className="text-white font-semibold">€{totalPrice.toFixed(2)}</span>
+                      </div>
+
+                      <div className="cart-summary-row">
+                        <span>Spedizione</span>
+                        <span className={shippingCost === 0 ? "text-hyria-orange font-bold uppercase text-xs" : "text-white font-semibold"}>
+                          {shippingCost === 0 ? "Gratuita" : `€${shippingCost.toFixed(2)}`}
+                        </span>
+                      </div>
+
+                      {shippingCost > 0 && (
+                        <p className="text-xs text-gray-400 bg-white/5 p-2 rounded-lg my-2">
+                          💡 Spedizione gratuita per ordini sopra €50 (mancano €{(50 - totalPrice).toFixed(2)})
+                        </p>
+                      )}
                     </div>
 
-                    <div className="summary-divider"></div>
+                    <div className="cart-summary-divider" />
 
-                    <div className="summary-row">
-                      <span className="text-gray-300">
-                        Spedizione:
-                      </span>
-                      <span className={shippingCost === 0 ? "text-hyria-secondary font-bold" : "text-white font-bold"}>
-                         Da concordare con lo staff! {/*€{shippingCost.toFixed(2)} */}
-                      </span>
+                    <div className="cart-summary-total-row">
+                      <span className="text-base font-bold text-white">Totale</span>
+                      <div className="text-right">
+                        <div className="cart-summary-total-price">€{finalTotal.toFixed(2)}</div>
+                        <span className="text-xs text-gray-400 block">IVA inclusa</span>
+                      </div>
                     </div>
 
-                    {shippingCost > 0 && (
-                      <p className="text-xs text-gray-400 mt-2">Spedizione gratuita sopra €50</p>
-                    )}
+                    <button
+                      type="button"
+                      className="cart-checkout-btn"
+                      onClick={() => alert('Checkout in attivazione. Contatta la segreteria per completare l\'ordine.')}
+                    >
+                      Procedi al Checkout
+                    </button>
 
-                    <div className="summary-divider"></div>
-
-                    <div className="summary-row total">
-                      <span className="text-lg font-bold text-white">Totale:</span>
-                      <span className="text-2xl font-black text-hyria-secondary">€{finalTotal.toFixed(2)}</span>
+                    {/* Compact Trust Signals */}
+                    <div className="cart-trust-signals">
+                      <div className="cart-trust-item">
+                        <HeartIcon className="w-4 h-4 text-hyria-orange shrink-0" aria-hidden="true" />
+                        <span>Sostiene direttamente i giovani atleti Hyria</span>
+                      </div>
+                      <div className="cart-trust-item">
+                        <TruckIcon className="w-4 h-4 text-hyria-orange shrink-0" aria-hidden="true" />
+                        <span>Ritiro al palazzetto o spedizione espressa</span>
+                      </div>
+                      <div className="cart-trust-item">
+                        <ShieldCheckIcon className="w-4 h-4 text-hyria-orange shrink-0" aria-hidden="true" />
+                        <span>Reso o cambio taglia garantito entro 14 giorni</span>
+                      </div>
                     </div>
-
-                    <div style={{display:'flex','justifyContent':'space-between'}}>
-                     <motion.button
-                        className="buy-button w-full mt-6 py-3 text-lg"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <Link to="/store" className="block text-center text-gray-400 hover:text-hyria-secondary transition-colors mt-4 text-sm">
-                          Continua lo shopping
-                        </Link>
-                      </motion.button>
-  
-                      <motion.button
-                        className="buy-button w-full mt-6 py-3 text-lg"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => alert('Checkout non ancora disponibile. Presto!')}
-                      >
-                        PROCEDI AL CHECKOUT
-                      </motion.button>
-                    </div>
-                  </motion.div>
-
-                  {/* Info Spedizione */}
-                  <motion.div
-                    className="mt-8 bg-hyria-primary/30 rounded-lg p-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    style={{margin: '1rem'}}
-                  >
-                    <h4 className="font-bold text-white mb-3">Termini e Condizioni</h4>
-                    <ul className="space-y-2 text-sm text-gray-300">
-                      <li className="flex items-start gap-2">
-                        <span className="text-hyria-secondary mt-1">✓</span>
-                        <span> Ogni acquisto sul nostro sito sostiene direttamente la nostra ASD. I fondi raccolti non hanno scopo di lucro: confluiscono interamente nelle casse della società per finanziare progetti sportivi e promuovere i valori del basket nel sociale.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-hyria-secondary mt-1">✓</span>
-                        <span> Consegna in 7-10 giorni lavorativi</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-hyria-secondary mt-1">✓</span>
-                        <span> Offriamo rimborsi entro 14 giorni per resi o problemi con l'ordine. Grazie per supportare la nostra comunità!</span>
-                      </li>
-                    </ul>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             )}

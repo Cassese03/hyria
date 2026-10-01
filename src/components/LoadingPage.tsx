@@ -35,7 +35,7 @@ const LoadingPage = ({ isLoading, onAnimationEnd }: LoadingPageProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="loading-container">
+    <div className={`loading-container ${isExiting ? 'pointer-events-none opacity-0 transition-opacity duration-700' : ''}`}>
       <div className="grid-overlay">
         {gridCells.map((cell) => (
           <div
