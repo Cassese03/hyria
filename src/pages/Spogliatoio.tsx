@@ -318,7 +318,7 @@ const Spogliatoio = () => {
                       <span>{player.firstName}</span>
                       {player.lastName}
                     </h2>
-                  </div>ascina 
+                  </div> 
                   <span className="locker-sheet__num" aria-label={`Numero ${player.number}`}>
                     {player.number}
                   </span>
