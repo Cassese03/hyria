@@ -22,6 +22,7 @@ const Store = lazy(() => import('./pages/Store'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Calendario = lazy(() => import('./pages/Calendario'));
 const Streaming = lazy(() => import('./pages/Streaming'));
+const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 
 const AppContent = () => {
   const location = useLocation();
@@ -67,6 +68,7 @@ const AppContent = () => {
               <Route path="/calendario" element={<Calendario />} />
               <Route path="/contatti" element={<Contact />} />
               <Route path="/streaming" element={<Streaming />} />
+              <Route path="/spogliatoio" element={<Spogliatoio />} />
             </Routes>
           </Suspense>
         </main>
