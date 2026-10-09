@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import type { LockerPlayer } from './roster';
-import { LockerAudio } from './audio';
 import {
   DEFAULT_KIT,
   createJerseyCanvas,
@@ -24,7 +23,6 @@ export type LockerMode = 'overview' | 'detail';
 export interface LockerSceneOptions {
   container: HTMLElement;
   roster: LockerPlayer[];
-  audio: LockerAudio;
   onReady: () => void;
   onHighlight: (index: number) => void;
   onMode: (mode: LockerMode) => void;
@@ -537,14 +535,13 @@ export class LockerScene {
     this.labelEl = el;
   }
 
-  setHighlight(index: number, silent = false) {
+  setHighlight(index: number) {
     const i = THREE.MathUtils.clamp(index, 0, this.rigs.length - 1);
     if (i === this.highlight) return;
     this.highlight = i;
     this.userRot = this.snapRot(this.userRot);
     this.spinVel = 0;
     this.snapTarget = null;
-    if (!silent) this.opts.audio.clink();
     if (this.mode === 'detail') this.assignHi();
     this.opts.onHighlight(i);
   }
@@ -562,7 +559,6 @@ export class LockerScene {
     this.spinVel = 0;
     this.assignHi();
     this.startBlend(1, 1.5);
-    this.opts.audio.swoosh('in');
     this.opts.onMode('detail');
   }
 
@@ -571,7 +567,6 @@ export class LockerScene {
     this.mode = 'overview';
     this.snapTarget = this.snapRot(this.userRot);
     this.startBlend(0, 1.25);
-    this.opts.audio.swoosh('out');
     this.opts.onMode('overview');
   }
 
@@ -581,7 +576,6 @@ export class LockerScene {
     const half = Math.round(this.userRot / Math.PI);
     this.snapTarget = (half + 1) * Math.PI;
     this.spinVel = 0;
-    this.opts.audio.clink();
   }
 
   setKit(kit: KitOptions) {
@@ -819,7 +813,6 @@ export class LockerScene {
   }
 
   private onPointerDown = (e: PointerEvent) => {
-    this.opts.audio.unlock();
     this.downX = this.lastMoveX = e.clientX;
     this.downY = e.clientY;
     this.downT = this.lastMoveT = performance.now();

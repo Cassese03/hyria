@@ -57,7 +57,7 @@ export const LOCKER_ROSTER: LockerPlayer[] = [
   // base(7, 'Christian', 'Barrella', 'Ala Piccola', 'ALI'),
   // base(21, 'Christian', 'CASSSHEEEEEEESEEEEEE', 'Ala Piccola', 'ALI'),
 
-  base(33, 'Lorenzo', 'Cassese', 'Ala Piccola', 'ALI',2003,'San Gennaro Vesuviano',185),
+  base(21, 'Lorenzo', 'Cassese', 'Ala Piccola', 'ALI',2003,'San Gennaro Vesuviano',185),
   base(35, 'Giacomo', 'Mascolo', 'Ala Piccola', 'ALI'),
 
   base(42, 'Davide', 'Guadagni', 'Ala Grande', 'ALI',2005,'Napoli',187),

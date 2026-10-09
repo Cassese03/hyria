@@ -6,11 +6,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   PaintBrushIcon,
-  SpeakerWaveIcon,
-  SpeakerXMarkIcon,
 } from '@heroicons/react/24/outline';
 import PageHead from '../components/PageHead';
-import { LockerAudio } from '../locker/audio';
 import { LockerScene, type LockerMode } from '../locker/LockerScene';
 import { CATEGORY_ORDER, LOCKER_ROSTER, type LockerPlayer } from '../locker/roster';
 import { DEFAULT_KIT, type KitOptions } from '../locker/jerseyTexture';
@@ -47,21 +44,12 @@ const Spogliatoio = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<LockerScene | null>(null);
-  const audioRef = useRef<LockerAudio | null>(null);
   const urlsRef = useRef<{ graphic?: string; logo?: string; sponsor?: string }>({});
-  if (!audioRef.current) audioRef.current = new LockerAudio();
 
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [mode, setMode] = useState<LockerMode>('overview');
   const [highlight, setHighlight] = useState(0);
-  const [muted, setMuted] = useState(() => {
-    try {
-      return localStorage.getItem('hyria-locker-muted') === '1';
-    } catch {
-      return false;
-    }
-  });
   const [panelOpen, setPanelOpen] = useState(false);
   const [kit, setKit] = useState<KitOptions>(DEFAULT_KIT);
   const [fileNames, setFileNames] = useState<{ graphic?: string; logo?: string; sponsor?: string }>({});
@@ -91,7 +79,6 @@ const Spogliatoio = () => {
     LockerScene.create({
       container,
       roster: LOCKER_ROSTER,
-      audio: audioRef.current!,
       onReady: () => !cancelled && setReady(true),
       onHighlight: (i) => !cancelled && setHighlight(i),
       onMode: (m) => !cancelled && setMode(m),
@@ -115,19 +102,9 @@ const Spogliatoio = () => {
   }, []);
 
   useEffect(() => {
-    audioRef.current?.setMuted(muted);
-    try {
-      localStorage.setItem('hyria-locker-muted', muted ? '1' : '0');
-    } catch {
-      /* storage non disponibile */
-    }
-  }, [muted]);
-
-  useEffect(() => {
     const urls = urlsRef.current;
     return () => {
       Object.values(urls).forEach((u) => u && URL.revokeObjectURL(u));
-      audioRef.current?.dispose();
     };
   }, []);
 
@@ -138,7 +115,6 @@ const Spogliatoio = () => {
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
       const eng = engineRef.current;
       if (!eng) return;
-      audioRef.current?.unlock();
       if (e.key === 'ArrowRight') eng.step(1);
       else if (e.key === 'ArrowLeft') eng.step(-1);
       else if (e.key === 'Escape') {
@@ -152,8 +128,7 @@ const Spogliatoio = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [panelOpen]);
 
-  const withAudio = useCallback((fn: (eng: LockerScene) => void) => {
-    audioRef.current?.unlock();
+  const withEngine = useCallback((fn: (eng: LockerScene) => void) => {
     const eng = engineRef.current;
     if (eng) fn(eng);
   }, []);
@@ -195,7 +170,7 @@ const Spogliatoio = () => {
   };
 
   const download = () =>
-    withAudio((eng) => {
+    withEngine((eng) => {
       const shot = eng.screenshot();
       if (!shot) return;
       const a = document.createElement('a');
@@ -220,7 +195,7 @@ const Spogliatoio = () => {
         {failed && (
           <div className="locker-fallback" role="alert">
             <p>Il tuo dispositivo non supporta la grafica 3D necessaria allo spogliatoio.</p>
-            <a href="/team" className="locker-btn locker-btn--primary">
+            <a href="/spogliatoio" className="locker-btn locker-btn--primary">
               VEDI IL ROSTER
             </a>
           </div>
@@ -245,7 +220,7 @@ const Spogliatoio = () => {
                 type="button"
                 className={`locker-tab ${player.category === c ? 'is-active' : ''}`}
                 aria-pressed={player.category === c}
-                onClick={() => withAudio((eng) => eng.setHighlight(categoryStart[c]))}
+                onClick={() => withEngine((eng) => eng.setHighlight(categoryStart[c]))}
               >
                 {c}
                 <span>{LOCKER_ROSTER.filter((p) => p.category === c).length}</span>
@@ -259,7 +234,7 @@ const Spogliatoio = () => {
           <span className="locker-label__num">{player.number}</span>
           <span className="locker-label__name">{player.lastName}</span>
           <span className="locker-label__role">{player.role}</span>
-          <button type="button" className="locker-label__cta" onClick={() => withAudio((eng) => eng.openDetail())}>
+          <button type="button" className="locker-label__cta" onClick={() => withEngine((eng) => eng.openDetail())}>
             APRI SCHEDA
           </button>
         </div>
@@ -271,7 +246,7 @@ const Spogliatoio = () => {
               className="locker-arrow locker-arrow--left"
               aria-label="Giocatore precedente"
               disabled={highlight === 0}
-              onClick={() => withAudio((eng) => eng.step(-1))}
+              onClick={() => withEngine((eng) => eng.step(-1))}
             >
               <ChevronLeftIcon />
             </button>
@@ -280,7 +255,7 @@ const Spogliatoio = () => {
               className="locker-arrow locker-arrow--right"
               aria-label="Giocatore successivo"
               disabled={highlight === LOCKER_ROSTER.length - 1}
-              onClick={() => withAudio((eng) => eng.step(1))}
+              onClick={() => withEngine((eng) => eng.step(1))}
             >
               <ChevronRightIcon />
             </button>
@@ -336,14 +311,14 @@ const Spogliatoio = () => {
               </motion.div>
 
               <footer className="locker-sheet__foot">
-                <button type="button" className="locker-btn locker-btn--primary" onClick={() => withAudio((eng) => eng.closeDetail())}>
+                <button type="button" className="locker-btn locker-btn--primary" onClick={() => withEngine((eng) => eng.closeDetail())}>
                   ← INDIETRO
                 </button>
                 <div className="locker-sheet__nav">
-                  <button type="button" className="locker-icon-btn" aria-label="Giocatore precedente" disabled={highlight === 0} onClick={() => withAudio((eng) => eng.step(-1))}>
+                  <button type="button" className="locker-icon-btn" aria-label="Giocatore precedente" disabled={highlight === 0} onClick={() => withEngine((eng) => eng.step(-1))}>
                     <ChevronLeftIcon />
                   </button>
-                  <button type="button" className="locker-icon-btn" aria-label="Giocatore successivo" disabled={highlight === LOCKER_ROSTER.length - 1} onClick={() => withAudio((eng) => eng.step(1))}>
+                  <button type="button" className="locker-icon-btn" aria-label="Giocatore successivo" disabled={highlight === LOCKER_ROSTER.length - 1} onClick={() => withEngine((eng) => eng.step(1))}>
                     <ChevronRightIcon />
                   </button>
                 </div>
@@ -417,14 +392,11 @@ const Spogliatoio = () => {
           )}
 
           <div className="locker-tools__row" style={{display:'hidden'}}>
-            <button type="button" className="locker-icon-btn" aria-label={muted ? 'Attiva audio' : 'Disattiva audio'} aria-pressed={muted} onClick={() => { audioRef.current?.unlock(); setMuted((m) => !m); }}>
-              {muted ? <SpeakerXMarkIcon /> : <SpeakerWaveIcon />}
-            </button>
             <button type="button" className={`locker-icon-btn ${panelOpen ? 'is-on' : ''}`} aria-label="Personalizza maglia" aria-expanded={panelOpen} onClick={() => setPanelOpen((o) => !o)}>
               <PaintBrushIcon />
             </button>
             {detail && (
-              <button type="button" className="locker-icon-btn" aria-label="Gira la maglia: fronte / retro" onClick={() => withAudio((eng) => eng.flip())}>
+              <button type="button" className="locker-icon-btn" aria-label="Gira la maglia: fronte / retro" onClick={() => withEngine((eng) => eng.flip())}>
                 <ArrowPathIcon />
               </button>
             )}
