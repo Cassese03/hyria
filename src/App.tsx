@@ -13,7 +13,7 @@ import './styles/cart.css';
 import './styles/streaming.css';
 import LoadingPage from './components/LoadingPage';
 
-const Teams = lazy(() => import('./pages/Teams'));
+// const Teams = lazy(() => import('./pages/Teams'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const SettoreGiovanile = lazy(() => import('./pages/SettoreGiovanile'));
@@ -59,7 +59,6 @@ const AppContent = () => {
           <Suspense fallback={<div className="min-h-screen bg-hyria-primary flex items-center justify-center"><p className="text-white">Caricamento...</p></div>}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/team" element={<Teams />} />
               <Route path="/chi-siamo" element={<About />} />
               <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
               <Route path="/sponsor" element={<Sponsor />} />
