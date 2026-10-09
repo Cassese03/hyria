@@ -61,12 +61,12 @@ export const LOCKER_ROSTER: LockerPlayer[] = [
   base(35, 'Giacomo', 'Mascolo', 'Ala Piccola', 'ALI'),
 
   base(42, 'Davide', 'Guadagni', 'Ala Grande', 'ALI',2005,'Napoli',187),
-  base(5, 'Agostino Pio', 'Esposito', 'Ala Grande', 'ALI'),
+  base(5, 'Agostino Pio', 'Esposito', 'Ala Grande', 'ALI',2003,'Avellino',184),
   base(9, 'Giovanni', 'Spiezia', 'Ala Grande', 'ALI',1997,'Nola',188),
   // base(17, 'Ciro Francesco', 'Piscopo', 'Ala Grande', 'ALI'),
 
   // base(0, 'Luigi', 'Manfellotto', 'Centro', 'CENTRI'),
-  base(0, 'Claudio', 'Capone', 'Centro', 'CENTRI',2004,'Napoli',194),
+  base(22, 'Claudio', 'Capone', 'Centro', 'CENTRI',2004,'Napoli',198),
   base(4, 'Simone', 'Soricelli', 'Centro', 'CENTRI',2006,'Torre del Greco',192),
   base(0, 'Alfonso', 'Carillo', 'Centro', 'CENTRI',2006,'Sarno',193),
   base(0, 'Marco', 'Gallo', 'Centro', 'CENTRI',1996,'Agropoli',190),
