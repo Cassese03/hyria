@@ -7,7 +7,7 @@ const Team: React.FC = () => {
     "@type": "WebPage",
     "name": "Prima Squadra - Hyria Basket",
     "description": "Scopri la prima squadra di Hyria Basket per la stagione 2025. Roster, staff tecnico e obiettivi della squadra di basket di Nola.",
-    "url": "https://hyriabasket.it/spogliatotio"
+    "url": "https://hyriabasket.it/spogliatoio"
   };
 
   return (
@@ -18,8 +18,8 @@ const Team: React.FC = () => {
         keywords="prima squadra Hyria Basket, roster 2025, giocatori basket Nola, staff tecnico, pallacanestro Nola"
         ogTitle="Prima Squadra Hyria Basket 2025 - Il Futuro del Basket Nolano"
         ogDescription="La prima squadra di Hyria Basket per la stagione 2025: giovani talenti, esperienza e determinazione per raggiungere nuovi traguardi nel basket campano."
-        ogUrl="https://hyriabasket.it/spogliatotio"
-        canonicalUrl="https://hyriabasket.it/spogliatotio"
+        ogUrl="https://hyriabasket.it/spogliatoio"
+        canonicalUrl="https://hyriabasket.it/spogliatoio"
         structuredData={teamStructuredData}
       />
     </>

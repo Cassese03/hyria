@@ -10,7 +10,7 @@ const Navbar = () => {
     { name: 'CHI SIAMO', href: '/chi-siamo' },
     {
       name: 'ROSTER',
-      href: '/spogliatotio',
+      href: '/spogliatoio',
       submenu: [
         { name: 'PRIMA SQUADRA', href: '/team/prima-squadra' },
         { name: 'UNDER 19', href: '/team/under-19' },
