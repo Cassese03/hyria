@@ -94,11 +94,11 @@ const Calendario = () => {
   return (
     <>
       <PageHead
-        title="Classifica | Hyria Basket – Stagione 2025/26"
-        description="Classifica aggiornata in tempo reale della stagione 2025/26 di Hyria Basket Nola."
+        title="Classifica | Hyria Basket – Stagione 2026/27"
+        description="Classifica aggiornata in tempo reale della stagione 2026/27 di Hyria Basket Nola."
         keywords="classifica, calendario, risultati, Hyria Basket, Nola, basket"
         ogTitle="Classifica – Hyria Basket"
-        ogDescription="Segui la classifica aggiornata di Hyria Basket nella stagione 2025/26."
+        ogDescription="Segui la classifica aggiornata di Hyria Basket nella stagione 2026/27."
         ogUrl="https://hyriabasket.it/classifica"
         canonicalUrl="https://hyriabasket.it/classifica"
       />
@@ -109,7 +109,7 @@ const Calendario = () => {
         <section className="hero-section calendario-hero">
           <div className="hero-background">
             <img
-              src="/images/basketball-hero.jpg"
+              src="/images/1.jpg"
               alt="Hyria Basket in campo"
               className="hero-bg-image"
               width={1920}
@@ -127,7 +127,7 @@ const Calendario = () => {
               className="hero-text-container"
             >
               <motion.p variants={heroItem} className="hero-kicker">
-                STAGIONE 2025/26 · SERIE DR2
+                STAGIONE 2026/27 · SERIE DR2
               </motion.p>
               <motion.h1 variants={heroItem} className="hero-title">
                 CLASSI<span className="hero-accent">FICA</span>

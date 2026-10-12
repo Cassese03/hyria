@@ -2196,7 +2196,8 @@ img, video, iframe {
 
 .calendario-page.calendario-bolder .calendario-hero .hero-title {
   font-family: 'Arvo', serif;
-  font-size: clamp(4.5rem, 14vw, 10rem);
+  /* 12vw tiene "CLASSIFICA" dentro lo schermo anche su telefoni da 320px */
+  font-size: clamp(2.25rem, 12vw, 10rem);
   line-height: 0.86;
   letter-spacing: -0.02em;
   text-align: left;
