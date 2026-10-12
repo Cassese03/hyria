@@ -23,6 +23,8 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Calendario = lazy(() => import('./pages/Calendario'));
 const Streaming = lazy(() => import('./pages/Streaming'));
 const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
+const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 
 const AppContent = () => {
   const location = useLocation();
@@ -68,6 +70,8 @@ const AppContent = () => {
               <Route path="/contatti" element={<Contact />} />
               <Route path="/streaming" element={<Streaming />} />
               <Route path="/spogliatoio" element={<Spogliatoio />} />
+              <Route path="/schedina" element={<HyriaBettingPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             </Routes>
           </Suspense>
         </main>

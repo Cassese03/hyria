@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap');
+
+/* Pagine legali: testo lungo, leggibile, nessuna decorazione */
+.legal {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: 5.5rem 1rem 5rem;
+  color: rgba(248, 250, 252, 0.85);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.legal__head {
+  margin-bottom: 2.5rem;
+}
+.legal h1 {
+  font-family: 'Arvo', serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.1;
+  color: #f8fafc;
+}
+.legal__head p {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(248, 250, 252, 0.5);
+}
+.legal section {
+  padding: 0;
+  margin-top: 2.25rem;
+}
+.legal h2 {
+  font-family: 'Arvo', serif;
+  font-size: 1.3rem;
+  color: #f8fafc;
+  margin-bottom: 0.6rem;
+}
+.legal p + p,
+.legal p + dl,
+.legal ul + p {
+  margin-top: 0.75rem;
+}
+.legal dl {
+  display: grid;
+  gap: 0.35rem 1.25rem;
+}
+.legal dt {
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+@media (min-width: 640px) {
+  .legal dl {
+    grid-template-columns: 10rem 1fr;
+  }
+  .legal dt {
+    margin-top: 0;
+  }
+}
+.legal ul {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+.legal a {
+  color: #d96c00;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal a:focus-visible {
+  outline: 2px solid #d96c00;
+  outline-offset: 2px;
+}

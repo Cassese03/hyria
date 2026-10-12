@@ -75,6 +75,9 @@ const Header = () => {
               <a href="/calendario">Classifica</a>
             </li>
             {/* <li className="menu-item">
+              <a href="/schedina">Schedina</a>
+            </li> */}
+            {/* <li className="menu-item">
               <a href="/store">STORE</a>
             </li> */}
             <li className="menu-item">
@@ -118,6 +121,9 @@ const Header = () => {
               <li className="mobile-menu-item">
                 <a href="/calendario" onClick={() => setIsOpen(false)}>Classifica</a>
               </li>
+              {/* <li className="mobile-menu-item">
+                <a href="/schedina" onClick={() => setIsOpen(false)}>Schedina</a>
+              </li> */}
               <li className="mobile-menu-item">
                 <a href="/streaming" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
                   LIVE <span className="pulse-dot-red"></span>
