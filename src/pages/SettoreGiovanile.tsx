@@ -86,7 +86,7 @@ const FAQS = [
   },
   {
     question: 'Quali sono i costi di iscrizione?',
-    answer: 'I costi variano in base alla categoria e comprendono il kit di abbigliamento e la tessera FIP. Contattaci per informazioni dettagliate e sulle eventuali facilitazioni per famiglie con più figli iscritti.',
+    answer: 'I costi variano in base alla categoria. Contattaci per informazioni dettagliate e sulle eventuali facilitazioni per famiglie con più figli iscritti.',
   },
   {
     question: 'È possibile effettuare allenamenti di prova?',
@@ -177,7 +177,7 @@ const SettoreGiovanile: React.FC = () => {
                   transition={{ ...revealTransition, delay: 0.1 }}
                 >
                   <p className="text-lg mb-6 text-white/85">
-                    Il minibasket rappresenta il cuore del progetto futuro Hyria Basket. Crediamo fermamente che la crescita di una società sportiva passi attraverso lo sviluppo dei giovani atleti del territorio.
+                    Il minibasket rappresenta il cuore del progetto futuro Hyria Basket. Crediamo fermamente che la crescita di una società sporfCMPRENtiva passi attraverso lo sviluppo dei giovani atleti del territorio.
                   </p>
                   <p className="text-lg mb-6 text-white/85">
                     Il nostro programma è strutturato per accompagnare bambini e ragazzi in un percorso di crescita sportiva e personale, dal Minibasket fino alle soglie della prima squadra.

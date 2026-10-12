@@ -51,10 +51,9 @@ html, body {
   margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Il sito è solo dark: non seguire il tema chiaro/scuro del dispositivo */
+html {
+  color-scheme: dark only;
 }
 
 @layer base {
