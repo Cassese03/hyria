@@ -1,0 +1,140 @@
+/* ─── Classifica: tabella in stile segnapunti ────────────────────────────── */
+
+.cl-board {
+  max-width: 52rem;
+  border: 1px solid var(--hy-line);
+  border-radius: 3px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1.5px) 0 0 / 6px 6px,
+    #070205;
+  overflow-x: auto;
+}
+
+.cl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.cl-table thead th {
+  padding: 0.9rem 1rem;
+  border-bottom: 2px solid var(--hy-maroon);
+  color: var(--hy-faint);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.cl-table abbr {
+  text-decoration: none;
+}
+
+.cl-table tbody tr + tr {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cl-table td,
+.cl-table tbody th {
+  padding: 0.95rem 1rem;
+  color: var(--hy-ink);
+  font-size: 0.98rem;
+}
+
+.cl-pos {
+  width: 3.5rem;
+  color: var(--hy-faint);
+  font-weight: 800;
+}
+
+.cl-table tbody th.cl-team {
+  font-weight: 700;
+  text-align: left;
+}
+
+.cl-num {
+  width: 3.5rem;
+  text-align: center !important;
+}
+
+.cl-table td.cl-pts {
+  color: #ff8a1f;
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-shadow: 0 0 12px rgba(255, 138, 31, 0.45);
+}
+
+/* la nostra riga */
+.cl-table tr.is-us {
+  background: linear-gradient(90deg, rgba(94, 3, 3, 0.95), rgba(94, 3, 3, 0.45));
+  box-shadow: inset 4px 0 0 var(--hy-orange);
+}
+
+.cl-table tr.is-us td,
+.cl-table tr.is-us th {
+  color: #fff;
+}
+
+.cl-badge {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+  background: var(--hy-orange);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+.cl-status {
+  max-width: 52rem;
+  margin: 0;
+  padding: 2rem 0;
+  color: var(--hy-muted);
+}
+
+.cl-status--error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  padding: 1.5rem;
+  border-left: 3px solid var(--hy-orange);
+  background: rgba(94, 3, 3, 0.35);
+}
+
+.cl-status--error p {
+  margin: 0;
+  flex: 1 1 18rem;
+}
+
+.cl-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 599px) {
+  .cl-table td,
+  .cl-table tbody th,
+  .cl-table thead th {
+    padding: 0.85rem 0.6rem;
+  }
+
+  .cl-table td,
+  .cl-table tbody th {
+    font-size: 0.9rem;
+  }
+
+  .cl-pos,
+  .cl-num {
+    width: 2.6rem;
+  }
+}

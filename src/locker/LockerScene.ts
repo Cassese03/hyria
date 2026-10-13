@@ -191,8 +191,8 @@ export class LockerScene {
 
   private build() {
     const { scene } = this;
-    scene.background = new THREE.Color(0x030203);
-    scene.fog = new THREE.Fog(0x030203, 8, 18);
+    scene.background = new THREE.Color(0x0b0306);
+    scene.fog = new THREE.Fog(0x0b0306, 8, 18);
 
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;

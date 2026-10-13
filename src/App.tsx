@@ -11,6 +11,7 @@ import './styles/overflow-fix.css';
 import './styles/store.css';
 import './styles/cart.css';
 import './styles/streaming.css';
+import './styles/ui.css';
 import LoadingPage from './components/LoadingPage';
 
 // const Teams = lazy(() => import('./pages/Teams'));

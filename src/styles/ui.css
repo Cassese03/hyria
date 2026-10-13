@@ -1,0 +1,496 @@
+/* ─── Linguaggio grafico condiviso ───────────────────────────────────────────
+   Pulsanti, titoli e sezioni usati dalla Home e dalle pagine interne.        */
+
+:root {
+  --hy-night: #0b0306;
+  --hy-night-rgb: 11, 3, 6;
+  --hy-deep: #170407;
+  --hy-maroon: #5e0303;
+  --hy-orange: #d96c00;
+  --hy-orange-hi: #f07c0a;
+  --hy-ink: #f4eee7;
+  --hy-muted: rgba(244, 238, 231, 0.78);
+  --hy-faint: rgba(244, 238, 231, 0.56);
+  --hy-line: rgba(244, 238, 231, 0.16);
+  --hy-gutter: clamp(20px, 5vw, 80px);
+}
+
+/* ─── Testi ─────────────────────────────────────────────────────────────── */
+
+.hy-kicker {
+  margin: 0 0 1rem;
+  color: var(--hy-orange-hi);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.hy-h2 {
+  margin: 0 0 1rem;
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Azioni ────────────────────────────────────────────────────────────── */
+
+.hy-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.hy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.6rem;
+  border: 0;
+  border-radius: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hy-btn:active {
+  transform: scale(0.97);
+}
+
+.hy-btn--primary {
+  background: var(--hy-orange);
+  color: #fff;
+}
+
+.hy-btn--primary:hover {
+  background: var(--hy-orange-hi);
+  color: #fff;
+}
+
+.hy-btn--ghost {
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  background: transparent;
+  color: #fff;
+}
+
+.hy-btn--ghost:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* su fondo bordeaux l'arancio perde contrasto: pulsante chiaro */
+.hy-btn--light {
+  background: #fff;
+  color: var(--hy-maroon);
+}
+
+.hy-btn--light:hover {
+  background: var(--hy-orange);
+  color: #fff;
+}
+
+.hy-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--hy-orange);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hy-link:hover {
+  color: var(--hy-orange-hi);
+}
+
+.hy-btn:focus-visible,
+.hy-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .hy-actions .hy-btn {
+    flex: 1 1 auto;
+  }
+
+  /* index.css porta i <button> a 16px su mobile (anti-zoom iOS, serve solo ai campi) */
+  .hy-btn {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ─── Intestazione 3D delle pagine interne ──────────────────────────────── */
+
+.ph {
+  position: relative;
+  min-height: clamp(520px, 86svh, 900px);
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  overflow: hidden;
+  background: var(--hy-night);
+  color: var(--hy-ink);
+  isolation: isolate;
+}
+
+.ph-media,
+.ph-canvas,
+.ph-photo {
+  position: absolute;
+  inset: 0;
+}
+
+.ph-media {
+  z-index: -2;
+}
+
+.ph-photo {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.55);
+}
+
+.ph-canvas {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.ph.is-ready .ph-canvas {
+  opacity: 1;
+}
+
+.ph-canvas canvas {
+  display: block;
+  max-width: none;
+}
+
+.ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(0deg, rgba(var(--hy-night-rgb), 1) 0%, rgba(var(--hy-night-rgb), 0.55) 32%, rgba(var(--hy-night-rgb), 0) 60%),
+    linear-gradient(90deg, rgba(var(--hy-night-rgb), 0.7) 0%, rgba(var(--hy-night-rgb), 0) 55%);
+}
+
+.ph-copy {
+  width: 100%;
+  max-width: 44rem;
+  padding: 120px var(--hy-gutter) clamp(48px, 9vh, 88px);
+}
+
+.ph-title {
+  margin: 0;
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.8rem, 8.5vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.45);
+}
+
+.ph-lead {
+  margin: 1.1rem 0 0;
+  max-width: 46ch;
+  color: var(--hy-muted);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 767px) {
+  .ph {
+    min-height: 88svh;
+  }
+
+  .ph::before {
+    background: linear-gradient(0deg, rgba(var(--hy-night-rgb), 1) 0%, rgba(var(--hy-night-rgb), 0.82) 36%, rgba(var(--hy-night-rgb), 0) 64%);
+  }
+
+  .ph-copy {
+    padding: 96px 20px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-canvas {
+    transition: none;
+  }
+}
+
+/* ─── Sezioni delle pagine interne ──────────────────────────────────────── */
+
+.pg {
+  background: var(--hy-night);
+  color: var(--hy-ink);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.pg-sec {
+  padding: clamp(4rem, 9vw, 7.5rem) 0;
+}
+
+.pg-sec--deep {
+  background: var(--hy-deep);
+}
+
+.pg-sec--maroon {
+  background: var(--hy-maroon);
+}
+
+.pg-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--hy-gutter);
+}
+
+.pg-head {
+  max-width: 44rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.pg-head p,
+.pg-prose p {
+  margin: 0;
+  color: var(--hy-muted);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.pg-head strong,
+.pg-prose strong {
+  color: #fff;
+}
+
+.pg-prose p + p {
+  margin-top: 1.1rem;
+}
+
+/* titolo a sinistra, testo a destra */
+.pg-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.pg-quote {
+  margin: 1.5rem 0 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--hy-orange);
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  line-height: 1.4;
+}
+
+/* elenco a griglia con filetti, senza card */
+.pg-rules {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.pg-rules li {
+  padding: 1.4rem 0 1.6rem;
+  border-top: 1px solid var(--hy-line);
+}
+
+.pg-rules h3 {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pg-rules p {
+  margin: 0;
+  color: var(--hy-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* chiusura con invito all'azione */
+.pg-cta {
+  text-align: left;
+}
+
+.pg-cta .hy-h2 {
+  max-width: 18ch;
+}
+
+.pg-cta p {
+  margin: 0;
+  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 899px) {
+  .pg-split {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-rules {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .pg-rules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* i link interni non finiscono sotto l'header fisso */
+.pg-sec[id] {
+  scroll-margin-top: 64px;
+}
+
+/* ─── Persone (staff, allenatori) ───────────────────────────────────────── */
+
+.hy-people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.hy-people li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--hy-line);
+}
+
+.hy-people-mono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(217, 108, 0, 0.6);
+  background: rgba(94, 3, 3, 0.55);
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hy-people-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.hy-people-name {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.hy-people-role {
+  color: var(--hy-faint);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── Domande frequenti ─────────────────────────────────────────────────── */
+
+.hy-faq {
+  max-width: 52rem;
+  border-bottom: 1px solid var(--hy-line);
+}
+
+.hy-faq details {
+  border-top: 1px solid var(--hy-line);
+}
+
+.hy-faq summary {
+  position: relative;
+  display: block;
+  padding: 1.25rem 2.5rem 1.25rem 0;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  cursor: pointer;
+  list-style: none;
+}
+
+.hy-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+/* più / meno disegnato in CSS */
+.hy-faq summary::before,
+.hy-faq summary::after {
+  content: '';
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  background: var(--hy-orange);
+  transition: transform 0.25s ease;
+}
+
+.hy-faq summary::after {
+  transform: rotate(90deg);
+}
+
+.hy-faq details[open] summary::after {
+  transform: rotate(0deg);
+}
+
+.hy-faq summary:hover {
+  color: var(--hy-orange-hi);
+}
+
+.hy-faq summary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.hy-faq p {
+  margin: 0;
+  padding: 0 2.5rem 1.4rem 0;
+  max-width: 64ch;
+  color: var(--hy-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}

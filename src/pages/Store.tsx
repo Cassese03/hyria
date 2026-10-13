@@ -167,7 +167,7 @@ const Store: React.FC = () => {
   }, []);
   const closeProductModal = useCallback(() => {
     setIsModalOpen(false);
-    document.body.style.overflow = "auto";
+    document.body.style.overflow = "";
   }, []);
 
   // Escape key listener for accessible modal closing
@@ -180,7 +180,7 @@ const Store: React.FC = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     };
   }, [isModalOpen, closeProductModal]);
 

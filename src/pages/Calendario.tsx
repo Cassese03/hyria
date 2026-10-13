@@ -1,95 +1,109 @@
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import PageHead from '../components/PageHead';
-import { heroContainer, heroItem, scaleReveal, revealTransition } from '../utils/animations';
+import ArenaPageHero from '../components/ArenaPageHero';
+import '../styles/classifica.css';
 
-interface ClassificaRow {
+const CLASSIFICA_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-yoKJ6mZg-97DM9iw6Ig4zZd5-PyR1uqlySH2q9uUAcdJbjavJ_d4nWK2Lx9wojFcV8uFoPyTU1bQ/pub?gid=0&single=true&output=csv';
+
+interface Row {
   pos: string;
   team: string;
-  played: string;
-  wins: string;
-  losses: string;
-  scored: string;
-  against: string;
   points: string;
+  played?: string;
+  wins?: string;
+  losses?: string;
 }
 
-const Calendario = () => {
-  const [classifica, setClassifica] = useState<ClassificaRow[]>([]);
-  //const [risultati, setRisultati] = useState<any[]>([]);
-  //const [prossimiMatch, setProssimiMatch] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+// Colonne opzionali: compaiono se il foglio le contiene (riconosciute dall'intestazione)
+const OPTIONAL: { key: 'played' | 'wins' | 'losses'; label: string; title: string; names: string[] }[] = [
+  { key: 'played', label: 'G', title: 'Partite giocate', names: ['g', 'giocate', 'partite'] },
+  { key: 'wins', label: 'V', title: 'Vittorie', names: ['v', 'vinte', 'vittorie'] },
+  { key: 'losses', label: 'P', title: 'Sconfitte', names: ['p', 'perse', 'sconfitte'] },
+];
 
-  // LINK AGGIORNATI
-  const classificaUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-yoKJ6mZg-97DM9iw6Ig4zZd5-PyR1uqlySH2q9uUAcdJbjavJ_d4nWK2Lx9wojFcV8uFoPyTU1bQ/pub?gid=0&single=true&output=csv';
-  //const calendarioUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-yoKJ6mZg-97DM9iw6Ig4zZd5-PyR1uqlySH2q9uUAcdJbjavJ_d4nWK2Lx9wojFcV8uFoPyTU1bQ/pub?gid=67573488&single=true&output=csv';
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      
-      // 1. Fetch Classifica
-      const resC = await fetch(classificaUrl);
-      const csvC = await resC.text();
-      const righeC = csvC.split('\n').map(r => r.split(','));
-      const puliteC = righeC.filter(r => r.length > 1).map(r => r.map(c => c.replace(/^"|"$/g, '').trim()));
-      
-      if (puliteC.length > 1) {
-        // Mappatura dinamica: cerchiamo di capire quali colonne usare
-        const data = puliteC.slice(1).map(row => ({
-          pos: row[0],
-          team: row[1],
-          played: row[2],
-          wins: row[3],
-          losses: row[4],
-          scored: row[5],
-          against: row[6],
-          points: row[2]
-        }));
-        setClassifica(data);
+/** CSV pubblicato da Google Sheets: gestisce anche le virgole tra virgolette */
+function parseCsv(text: string): string[][] {
+  return text
+    .split(/\r?\n/)
+    .filter((line) => line.trim())
+    .map((line) => {
+      const cells: string[] = [];
+      let cur = '';
+      let quoted = false;
+      for (const ch of line) {
+        if (ch === '"') quoted = !quoted;
+        else if (ch === ',' && !quoted) {
+          cells.push(cur.trim());
+          cur = '';
+        } else cur += ch;
       }
+      cells.push(cur.trim());
+      return cells;
+    });
+}
 
-      // 2. Fetch Calendario
-/*     const resCal = await fetch(calendarioUrl);
-      const csvCal = await resCal.text();
-      // Usiamo una regex per lo split per gestire meglio virgole dentro le virgolette
-      const righeCal = csvCal.split('\n').map(r => r.split(','));
-      
-      const soloHyria = righeCal.filter(riga => 
-        riga.some(cella => cella.toUpperCase().includes('HYRIA'))
-      ).map(riga => riga.map(cella => cella.replace(/^"|"$/g, '').trim()));
-
-      // LOGICA DI SEPARAZIONE RISULTATI / PROSSIMI
-      const fatti: any[] = [];
-      const daFare: any[] = [];
-
-      soloHyria.forEach(m => {
-        // Playbasket solitamente mette il punteggio nella colonna 2 (indice 2) o 3
-        // Se troviamo un trattino "-" e dei numeri, è un risultato
-        const colonnaPunteggio = m[2] || "";
-        const haPunteggio = colonnaPunteggio.includes('-') && /\d/.test(colonnaPunteggio);
-
-        if (haPunteggio) {
-          fatti.push(m);
-        } else {
-          daFare.push(m);
-        }
+function toRows(table: string[][]): Row[] {
+  const [head, ...body] = table;
+  const names = head.map((h) => h.toLowerCase());
+  const find = (...keys: string[]) => names.findIndex((n) => keys.includes(n));
+  const teamCol = Math.max(find('squadra', 'team'), 1);
+  const ptsCol = find('punti', 'pt', 'pts');
+  const pointsCol = ptsCol >= 0 ? ptsCol : 2;
+  const optional = OPTIONAL.map((o) => ({ key: o.key, col: find(...o.names) }));
+  return body
+    .filter((r) => r[teamCol])
+    .map((r) => {
+      const row: Row = { pos: r[0], team: r[teamCol], points: r[pointsCol] ?? '' };
+      optional.forEach(({ key, col }) => {
+        if (col >= 0) row[key] = r[col];
       });
+      return row;
+    });
+}
 
-      setRisultati(fatti);
-      setProssimiMatch(daFare);
-      */
+const isHyria = (team: string) => team.toUpperCase().includes('HYRIA');
 
+const Calendario = () => {
+  const [rows, setRows] = useState<Row[]>([]);
+  const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
+
+  const load = useCallback(async () => {
+    setState('loading');
+    try {
+      const res = await fetch(CLASSIFICA_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = toRows(parseCsv(await res.text()));
+      if (!data.length) throw new Error('Classifica vuota');
+      setRows(data);
+      setState('ready');
     } catch (error) {
-      console.error('Errore caricamento dati:', error);
-    } finally {
-      setLoading(false);
+      console.error('Errore caricamento classifica:', error);
+      setState('error');
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    load();
+  }, [load]);
+
+  const columns = OPTIONAL.filter((o) => rows.some((r) => r[o.key] !== undefined));
+  const hyria = rows.find((r) => isHyria(r.team));
+
+  // il tabellone del palazzetto mostra la nostra posizione
+  const jumbo = useMemo(
+    () =>
+      hyria
+        ? {
+            title: 'Classifica',
+            columns: [
+              { value: `${hyria.pos}°`, label: 'Posizione' },
+              { value: hyria.points || '0', label: 'Punti' },
+            ],
+          }
+        : undefined,
+    [hyria],
+  );
 
   return (
     <>
@@ -103,126 +117,95 @@ const Calendario = () => {
         canonicalUrl="https://hyriabasket.it/classifica"
       />
 
-      <div className="calendario-page calendario-bolder">
+      <div className="pg">
+        <ArenaPageHero
+          shot="classifica"
+          floorTitle="Classifica"
+          kicker="Stagione 2026/27 · Serie DR2"
+          title="Classifica"
+          lead={
+            hyria
+              ? `Hyria è ${hyria.pos}ª con ${hyria.points || 0} punti. Segui il campionato giornata dopo giornata.`
+              : 'Segui il campionato di Hyria Basket giornata dopo giornata.'
+          }
+          image="/images/1.jpg"
+          jumbo={jumbo}
+          actions={
+            <a href="#classifica" className="hy-btn hy-btn--primary">
+              Vedi la classifica
+            </a>
+          }
+        />
 
-        {/* ── Hero ─────────────────────────────────────────────── */}
-        <section className="hero-section calendario-hero">
-          <div className="hero-background">
-            <img
-              src="/images/1.jpg"
-              alt="Hyria Basket in campo"
-              className="hero-bg-image"
-              width={1920}
-              height={1080}
-              decoding="async"
-              fetchPriority="high"
-            />
-            <div className="hero-overlay" />
-          </div>
-          <div className="hero-content">
-            <motion.div
-              variants={heroContainer}
-              initial="hidden"
-              animate="visible"
-              className="hero-text-container"
-            >
-              <motion.p variants={heroItem} className="hero-kicker">
-                STAGIONE 2026/27 · SERIE DR2
-              </motion.p>
-              <motion.h1 variants={heroItem} className="hero-title">
-                CLASSI<span className="hero-accent">FICA</span>
-              </motion.h1>
-            </motion.div>
-          </div>
-        </section>
+        <section id="classifica" className="pg-sec">
+          <div className="pg-wrap">
+            <header className="pg-head cl-head">
+              <h2 className="hy-h2">Classifica generale</h2>
+              <p>Aggiornata automaticamente dalla piattaforma ufficiale del campionato.</p>
+            </header>
 
-        {/* ── Classifica ───────────────────────────────────────── */}
-        <section className="about-section section-padding">
-          <div className="container">
-            <motion.h2
-              className="section-title"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={revealTransition}
-            >
-              CLASSIFICA GENERALE
-            </motion.h2>
-            <motion.div
-              className="section-divider"
-              variants={scaleReveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              style={{ transformOrigin: 'left center' }}
-            />
-            <motion.p
-              className="section-subtitle"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...revealTransition, delay: 0.12 }}
-            >
-              Aggiornamento automatico dalla piattaforma ufficiale
-            </motion.p>
+            {state === 'loading' && (
+              <p className="cl-status" role="status">
+                Carico la classifica…
+              </p>
+            )}
 
-            <div className="classifica-live-badge">
-              <span className="classifica-live-dot" />
-              Dati in tempo reale
-            </div>
+            {state === 'error' && (
+              <div className="cl-status cl-status--error" role="alert">
+                <p>Non riesco a caricare la classifica in questo momento. Controlla la connessione e riprova.</p>
+                <button type="button" className="hy-btn hy-btn--ghost" onClick={load}>
+                  Riprova
+                </button>
+              </div>
+            )}
 
-            <motion.div
-              className="classifica-table-wrap"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ ...revealTransition, delay: 0.18 }}
-            >
-              <table className="classifica-table">
-                <thead>
-                  <tr>
-                    <th className="classifica-th classifica-th--pos">#</th>
-                    <th className="classifica-th classifica-th--team">Squadra</th>
-                    <th className="classifica-th classifica-th--pts">PT</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading ? (
+            {state === 'ready' && (
+              <div className="cl-board">
+                <table className="cl-table">
+                  <caption className="cl-sr">Classifica Serie DR2, stagione 2026/27</caption>
+                  <thead>
                     <tr>
-                      <td colSpan={3} className="classifica-loading">
-                        Caricamento in corso…
-                      </td>
+                      <th scope="col" className="cl-pos">
+                        <abbr title="Posizione">#</abbr>
+                      </th>
+                      <th scope="col" className="cl-team">
+                        Squadra
+                      </th>
+                      {columns.map((c) => (
+                        <th scope="col" key={c.key} className="cl-num">
+                          <abbr title={c.title}>{c.label}</abbr>
+                        </th>
+                      ))}
+                      <th scope="col" className="cl-num cl-pts">
+                        <abbr title="Punti">PT</abbr>
+                      </th>
                     </tr>
-                  ) : (
-                    classifica.map((row, i) => {
-                      const isHyria = row.team?.toUpperCase().includes('HYRIA');
+                  </thead>
+                  <tbody>
+                    {rows.map((r) => {
+                      const us = isHyria(r.team);
                       return (
-                        <tr
-                          key={i}
-                          className={`classifica-row${isHyria ? ' classifica-row--hyria' : ''}`}
-                        >
-                          <td className="classifica-td classifica-td--pos">
-                            <span className="classifica-pos">{row.pos}</span>
-                          </td>
-                          <td className="classifica-td classifica-td--team">
-                            {isHyria && (
-                              <span className="classifica-hyria-badge">NOI</span>
-                            )}
-                            <span className="classifica-team-name">{row.team}</span>
-                          </td>
-                          <td className="classifica-td classifica-td--pts">
-                            <span className="classifica-pts">{row.points}</span>
-                          </td>
+                        <tr key={`${r.pos}-${r.team}`} className={us ? 'is-us' : undefined}>
+                          <td className="cl-pos">{r.pos}</td>
+                          <th scope="row" className="cl-team">
+                            {r.team}
+                            {us && <span className="cl-badge">Noi</span>}
+                          </th>
+                          {columns.map((c) => (
+                            <td key={c.key} className="cl-num">
+                              {r[c.key] ?? '–'}
+                            </td>
+                          ))}
+                          <td className="cl-num cl-pts">{r.points}</td>
                         </tr>
                       );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </motion.div>
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </section>
-
       </div>
     </>
   );

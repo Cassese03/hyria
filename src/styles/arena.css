@@ -1,0 +1,525 @@
+/* ─── Home "Dentro il Palazzetto" ────────────────────────────────────────────
+   La scena 3D è fissa dietro la pagina; ogni sezione ha uno "stage" sticky
+   che resta fermo mentre la camera è sulla sua tappa.                        */
+
+.ah {
+  --ah-ink: #f4eee7;
+  --ah-muted: rgba(244, 238, 231, 0.78);
+  --ah-line: rgba(244, 238, 231, 0.16);
+  --ah-orange: #d96c00;
+  --ah-orange-hi: #f07c0a;
+  --ah-maroon: #5e0303;
+  --ah-night: 11, 3, 6;
+  --ah-gutter: clamp(20px, 5vw, 80px);
+
+  position: relative;
+  color: var(--ah-ink);
+  font-family: 'Montserrat', sans-serif;
+  background: rgb(var(--ah-night));
+}
+
+/* il footer deve coprire il canvas fisso */
+.site-footer {
+  position: relative;
+  z-index: 6; /* sopra canvas e percorso laterale */
+}
+
+.ah-backdrop,
+.ah-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.ah-backdrop {
+  background:
+    radial-gradient(120% 80% at 50% 40%, rgba(94, 3, 3, 0.55), rgba(var(--ah-night), 0.95) 70%),
+    url('/images/basketball-hero.jpg') center / cover no-repeat;
+}
+
+.ah-canvas {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.ah.is-ready .ah-canvas {
+  opacity: 1;
+}
+
+.ah-canvas canvas {
+  display: block;
+  max-width: none;
+}
+
+/* ─── Sezioni e stage ───────────────────────────────────────────────────── */
+
+.ah-sec {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+}
+
+.ah--3d .ah-sec {
+  height: 170svh;
+}
+
+.ah--3d .ah-sec--hero,
+.ah--3d .ah-sec--last {
+  height: 100svh;
+}
+
+.ah--3d .ah-sec--long {
+  height: 280svh;
+}
+
+.ah-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  isolation: isolate;
+  padding: clamp(88px, 12vh, 120px) var(--ah-gutter) clamp(40px, 8vh, 72px);
+}
+
+.ah-sec--hero .ah-stage {
+  position: relative;
+}
+
+/* velature: tengono il testo leggibile sopra la scena */
+.ah-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ah-stage--hero,
+.ah-stage--bottom-left {
+  align-items: flex-end;
+}
+
+.ah-stage--hero::before,
+.ah-stage--bottom-left::before {
+  background:
+    linear-gradient(0deg, rgba(var(--ah-night), 0.9) 0%, rgba(var(--ah-night), 0.45) 38%, rgba(var(--ah-night), 0) 62%),
+    linear-gradient(90deg, rgba(var(--ah-night), 0.6) 0%, rgba(var(--ah-night), 0) 55%);
+}
+
+.ah-stage--left {
+  align-items: center;
+}
+
+.ah-stage--left::before {
+  background: linear-gradient(90deg, rgba(var(--ah-night), 0.92) 0%, rgba(var(--ah-night), 0.7) 34%, rgba(var(--ah-night), 0) 62%);
+}
+
+.ah-stage--right {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ah-stage--right::before {
+  background: linear-gradient(270deg, rgba(var(--ah-night), 0.92) 0%, rgba(var(--ah-night), 0.7) 34%, rgba(var(--ah-night), 0) 62%);
+}
+
+.ah-stage--bottom {
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ah-stage--bottom::before {
+  background: linear-gradient(0deg, rgba(var(--ah-night), 0.94) 0%, rgba(var(--ah-night), 0.6) 30%, rgba(var(--ah-night), 0) 55%);
+}
+
+.ah-copy {
+  width: 100%;
+  max-width: 34rem;
+}
+
+.ah-copy--center {
+  max-width: 40rem;
+  text-align: center;
+}
+
+/* ─── Tipografia ────────────────────────────────────────────────────────── */
+
+
+.ah-title {
+  margin: 0;
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(3.6rem, 12.5vw, 9.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.45);
+}
+
+.ah-motto {
+  margin: 1.25rem 0 0;
+  color: #fff;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 700;
+}
+
+
+.ah-body,
+.ah-lead {
+  margin: 0;
+  color: var(--ah-muted);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  max-width: 54ch;
+}
+
+.ah-copy--center .ah-body {
+  margin-inline: auto;
+}
+
+.ah-sec--hero .ah-body {
+  margin-top: 1rem;
+  max-width: 46ch;
+}
+
+.ah-lead {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ─── Azioni ────────────────────────────────────────────────────────────── */
+
+
+.ah-copy--center .hy-actions {
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+.ah :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ─── Contenuti delle sezioni ───────────────────────────────────────────── */
+
+.ah-photo {
+  margin: 1.5rem 0 0;
+  aspect-ratio: 16 / 9;
+  max-height: 24vh;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.ah-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ah-pillars {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+}
+
+.ah-pillars li {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--ah-line);
+}
+
+.ah-pillars h3 {
+  margin: 0 0 0.35rem;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ah-pillars p {
+  margin: 0;
+  color: var(--ah-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.ah-stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 8vw, 5rem);
+  margin: 2rem 0 0;
+}
+
+.ah-stats div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.ah-stats dd {
+  margin: 0;
+  color: var(--ah-orange-hi);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ah-stats dt {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* in 3D i numeri sono sul tabellone: qui restano per i lettori di schermo */
+.ah--3d .ah-stats {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─── Indicazione di scroll ─────────────────────────────────────────────── */
+
+.ah-hint {
+  position: absolute;
+  right: var(--ah-gutter);
+  bottom: clamp(40px, 8vh, 72px);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  color: var(--ah-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.ah-hint::after {
+  content: '';
+  width: 1px;
+  height: 64px;
+  background: linear-gradient(var(--ah-orange), transparent);
+  transform-origin: top;
+  animation: ah-hint 2.4s ease-in-out infinite;
+}
+
+@keyframes ah-hint {
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* ─── Percorso laterale ─────────────────────────────────────────────────── */
+
+.ah-rail {
+  position: fixed;
+  top: 50%;
+  right: 22px;
+  z-index: 5;
+  transform: translateY(-50%);
+  display: none;
+}
+
+.ah-rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ah-rail button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ah-muted);
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ah-rail-label {
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.ah-rail button:hover .ah-rail-label,
+.ah-rail button:focus-visible .ah-rail-label,
+.ah-rail button.is-active .ah-rail-label {
+  opacity: 1;
+  transform: none;
+}
+
+.ah-rail button.is-active {
+  color: #fff;
+}
+
+.ah-rail-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.ah-rail button.is-active .ah-rail-dot {
+  background: var(--ah-orange);
+  border-color: var(--ah-orange);
+  transform: scale(1.35);
+}
+
+@media (min-width: 1024px) {
+  .ah-rail {
+    display: block;
+  }
+}
+
+/* ─── Versione senza 3D (WebGL assente o risparmio dati) ────────────────── */
+
+.ah--static .ah-backdrop {
+  position: absolute;
+  height: 100svh;
+}
+
+.ah--static .ah-stage {
+  position: relative;
+  height: auto;
+  min-height: 0;
+  padding-block: clamp(4rem, 10vw, 7rem);
+  justify-content: flex-start;
+}
+
+.ah--static .ah-stage::before {
+  display: none;
+}
+
+.ah--static .ah-sec--hero .ah-stage {
+  min-height: 100svh;
+}
+
+.ah--static .ah-sec:nth-child(even of .ah-sec) {
+  background: var(--ah-maroon);
+}
+
+.ah--static .ah-stage--bottom-left {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2rem;
+}
+
+.ah-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.ah-gallery img,
+.ah-gallery video {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+/* ─── Mobile: testo sempre in basso, la scena sopra ─────────────────────── */
+
+@media (max-width: 767px) {
+  .ah-stage {
+    padding: 84px 20px 32px;
+  }
+
+  .ah-stage--left,
+  .ah-stage--right {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .ah--3d .ah-stage--left::before,
+  .ah--3d .ah-stage--right::before,
+  .ah--3d .ah-stage--bottom::before,
+  .ah--3d .ah-stage--bottom-left::before,
+  .ah--3d .ah-stage--hero::before {
+    background: linear-gradient(0deg, rgba(var(--ah-night), 0.95) 0%, rgba(var(--ah-night), 0.82) 38%, rgba(var(--ah-night), 0) 66%);
+  }
+
+  .ah-copy--center {
+    text-align: left;
+  }
+
+  .ah-copy--center .hy-actions {
+    justify-content: flex-start;
+  }
+
+  .ah-body,
+  .ah-lead {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .ah--3d .ah-photo {
+    display: none;
+  }
+
+  .ah-pillars {
+    margin-top: 1rem;
+  }
+
+  .ah-pillars li {
+    padding: 0.75rem 0;
+  }
+
+  .ah-pillars p {
+    font-size: 0.92rem;
+  }
+
+  .ah-hint {
+    display: none;
+  }
+
+
+  .ah-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ah-hint::after {
+    animation: none;
+  }
+
+  .ah-canvas {
+    transition: none;
+  }
+}
+
+/* spazio per il percorso laterale */
+@media (min-width: 1024px) {
+  .ah--3d .ah-stage--right {
+    padding-right: calc(var(--ah-gutter) + 96px);
+  }
+}

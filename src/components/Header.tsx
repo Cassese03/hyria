@@ -23,11 +23,11 @@ const Header = () => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -124,11 +124,12 @@ const Header = () => {
               {/* <li className="mobile-menu-item">
                 <a href="/schedina" onClick={() => setIsOpen(false)}>Schedina</a>
               </li> */}
+              {/* Streaming nascosto per ora: la pagina resta raggiungibile da /streaming
               <li className="mobile-menu-item">
                 <a href="/streaming" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
                   LIVE <span className="pulse-dot-red"></span>
                 </a>
-              </li>
+              </li> */}
               {/* <li className="mobile-menu-item">
                 <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
               </li> */}

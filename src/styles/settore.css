@@ -1,0 +1,53 @@
+/* ─── Settore giovanile ──────────────────────────────────────────────────── */
+
+/* gruppi per età: una scala che sale, come i bambini che crescono */
+.sg-ladder {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 0.75rem;
+}
+
+.sg-ladder li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 1.25rem 1.25rem 1.4rem;
+  border-top: 3px solid var(--hy-orange);
+  background: linear-gradient(180deg, rgba(94, 3, 3, 0.75), rgba(94, 3, 3, 0.25));
+}
+
+.sg-ladder li:nth-child(1) { min-height: 9rem; }
+.sg-ladder li:nth-child(2) { min-height: 11rem; }
+.sg-ladder li:nth-child(3) { min-height: 13rem; }
+.sg-ladder li:nth-child(4) { min-height: 15rem; }
+
+.sg-ladder-age {
+  color: var(--hy-orange-hi);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sg-ladder-name {
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+@media (max-width: 699px) {
+  .sg-ladder {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sg-ladder li:nth-child(n) {
+    min-height: 7.5rem;
+  }
+}

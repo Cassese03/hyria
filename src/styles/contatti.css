@@ -1,0 +1,200 @@
+/* ─── Contatti ───────────────────────────────────────────────────────────── */
+
+.ct-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.ct-info {
+  margin: 1.5rem 0 0;
+}
+
+.ct-info > div {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--hy-line);
+}
+
+.ct-info dt {
+  margin-bottom: 0.4rem;
+  color: var(--hy-faint);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ct-info dd {
+  margin: 0.2rem 0 0;
+  color: var(--hy-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.ct-info a {
+  color: #fff;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(217, 108, 0, 0.6);
+}
+
+.ct-info a:hover {
+  color: var(--hy-orange-hi);
+}
+
+.ct-map {
+  aspect-ratio: 21 / 9;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid var(--hy-line);
+}
+
+.ct-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(0.35) contrast(1.05);
+}
+
+@media (max-width: 899px) {
+  .ct-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ct-map {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ─── Modulo ─────────────────────────────────────────────────────────────── */
+
+.cf-form,
+.cf-result {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 3px solid var(--hy-orange);
+  background: var(--hy-deep);
+}
+
+.cf-title {
+  margin: 0 0 1.5rem;
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.cf-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+}
+
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+.cf-field label {
+  color: var(--hy-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cf-field input,
+.cf-field select,
+.cf-field textarea {
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(244, 238, 231, 0.22);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cf-field textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.cf-field select option {
+  background: var(--hy-deep);
+}
+
+.cf-field input::placeholder,
+.cf-field textarea::placeholder {
+  color: rgba(244, 238, 231, 0.35);
+}
+
+.cf-field input:focus,
+.cf-field select:focus,
+.cf-field textarea:focus {
+  outline: none;
+  border-color: var(--hy-orange);
+  box-shadow: 0 0 0 3px rgba(217, 108, 0, 0.25);
+}
+
+.cf-error {
+  margin: 0 0 1rem;
+  color: #fca5a5;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.cf-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.cf-foot .hy-btn[disabled] {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.cf-note {
+  margin: 0;
+  color: var(--hy-faint);
+  font-size: 0.82rem;
+}
+
+.cf-result h3 {
+  margin: 0 0 0.6rem;
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: 1.6rem;
+}
+
+.cf-result p {
+  margin: 0 0 1.5rem;
+  color: var(--hy-muted);
+  line-height: 1.6;
+}
+
+.cf-result.is-ok {
+  border-top-color: #4ade80;
+}
+
+.cf-result.is-error {
+  border-top-color: #f87171;
+}
+
+@media (max-width: 599px) {
+  .cf-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cf-foot .hy-btn {
+    width: 100%;
+  }
+}

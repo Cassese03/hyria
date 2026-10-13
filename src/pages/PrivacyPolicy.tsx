@@ -11,6 +11,7 @@ const PrivacyPolicy = () => (
       canonicalUrl="https://hyriabasket.it/privacy-policy"
       ogUrl="https://hyriabasket.it/privacy-policy"
     />
+    <div className="pg">
     <article className="legal">
       <header className="legal__head">
         <h1>Privacy Policy</h1>
@@ -101,6 +102,7 @@ const PrivacyPolicy = () => (
         </p>
       </section>
     </article>
+    </div>
   </>
 );
 
