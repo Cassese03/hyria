@@ -26,6 +26,10 @@ const Streaming = lazy(() => import('./pages/Streaming'));
 const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const LoaderPreview = lazy(() => import('./pages/LoaderPreview'));
+
+// la pagina di anteprima gestisce da sola i suoi loading screen
+const NO_LOADER = ['/anteprima-loading'];
 
 const AppContent = () => {
   const location = useLocation();
@@ -33,6 +37,11 @@ const AppContent = () => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
+    if (NO_LOADER.includes(location.pathname)) {
+      setShowLoadingPage(false);
+      return;
+    }
+
     // FASE 1 → Mostra loading + animazione entrata
     setShowLoadingPage(true);
     setIsAnimating(true);
@@ -73,6 +82,7 @@ const AppContent = () => {
               <Route path="/spogliatoio" element={<Spogliatoio />} />
               <Route path="/schedina" element={<HyriaBettingPage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/anteprima-loading" element={<LoaderPreview />} />
             </Routes>
           </Suspense>
         </main>
