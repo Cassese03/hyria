@@ -33,6 +33,7 @@ const INTRO = 0.95; // secondi del tiro iniziale
 const BOARD_Z = -0.405;
 const LOGO_TO = new THREE.Vector3(0, 0.5, 0.5);
 const FOV = 36;
+const LOGO_AXIS = new THREE.Vector3(1, 0, 0);
 
 const rng = (seed: number) => () => {
   seed = (seed * 16807) % 2147483647;
@@ -44,6 +45,7 @@ const rng = (seed: number) => () => {
 const BW = 2048;
 const BH = 1024;
 const SEAM_AMP = BW * 0.146; // apertura delle cuciture curve
+const LOGO_DEG = 126; // ampiezza dello stemma sul pallone: copre quasi tutta la faccia visibile
 
 /** Le cuciture di un pallone vero: equatore, un meridiano e le due curve */
 function seamPath(ctx: CanvasRenderingContext2D) {
@@ -67,11 +69,11 @@ function seamPath(ctx: CanvasRenderingContext2D) {
 
 /** Stampa lo stemma sulla sfera: riga per riga, allargando verso i poli
     così sul pallone non risulta deformato */
-function printOnSphere(ctx: CanvasRenderingContext2D, img: HTMLImageElement, cx: number, latDeg: number, sizeDeg: number) {
+function printOnSphere(ctx: CanvasRenderingContext2D, img: HTMLCanvasElement, cx: number, latDeg: number, sizeDeg: number) {
   const h = (sizeDeg / 180) * BH;
   const top = BH * (0.5 - latDeg / 180) - h / 2;
-  const sw = img.naturalWidth;
-  const sh = img.naturalHeight;
+  const sw = img.width;
+  const sh = img.height;
   for (let row = 0; row < h; row++) {
     const lat = THREE.MathUtils.degToRad(latDeg + (0.5 - (row + 0.5) / h) * sizeDeg);
     const w = ((sizeDeg / Math.max(0.2, Math.cos(lat))) / 360) * BW;
@@ -83,8 +85,35 @@ function printOnSphere(ctx: CanvasRenderingContext2D, img: HTMLImageElement, cx:
   }
 }
 
-/** Pelle del pallone con lo stemma Hyria stampato nei pannelli tra le cuciture curve */
-function ballTextures(logo: HTMLImageElement) {
+/** Stemma con un bordo crema attorno alla sagoma, per staccarlo dall'arancio */
+function outlinedLogo(logo: HTMLImageElement) {
+  const S = 1024;
+  const pad = S * 0.05;
+  const c = document.createElement('canvas');
+  c.width = c.height = S;
+  const ctx = c.getContext('2d') as CanvasRenderingContext2D;
+  const inner = S - pad * 2;
+  // sagoma tinta di crema, ripetuta in cerchio: diventa un contorno spesso
+  const sil = document.createElement('canvas');
+  sil.width = sil.height = S;
+  const sctx = sil.getContext('2d') as CanvasRenderingContext2D;
+  sctx.drawImage(logo, pad, pad, inner, inner);
+  sctx.globalCompositeOperation = 'source-in';
+  sctx.fillStyle = '#f3e7d6';
+  sctx.fillRect(0, 0, S, S);
+  const r = S * 0.022;
+  for (let i = 0; i < 24; i++) {
+    const a = (i / 24) * Math.PI * 2;
+    ctx.drawImage(sil, Math.cos(a) * r, Math.sin(a) * r);
+  }
+  ctx.drawImage(sil, 0, 0);
+  ctx.drawImage(logo, pad, pad, inner, inner);
+  return c;
+}
+
+/** Pelle del pallone con lo stemma Hyria stampato grande sui due lati */
+function ballTextures(logoImg: HTMLImageElement) {
+  const logo = outlinedLogo(logoImg);
   const rand = rng(7);
 
   // colore
@@ -109,21 +138,10 @@ function ballTextures(logo: HTMLImageElement) {
     ctx.fillStyle = rand() > 0.5 ? 'rgba(60,20,4,0.16)' : 'rgba(255,190,140,0.1)';
     ctx.fillRect(rand() * BW, rand() * BH, 2, 2);
   }
+  // stemma grande su entrambi i lati (±X della sfera), stampato sotto le cuciture
   ctx.imageSmoothingQuality = 'high';
-  printOnSphere(ctx, logo, BW / 2, 36, 50);
-  printOnSphere(ctx, logo, 0, -36, 50);
-  ctx.fillStyle = '#2a0b04';
-  ctx.font = '800 30px Montserrat, Arial, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) (ctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = '6px';
-  ctx.fillText('HYRIA BASKET · NOLA', BW / 2, BH * (0.5 - 7 / 180));
-  ctx.save();
-  ctx.translate(BW, BH * (0.5 + 7 / 180));
-  ctx.fillText('HYRIA BASKET · NOLA', 0, 0);
-  ctx.translate(-BW, 0);
-  ctx.fillText('HYRIA BASKET · NOLA', 0, 0);
-  ctx.restore();
+  printOnSphere(ctx, logo, BW / 2, 0, LOGO_DEG);
+  printOnSphere(ctx, logo, 0, 0, LOGO_DEG);
   ctx.strokeStyle = '#1a0b05';
   ctx.lineWidth = 13;
   seamPath(ctx);
@@ -183,47 +201,138 @@ function raysTexture() {
   return t;
 }
 
-/** Cronometro dei 24" a LED: le cifre sono fatte di puntini, come quelli veri */
+/* Cronometro dei 24" come quelli da palazzetto: cifre rosse a 7 segmenti
+   (si vedono anche i segmenti spenti) e una riga ambra a puntini sotto */
+
+const CW = 1024;
+const CH = 640;
+
+// segmenti accesi per ogni cifra: a b c d e f g
+const SEGS: Record<string, string> = {
+  '0': 'abcdef',
+  '1': 'bc',
+  '2': 'abged',
+  '3': 'abgcd',
+  '4': 'fgbc',
+  '5': 'afgcd',
+  '6': 'afgedc',
+  '7': 'abc',
+  '8': 'abcdefg',
+  '9': 'abcdfg',
+};
+
+/** Una cifra a 7 segmenti, leggermente inclinata come sui cronometri veri */
+function drawDigit(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, ch: string, lit: string, off: string) {
+  const t = w * 0.2; // spessore del segmento
+  const g = t * 0.14; // fessura tra segmenti
+  const skew = 0.08;
+  const on = SEGS[ch] ?? '';
+  const P = (px: number, py: number): [number, number] => [x + px + (h - py) * skew, y + py];
+  // segmento orizzontale e verticale come esagoni allungati
+  const hSeg = (cy: number) => [
+    P(t / 2 + g, cy),
+    P(t + g, cy - t / 2),
+    P(w - t - g, cy - t / 2),
+    P(w - t / 2 - g, cy),
+    P(w - t - g, cy + t / 2),
+    P(t + g, cy + t / 2),
+  ];
+  const vSeg = (cx: number, y0: number, y1: number) => [
+    P(cx, y0 + g),
+    P(cx + t / 2, y0 + t / 2 + g),
+    P(cx + t / 2, y1 - t / 2 - g),
+    P(cx, y1 - g),
+    P(cx - t / 2, y1 - t / 2 - g),
+    P(cx - t / 2, y0 + t / 2 + g),
+  ];
+  const segs: Record<string, [number, number][]> = {
+    a: hSeg(t / 2),
+    g: hSeg(h / 2),
+    d: hSeg(h - t / 2),
+    f: vSeg(t / 2, t / 2, h / 2),
+    b: vSeg(w - t / 2, t / 2, h / 2),
+    e: vSeg(t / 2, h / 2, h - t / 2),
+    c: vSeg(w - t / 2, h / 2, h - t / 2),
+  };
+  for (const [k, pts] of Object.entries(segs)) {
+    const isOn = on.includes(k);
+    ctx.fillStyle = isOn ? lit : off;
+    ctx.shadowColor = isOn ? lit : 'transparent';
+    ctx.shadowBlur = isOn ? 28 : 0;
+    ctx.beginPath();
+    pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.shadowBlur = 0;
+}
+
+/** Riga a puntini ambra sotto le cifre */
+function drawDotRow(ctx: CanvasRenderingContext2D, text: string, y: number, h: number) {
+  const GW = 96;
+  const GH = 9;
+  const m = document.createElement('canvas');
+  m.width = GW;
+  m.height = GH;
+  const mctx = m.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+  mctx.fillStyle = '#fff';
+  mctx.font = '700 9px Montserrat, Arial, sans-serif';
+  mctx.textAlign = 'center';
+  mctx.textBaseline = 'middle';
+  if ('letterSpacing' in mctx) (mctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = '1px';
+  mctx.fillText(text, GW / 2, GH / 2 + 0.5);
+  const px = mctx.getImageData(0, 0, GW, GH).data;
+  const P = CW / GW;
+  const s = h / GH;
+  for (let gy = 0; gy < GH; gy++) {
+    for (let gx = 0; gx < GW; gx++) {
+      const isOn = px[(gy * GW + gx) * 4 + 3] > 120;
+      ctx.fillStyle = isOn ? '#ffab2e' : '#1c1006';
+      ctx.shadowColor = isOn ? '#ffab2e' : 'transparent';
+      ctx.shadowBlur = isOn ? 6 : 0;
+      ctx.beginPath();
+      ctx.arc(gx * P + P / 2, y + gy * s + s / 2, Math.min(P, s) * 0.34, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.shadowBlur = 0;
+}
+
 function useShotClock() {
   return useMemo(() => {
-    const GW = 44;
-    const GH = 26;
-    const P = 8;
     const c = document.createElement('canvas');
-    c.width = GW * P;
-    c.height = GH * P;
+    c.width = CW;
+    c.height = CH;
     const ctx = c.getContext('2d') as CanvasRenderingContext2D;
-    const m = document.createElement('canvas');
-    m.width = GW;
-    m.height = GH;
-    const mctx = m.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
     const tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = 4;
+    tex.anisotropy = 8;
+
+    // la riga ambra non cambia: la disegno una volta su un canvas a parte
+    const strip = document.createElement('canvas');
+    strip.width = CW;
+    strip.height = 120;
+    const sctx = strip.getContext('2d') as CanvasRenderingContext2D;
+    sctx.fillStyle = '#060405';
+    sctx.fillRect(0, 0, CW, 120);
+    drawDotRow(sctx, 'HYRIA BASKET', 14, 92);
 
     const draw = (n: number, on = true) => {
-      mctx.clearRect(0, 0, GW, GH);
-      mctx.fillStyle = '#fff';
-      mctx.font = '900 25px Montserrat, Arial, sans-serif';
-      mctx.textAlign = 'center';
-      mctx.textBaseline = 'middle';
-      mctx.fillText(String(n), GW / 2, GH / 2 + 1.5);
-      const px = mctx.getImageData(0, 0, GW, GH).data;
-      ctx.fillStyle = '#050406';
-      ctx.fillRect(0, 0, c.width, c.height);
-      const lit = n === 0 ? '#ff3b1f' : '#ff8a1f';
-      for (let y = 0; y < GH; y++) {
-        for (let x = 0; x < GW; x++) {
-          const isOn = on && px[(y * GW + x) * 4 + 3] > 110;
-          ctx.fillStyle = isOn ? lit : '#1d0d08';
-          ctx.shadowColor = isOn ? lit : 'transparent';
-          ctx.shadowBlur = isOn ? 6 : 0;
-          ctx.beginPath();
-          ctx.arc(x * P + P / 2, y * P + P / 2, P * 0.36, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#060405';
+      ctx.fillRect(0, 0, CW, CH);
+      // pannello delle cifre, leggermente più scuro con una cornice
+      ctx.fillStyle = '#030203';
+      ctx.fillRect(40, 30, CW - 80, 440);
+      const lit = '#ff2d14';
+      const off = '#2a0907';
+      const str = String(n);
+      const digits = str.length === 1 ? [' ', str] : str.split('');
+      const dw = 300;
+      const dh = 380;
+      const gap = 70;
+      const x0 = (CW - (dw * 2 + gap)) / 2;
+      digits.forEach((d, i) => drawDigit(ctx, x0 + i * (dw + gap), 60, dw, dh, on ? d : ' ', lit, off));
+      ctx.drawImage(strip, 0, 500);
       tex.needsUpdate = true;
     };
     draw(24);
@@ -234,7 +343,8 @@ function useShotClock() {
 /* ─── Retina: corde intrecciate, con nodi e un filo di cedimento ─────────── */
 
 const NET_ROWS = 6;
-const NET_STRANDS = 16;
+const NET_DARK = 0.5; // luminosità delle corde sul retro della retina
+const NET_STRANDS = 12; // regolamentare: 12 ganci sul ferro
 const NET_LEN = 0.44;
 const NET_TOP = -0.016; // la retina pende dai ganci sotto il ferro
 const NET_SUB = 3; // ogni corda tra due nodi è spezzata in 3 per farla curvare
@@ -280,6 +390,7 @@ function braidTexture() {
 }
 
 function Net({ state }: { state: NetState }) {
+  const camera = useThree((s) => s.camera);
   const cords = useRef<THREE.InstancedMesh>(null);
   const knots = useRef<THREE.InstancedMesh>(null);
   const nodes = useMemo(() => Array.from({ length: (NET_ROWS + 1) * NET_STRANDS }, () => new THREE.Vector3()), []);
@@ -295,6 +406,8 @@ function Net({ state }: { state: NetState }) {
       sag: new THREE.Vector3(),
       up: new THREE.Vector3(0, 1, 0),
       one: new THREE.Quaternion(),
+      view: new THREE.Vector2(),
+      c: new THREE.Color(),
     }),
     [],
   );
@@ -319,6 +432,13 @@ function Net({ state }: { state: NetState }) {
     const km = knots.current;
     if (!cm || !km) return;
     const { ballY, inside, drag, whip, jiggle, t } = state;
+    // direzione orizzontale verso la camera: le corde opposte sono in ombra
+    tmp.view.set(camera.position.x, camera.position.z).normalize();
+    const shade = (x: number, z: number) => {
+      const l = Math.hypot(x, z) || 1;
+      const facing = (x * tmp.view.x + z * tmp.view.y) / l; // 1 davanti, -1 dietro
+      return tmp.c.setScalar(NET_DARK + (1 - NET_DARK) * (0.5 + 0.5 * facing));
+    };
     const whipK = Math.sin(whip * Math.PI * 3) * (1 - whip) ** 2;
 
     for (let r = 0; r <= NET_ROWS; r++) {
@@ -354,6 +474,7 @@ function Net({ state }: { state: NetState }) {
       tmp.q.setFromUnitVectors(tmp.up, tmp.dir.divideScalar(l || 1));
       tmp.s.set(1, l * 1.04, 1);
       tmp.m.compose(tmp.mid, tmp.q, tmp.s);
+      cm.setColorAt(i, shade(tmp.mid.x, tmp.mid.z));
       cm.setMatrixAt(i++, tmp.m);
     };
     const cord = (a: THREE.Vector3, b: THREE.Vector3) => {
@@ -367,14 +488,18 @@ function Net({ state }: { state: NetState }) {
       }
     }
     cm.instanceMatrix.needsUpdate = true;
+    if (cm.instanceColor) cm.instanceColor.needsUpdate = true;
 
     // nodi dove le corde si incrociano
     tmp.s.set(0.0068, 0.0082, 0.0068);
     for (let n = 0; n < NET_KNOTS; n++) {
-      tmp.m.compose(nodes[NET_STRANDS + n], tmp.one, tmp.s);
+      const node = nodes[NET_STRANDS + n];
+      tmp.m.compose(node, tmp.one, tmp.s);
       km.setMatrixAt(n, tmp.m);
+      km.setColorAt(n, shade(node.x, node.z));
     }
     km.instanceMatrix.needsUpdate = true;
+    if (km.instanceColor) km.instanceColor.needsUpdate = true;
   });
 
   return (
@@ -425,20 +550,65 @@ const BRACES: [[number, number, number], [number, number, number]][] = [
   [[-0.045, -0.07, BOARD_Z + 0.15], [-0.085, -0.012, -RIM_R * 0.6]],
 ];
 
-function Hoop({ clockTex, led }: { clockTex: THREE.Texture; led: THREE.MeshStandardMaterial }) {
+/** Scritta stampata sull'imbottitura sotto il tabellone */
+function padPrintTexture() {
+  const c = document.createElement('canvas');
+  c.width = 1024;
+  c.height = 64;
+  const ctx = c.getContext('2d') as CanvasRenderingContext2D;
+  ctx.fillStyle = '#f4ece4';
+  ctx.font = '800 40px Montserrat, Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  if ('letterSpacing' in ctx) (ctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = '18px';
+  ctx.fillText('HYRIA BASKET', 512, 34);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 8;
+  return t;
+}
+
+const CLOCK_W = 0.64;
+const CLOCK_H = 0.4;
+const CLOCK_D = 0.18;
+
+function Hoop({ clockTex, led, horn }: { clockTex: THREE.Texture; led: THREE.MeshStandardMaterial; horn: THREE.MeshStandardMaterial }) {
+  const padPrint = useMemo(padPrintTexture, []);
   const mats = useMemo(
     () => ({
+      // cristallo temperato: appena velato di verde, dietro si vedono luci e tribune
       glass: new THREE.MeshPhysicalMaterial({
-        // vetro trasparente con i riflessi del palazzetto: dietro si vedono luci e tribune
-        color: '#dcefe8',
+        color: '#d9efe6',
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.1,
         roughness: 0.02,
         clearcoat: 1,
         clearcoatRoughness: 0.02,
-        envMapIntensity: 2.4,
+        envMapIntensity: 1.5,
         depthWrite: false,
       }),
+      // i riflessi del palazzetto sul cristallo: specchio additivo, aggiunge luce senza scurire
+      sheen: new THREE.MeshStandardMaterial({
+        color: '#000000',
+        metalness: 1,
+        roughness: 0.06,
+        envMapIntensity: 0.55,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+      // vetrino del cronometro: lucido, lascia vedere le cifre
+      lens: new THREE.MeshPhysicalMaterial({
+        color: '#000000',
+        transparent: true,
+        opacity: 0.18,
+        roughness: 0.04,
+        clearcoat: 1,
+        clearcoatRoughness: 0.02,
+        envMapIntensity: 2.2,
+        depthWrite: false,
+      }),
+      housing: new THREE.MeshStandardMaterial({ color: '#0e0e11', metalness: 0.6, roughness: 0.45 }),
       paint: new THREE.MeshStandardMaterial({ color: '#f6f4ef', roughness: 0.55, polygonOffset: true, polygonOffsetFactor: -2 }),
       alu: new THREE.MeshStandardMaterial({ color: '#1b1c21', metalness: 0.85, roughness: 0.3 }),
       steel: new THREE.MeshStandardMaterial({ color: '#2c2d33', metalness: 0.8, roughness: 0.36 }),
@@ -470,6 +640,9 @@ function Hoop({ clockTex, led }: { clockTex: THREE.Texture; led: THREE.MeshStand
     <group>
       {/* cristallo temperato */}
       <RoundedBox args={[W, H, GLASS_T]} radius={0.006} smoothness={3} position={[0, CY, BOARD_Z]} material={mats.glass} />
+      <mesh position={[0, CY, GLASS_FRONT + 0.0003]} material={mats.sheen}>
+        <planeGeometry args={[W, H]} />
+      </mesh>
       {/* linee verniciate: bordo e quadrato di tiro */}
       <Paint x={0} y={CY + H / 2 - L / 2} w={W} h={L} material={mats.paint} />
       <Paint x={0} y={CY - H / 2 + L / 2} w={W} h={L} material={mats.paint} />
@@ -498,22 +671,36 @@ function Hoop({ clockTex, led }: { clockTex: THREE.Texture; led: THREE.MeshStand
         </mesh>
       ))}
 
-      {/* imbottiture: sotto e sui due angoli bassi */}
-      <RoundedBox args={[W + 0.1, 0.1, 0.13]} radius={0.04} smoothness={4} position={[0, CY - H / 2 - 0.045, BOARD_Z - 0.01]} material={mats.pad} />
+      {/* imbottiture: sotto (con la scritta del club) e sui due angoli bassi */}
+      <RoundedBox args={[W + 0.1, 0.1, 0.13]} radius={0.024} smoothness={4} position={[0, CY - H / 2 - 0.045, BOARD_Z - 0.01]} material={mats.pad} />
+      <mesh position={[0, CY - H / 2 - 0.045, BOARD_Z - 0.01 + 0.0655]}>
+        <planeGeometry args={[1.1, 0.0688]} />
+        <meshStandardMaterial map={padPrint} transparent roughness={0.7} polygonOffset polygonOffsetFactor={-2} />
+      </mesh>
       {[W / 2 + 0.03, -W / 2 - 0.03].map((x) => (
-        <RoundedBox key={x} args={[0.1, 0.36, 0.13]} radius={0.04} smoothness={4} position={[x, CY - H / 2 + 0.14, BOARD_Z - 0.01]} material={mats.pad} />
+        <RoundedBox key={x} args={[0.1, 0.36, 0.13]} radius={0.024} smoothness={4} position={[x, CY - H / 2 + 0.14, BOARD_Z - 0.01]} material={mats.pad} />
       ))}
 
       {/* braccio della struttura */}
       <RoundedBox args={[0.16, 0.16, 1.8]} radius={0.02} smoothness={2} position={[0, CY, BOARD_Z - 0.95]} material={mats.steel} />
       <RoundedBox args={[0.13, 1.6, 0.13]} radius={0.02} smoothness={2} position={[0, CY - 0.58, BOARD_Z - 1.6]} rotation-x={0.75} material={mats.steel} />
 
-      {/* cronometro dei 24" sopra il tabellone */}
-      <RoundedBox args={[0.68, 0.32, 0.17]} radius={0.02} smoothness={3} position={[0, CY + H / 2 + 0.2, BOARD_Z - 0.02]} material={mats.alu} />
-      <mesh position={[0, CY + H / 2 + 0.2, BOARD_Z + 0.0655]}>
-        <planeGeometry args={[0.6, 0.25]} />
-        <meshBasicMaterial map={clockTex} toneMapped={false} />
-      </mesh>
+      {/* cronometro dei 24" sopra il tabellone: cassa, staffa, display, vetrino e luce rossa dello scadere */}
+      <group position={[0, CY + H / 2 + 0.05 + CLOCK_H / 2, BOARD_Z - 0.03]}>
+        <RoundedBox args={[CLOCK_W, CLOCK_H, CLOCK_D]} radius={0.022} smoothness={4} material={mats.housing} />
+        <RoundedBox args={[CLOCK_W - 0.03, CLOCK_H - 0.03, 0.01]} radius={0.01} smoothness={2} position={[0, 0, CLOCK_D / 2 - 0.002]} material={mats.alu} />
+        <mesh position={[0, -0.006, CLOCK_D / 2 + 0.0035]}>
+          <planeGeometry args={[CLOCK_W - 0.07, (CLOCK_W - 0.07) * (CH / CW)]} />
+          <meshBasicMaterial map={clockTex} toneMapped={false} />
+        </mesh>
+        <mesh position={[0, -0.006, CLOCK_D / 2 + 0.006]} material={mats.lens}>
+          <planeGeometry args={[CLOCK_W - 0.05, CLOCK_H - 0.05]} />
+        </mesh>
+        <RoundedBox args={[CLOCK_W - 0.08, 0.018, 0.03]} radius={0.006} smoothness={2} position={[0, CLOCK_H / 2 + 0.006, CLOCK_D / 2 - 0.02]} material={horn} />
+        {[CLOCK_W / 2 - 0.1, -CLOCK_W / 2 + 0.1].map((x) => (
+          <RoundedBox key={x} args={[0.05, 0.08, 0.12]} radius={0.01} smoothness={2} position={[x, -CLOCK_H / 2 - 0.03, -0.02]} material={mats.steel} />
+        ))}
+      </group>
 
       {/* attacco del ferro: piastra con bulloni, molla di sgancio, tiranti */}
       <RoundedBox args={[0.24, 0.16, 0.02]} radius={0.006} smoothness={2} position={[0, -0.03, GLASS_FRONT + 0.01]} material={mats.steel} />
@@ -752,6 +939,10 @@ function SwishScene() {
     [],
   );
   const ledColors = useMemo(() => ({ idle: new THREE.Color('#ffe8d0'), hot: new THREE.Color(LED) }), []);
+  const horn = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#1a0504', emissive: new THREE.Color('#ff1e0a'), emissiveIntensity: 0, toneMapped: false }),
+    [],
+  );
 
   const net = useMemo<NetState>(() => ({ ballY: 0, inside: false, drag: 0, whip: 0, jiggle: 0, t: 0 }), []);
   const fire = useMemo(() => ({ at: -1 }), []);
@@ -768,7 +959,16 @@ function SwishScene() {
     [],
   );
   const tmp = useMemo(
-    () => ({ p: new THREE.Vector3(), look: new THREE.Vector3(), cam: new THREE.Vector3(), front: new THREE.Vector3() }),
+    () => ({
+      p: new THREE.Vector3(),
+      look: new THREE.Vector3(),
+      cam: new THREE.Vector3(),
+      front: new THREE.Vector3(),
+      face: new THREE.Vector3(),
+      axis: new THREE.Vector3(),
+      q0: new THREE.Quaternion(),
+      q1: new THREE.Quaternion(),
+    }),
     [],
   );
   const theta = useRef(Math.PI);
@@ -781,7 +981,8 @@ function SwishScene() {
     const lg = logo.current;
     if (!b || !lg || !rays.current || !halo.current || !key.current || !logoLight.current || !ledGlow.current) return;
 
-    // cronometro: scende col caricamento, a zero lampeggia
+    // cronometro: scende col caricamento, a zero lampeggia e si accende la luce rossa
+    horn.emissiveIntensity = done ? (Math.floor(outro * 10) % 2 === 0 ? 2.4 : 0.6) : 0;
     if (done) {
       const on = Math.floor(outro * 10) % 2 === 0;
       if (shownSec.current !== 0 || on !== blink.current) {
@@ -803,18 +1004,25 @@ function SwishScene() {
     net.jiggle = 0;
     if (t < INTRO) {
       intro.getPoint(easeOutCubic(t / INTRO), p);
-      b.rotation.set(0, 0, -t * 11);
+      // lo stemma (sul lato +X della sfera) resta rivolto alla camera e gira su sé stesso
+      tmp.face.subVectors(camera.position, p).normalize();
+      tmp.q0.setFromUnitVectors(LOGO_AXIS, tmp.face);
+      tmp.q1.setFromAxisAngle(tmp.face, -t * 5);
+      b.quaternion.multiplyQuaternions(tmp.q1, tmp.q0);
     } else {
       speed.current = THREE.MathUtils.damp(speed.current, done ? 7.5 : 4.4, 3, dt);
-      theta.current -= speed.current * dt;
+      const dTheta = speed.current * dt;
+      theta.current -= dTheta;
       const spiral = easeInCubic(seg(outro, 0, 0.14));
       const r = RIM_R * (1 - spiral);
       p.set(Math.cos(theta.current) * r, ORBIT_Y - spiral * 0.11, Math.sin(theta.current) * r);
       p.y += Math.abs(Math.sin(t * 8)) * 0.008 * (1 - spiral); // piccoli saltelli sul ferro
       const drop = seg(outro, 0.14, 0.42);
       p.y -= drop * drop * 2.4;
-      b.rotation.set(0, -theta.current, 0);
-      b.rotateZ(theta.current * (RIM_R / BALL_R));
+      // rotola sul ferro: asse orizzontale verso il centro, angolo = strada fatta / raggio
+      tmp.axis.set(-Math.cos(theta.current), 0, -Math.sin(theta.current));
+      tmp.q1.setFromAxisAngle(tmp.axis, (dTheta * RIM_R * (1 - spiral)) / BALL_R);
+      b.quaternion.premultiply(tmp.q1);
       net.jiggle = (1 - spiral) * (t < INTRO + 0.4 ? 2 : 1);
       net.inside = spiral > 0.9 && p.y > -NET_LEN - BALL_R * 2;
       if (drop > 0 && fire.at < 0) fire.at = t;
@@ -897,7 +1105,7 @@ function SwishScene() {
       <pointLight ref={logoLight} position={[0.3, 0.7, 1.6]} intensity={0} decay={0} distance={3} color="#fff2e2" />
 
       <Arena />
-      <Hoop clockTex={shotClock.tex} led={led} />
+      <Hoop clockTex={shotClock.tex} led={led} horn={horn} />
       {/* bagliore del LED sul vetro */}
       <mesh ref={ledGlow} position={[0, 0.375, BOARD_Z - 0.01]}>
         <planeGeometry args={[2.3, 1.5]} />

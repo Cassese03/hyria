@@ -3,6 +3,7 @@ import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useStat
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
 import { canUseWebGL, isMobileDevice, saveData } from '../arena/shots';
+import { useLoaderDoneAt } from '../loaders/gate';
 import { STATIONS, arena, setArenaTarget } from '../arena/store';
 import { easeOutExpo } from '../utils/animations';
 import '../styles/arena.css';
@@ -62,8 +63,9 @@ const Home: React.FC = () => {
   const sections = useRef<(HTMLElement | null)[]>([]);
 
   const mobile = useMemo(isMobileDevice, []);
-  // l'ingresso della camera parte quando la schermata di caricamento è uscita
-  const introAt = useMemo(() => performance.now() + (reduced ? 0 : 1700), [reduced]);
+  // camera e testi partono quando la schermata di caricamento è uscita
+  const loaderDoneAt = useLoaderDoneAt();
+  const introAt = loaderDoneAt === null ? Infinity : loaderDoneAt + (reduced ? 0 : 150);
   const onReady = useCallback(() => setReady(true), []);
 
   // scroll → posizione della camera lungo il percorso
@@ -112,7 +114,7 @@ const Home: React.FC = () => {
 
   const heroCopy: Variants = {
     hidden: {},
-    visible: { transition: { delayChildren: is3D && !reduced ? 1.9 : 0.2, staggerChildren: 0.09 } },
+    visible: { transition: { delayChildren: is3D && !reduced ? 0.5 : 0.1, staggerChildren: 0.09 } },
   };
   const heroItem: Variants = {
     hidden: { opacity: 0, y: reduced ? 0 : 24 },
@@ -169,7 +171,12 @@ const Home: React.FC = () => {
         {/* Centrocampo */}
         <section id="inizio" ref={register(0)} data-span={1} className="ah-sec ah-sec--hero">
           <div className="ah-stage ah-stage--hero">
-            <motion.div className="ah-copy" variants={heroCopy} initial="hidden" animate="visible">
+            <motion.div
+              className="ah-copy"
+              variants={heroCopy}
+              initial="hidden"
+              animate={loaderDoneAt === null ? 'hidden' : 'visible'}
+            >
               <motion.p variants={heroItem} className="hy-kicker">
                 Nola, dal 2025
               </motion.p>

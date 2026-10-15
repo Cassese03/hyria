@@ -4,6 +4,7 @@ import type { Sponsor } from '../arena/assets';
 import type { JumboContent } from '../arena/textures';
 import { canUseWebGL, isMobileDevice, saveData, type ShotName } from '../arena/shots';
 import { easeOutExpo } from '../utils/animations';
+import { useLoaderDoneAt } from '../loaders/gate';
 
 const ArenaHero = lazy(() => import('../arena/ArenaHero'));
 
@@ -35,8 +36,9 @@ const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, 
   const [active, setActive] = useState(true);
   const root = useRef<HTMLElement>(null);
   const mobile = useMemo(isMobileDevice, []);
-  // la camera parte quando la schermata di caricamento è uscita
-  const introAt = useMemo(() => performance.now() + (reduced ? 0 : 1700), [reduced]);
+  // camera e testi partono quando la schermata di caricamento è uscita
+  const loaderDoneAt = useLoaderDoneAt();
+  const introAt = loaderDoneAt === null ? Infinity : loaderDoneAt + (reduced ? 0 : 150);
   const onReady = useCallback(() => setReady(true), []);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, 
 
   const copy: Variants = {
     hidden: {},
-    visible: { transition: { delayChildren: reduced ? 0 : 1.5, staggerChildren: 0.08 } },
+    visible: { transition: { delayChildren: reduced ? 0 : 0.4, staggerChildren: 0.08 } },
   };
   const item: Variants = {
     hidden: { opacity: 0, y: reduced ? 0 : 20 },
@@ -80,7 +82,7 @@ const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, 
           </div>
         )}
       </div>
-      <motion.div className="ph-copy" variants={copy} initial="hidden" animate="visible">
+      <motion.div className="ph-copy" variants={copy} initial="hidden" animate={loaderDoneAt === null ? 'hidden' : 'visible'}>
         <motion.p variants={item} className="hy-kicker">
           {kicker}
         </motion.p>

@@ -12,7 +12,6 @@ const importers = {
   swish: () => import('../loaders/SwishLoader'),
   rovine: () => import('../loaders/RovineLoader'),
   arena: () => import('../loaders/ArenaLuciLoader'),
-  particelle: () => import('../loaders/ParticelleLoader'),
 };
 
 interface Option {
@@ -46,17 +45,10 @@ const OPTIONS: Option[] = [
     Component: lazy(importers.arena),
   },
   {
-    id: 'particelle',
-    n: '06',
-    name: 'Stemma + Particelle',
-    desc: 'Lo stemma in rilievo al centro. Migliaia di scintille formano un pallone che gli gira alle spalle, poi esplodono verso lo schermo.',
-    Component: lazy(importers.particelle),
-  },
-  {
     id: 'attuale',
     n: '—',
-    name: 'Attuale',
-    desc: 'La griglia di quadretti di adesso, per avere un termine di paragone.',
+    name: 'Precedente',
+    desc: 'La griglia di quadretti usata prima di Swish. Resta come riserva sui dispositivi senza grafica 3D.',
     Component: LoadingPage,
   },
 ];

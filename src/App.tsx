@@ -12,7 +12,9 @@ import './styles/store.css';
 import './styles/cart.css';
 import './styles/streaming.css';
 import './styles/ui.css';
-import LoadingPage from './components/LoadingPage';
+// subito, non con la scena: il fondo del loader deve coprire la pagina mentre Swish si scarica
+import './styles/loaders.css';
+import { openLoaderGate } from './loaders/gate';
 
 // const Teams = lazy(() => import('./pages/Teams'));
 const About = lazy(() => import('./pages/About'));
@@ -27,45 +29,42 @@ const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const LoaderPreview = lazy(() => import('./pages/LoaderPreview'));
+const SwishLoader = lazy(() => import('./loaders/SwishLoader'));
 
 // la pagina di anteprima gestisce da sola i suoi loading screen
 const NO_LOADER = ['/anteprima-loading'];
 
-const AppContent = () => {
+/** Swish solo al primo ingresso nel sito: tra una pagina e l'altra fanno da transizione le intestazioni 3D */
+const FirstVisitLoader = () => {
   const location = useLocation();
-  const [showLoadingPage, setShowLoadingPage] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [show] = useState(() => !NO_LOADER.includes(location.pathname));
+  const [loading, setLoading] = useState(() => document.readyState !== 'complete');
+
+  // il caricamento "vero" finisce con l'evento load della pagina
+  useEffect(() => {
+    if (!loading) return;
+    const done = () => setLoading(false);
+    window.addEventListener('load', done, { once: true });
+    return () => window.removeEventListener('load', done);
+  }, [loading]);
 
   useEffect(() => {
-    if (NO_LOADER.includes(location.pathname)) {
-      setShowLoadingPage(false);
-      return;
-    }
+    if (!show) openLoaderGate();
+  }, [show]);
 
-    // FASE 1 → Mostra loading + animazione entrata
-    setShowLoadingPage(true);
-    setIsAnimating(true);
+  if (!show) return null;
+  return (
+    <Suspense fallback={<div className="hl-loader" />}>
+      <SwishLoader isLoading={loading} onAnimationEnd={openLoaderGate} />
+    </Suspense>
+  );
+};
 
-    // Simula il tempo in cui il nuovo contenuto è pronto (puoi collegarlo a un reale evento onLoad volendo)
-    const contentReadyTimer = setTimeout(() => {
-      // FASE 2 → avvia animazione di uscita
-      setIsAnimating(false);
-
-      // Dopo l'animazione di uscita, nascondi il loading
-      const hideLoaderTimer = setTimeout(() => {
-        setShowLoadingPage(false);
-      }, 1500); // deve combaciare con durata animazione slideUp
-
-      return () => clearTimeout(hideLoaderTimer);
-    }, 1000); // questo è il tempo fittizio in cui "la pagina si carica" → qui puoi regolarlo o agganciarlo a un evento reale
-
-    return () => clearTimeout(contentReadyTimer);
-  }, [location.pathname]);
-
+const AppContent = () => {
   return (
     <>
-      {showLoadingPage && <LoadingPage isLoading={isAnimating} />}
-      <div className={`flex flex-col min-h-screen w-full overflow-x-hidden ${showLoadingPage ? 'overflow-hidden' : ''}`}>
+      <FirstVisitLoader />
+      <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
         <Header />
         <main className="flex-grow pt-[60px] md:pt-[70px] w-full overflow-x-hidden">
           <Suspense fallback={<div className="min-h-screen bg-hyria-primary flex items-center justify-center"><p className="text-white">Caricamento...</p></div>}>
