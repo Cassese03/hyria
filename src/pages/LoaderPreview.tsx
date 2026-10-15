@@ -4,6 +4,7 @@ import PageHead from '../components/PageHead';
 import LoadingPage from '../components/LoadingPage';
 import type { LoaderProps } from '../loaders/shared';
 import '../styles/loaders.css';
+import '../styles/loader-preview.css';
 
 /* Pagina temporanea per confrontare i loading screen 3D: non è nel menu né nella sitemap */
 
@@ -98,54 +99,41 @@ const LoaderPreview = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-hyria-dark text-hyria-light">
+    <div className="lp">
       <PageHead title="Anteprima loading | Hyria Basket" />
 
-      <section className="mx-auto max-w-5xl px-4 py-12 md:py-16">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-hyria-orange">Anteprima interna</p>
-        <h1 className="mt-3 font-heading text-3xl md:text-5xl">Scegli il loading screen</h1>
-        <p className="mt-4 max-w-2xl text-sm text-white/70 md:text-base">
+      <section className="lp__wrap">
+        <p className="lp__eyebrow">Anteprima interna</p>
+        <h1 className="lp__title">Scegli il loading screen</h1>
+        <p className="lp__lead">
           Ogni scena segue il caricamento vero: la barra avanza, e quando il sito è pronto parte il finale. Con la
           durata puoi vedere come si comporta su una connessione veloce o lenta.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          <span className="mr-2 text-xs font-bold uppercase tracking-[0.2em] text-white/50">Caricamento simulato</span>
+        <div className="lp__durations">
+          <span className="lp__label">Caricamento simulato</span>
           {DURATIONS.map((d) => (
             <button
               key={d.ms}
               type="button"
               onClick={() => setDuration(d.ms)}
-              className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
-                duration === d.ms
-                  ? 'border-hyria-orange bg-hyria-orange text-white'
-                  : 'border-white/20 text-white/70 hover:border-white/50'
-              }`}
+              className={`lp__chip${duration === d.ms ? ' is-active' : ''}`}
             >
               {d.label}
             </button>
           ))}
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="lp__grid">
           {OPTIONS.map((o) => (
-            <article
-              key={o.id}
-              className={`flex flex-col rounded-2xl border p-6 ${
-                o.id === 'attuale' ? 'border-white/10 bg-white/[0.02]' : 'border-white/10 bg-hyria-primary/40'
-              }`}
-            >
-              <div className="flex items-baseline gap-3">
-                <span className="font-heading text-2xl text-hyria-orange">{o.n}</span>
-                <h2 className="text-lg font-extrabold uppercase tracking-wide">{o.name}</h2>
+            <article key={o.id} className={`lp__card${o.id === 'attuale' ? ' is-muted' : ''}`}>
+              <div className="lp__card-head">
+                <span className="lp__num">{o.n}</span>
+                <h2 className="lp__name">{o.name}</h2>
               </div>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{o.desc}</p>
-              <button
-                type="button"
-                onClick={() => play([o.id])}
-                className="mt-5 inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-2.5 text-xs font-extrabold uppercase tracking-wider text-hyria-primary transition-transform hover:scale-[1.03] active:scale-95"
-              >
-                <PlayIcon className="h-4 w-4" />
+              <p className="lp__desc">{o.desc}</p>
+              <button type="button" onClick={() => play([o.id])} className="lp__play">
+                <PlayIcon className="lp__icon" />
                 Guarda
               </button>
             </article>
@@ -155,9 +143,9 @@ const LoaderPreview = () => {
         <button
           type="button"
           onClick={() => play(OPTIONS.filter((o) => o.id !== 'attuale').map((o) => o.id))}
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-hyria-orange px-6 py-3 text-sm font-extrabold uppercase tracking-wider text-white transition-transform hover:scale-[1.03] active:scale-95"
+          className="lp__all"
         >
-          <PlayIcon className="h-5 w-5" />
+          <PlayIcon className="lp__icon" />
           Guardale tutte di fila
         </button>
       </section>
@@ -167,16 +155,11 @@ const LoaderPreview = () => {
           <Suspense fallback={<div className="hl-loader" />}>
             <current.Component key={`${current.id}-${run}`} isLoading={loading} onAnimationEnd={next} />
           </Suspense>
-          <div className="fixed left-4 top-4 z-[10000] flex items-center gap-3 rounded-full bg-black/50 py-2 pl-4 pr-2 text-xs font-bold uppercase tracking-wider text-white backdrop-blur">
-            <span className="text-hyria-orange">{current.n}</span>
+          <div className="lp__badge">
+            <span className="lp__badge-num">{current.n}</span>
             {current.name}
-            <button
-              type="button"
-              onClick={() => setQueue([])}
-              aria-label="Chiudi anteprima"
-              className="rounded-full p-1 hover:bg-white/10"
-            >
-              <XMarkIcon className="h-4 w-4" />
+            <button type="button" onClick={() => setQueue([])} aria-label="Chiudi anteprima" className="lp__close">
+              <XMarkIcon className="lp__icon" />
             </button>
           </div>
         </>

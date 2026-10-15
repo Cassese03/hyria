@@ -265,9 +265,44 @@ export function LoaderShell({ isLoading, onAnimationEnd, minMs = 1500, outroMs, 
           <span ref={(el) => void (hud.current.pct = el)}>00</span>%
         </span>
       </div>
-      <span className="sr-only" role="status">
+      <span className="hl-sr" role="status">
         Caricamento in corso
       </span>
     </div>
   );
 }
+
+/* ─── Fascio di luce volumetrico (cono additivo) ─────────────────────────── */
+
+/** Da usare su un ConeGeometry con altezza normalizzata a 1 (punta = lampada) */
+export const beamMaterial = (color = '#ffe2bd', soft = 1.6) =>
+  new THREE.ShaderMaterial({
+    uniforms: { uColor: { value: new THREE.Color(color) }, uOn: { value: 0 } },
+    vertexShader: /* glsl */ `
+      uniform float uOn;
+      varying float vH;
+      varying float vEdge;
+      void main() {
+        vec4 wp = modelMatrix * vec4(position, 1.0);
+        vec3 n = normalize(mat3(modelMatrix) * normal);
+        vec3 v = normalize(cameraPosition - wp.xyz);
+        vEdge = pow(abs(dot(n, v)), ${soft.toFixed(2)});
+        vH = position.y; // -0.5 alla base, 0.5 alla lampada
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uColor;
+      uniform float uOn;
+      varying float vH;
+      varying float vEdge;
+      void main() {
+        float fall = smoothstep(-0.5, 0.5, vH);
+        gl_FragColor = vec4(uColor * vEdge * (0.04 + 0.16 * fall) * uOn, 1.0);
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });

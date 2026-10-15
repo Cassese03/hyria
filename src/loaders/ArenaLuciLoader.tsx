@@ -10,6 +10,7 @@ import {
   fitDistance,
   seg,
   useLoaderClock,
+  beamMaterial,
   useLogoTexture,
   type LoaderProps,
 } from './shared';
@@ -61,38 +62,6 @@ const flicker = (dt: number) => {
   const steps = [0.9, 0, 0.6, 0.1, 1, 0.35, 1];
   return steps[Math.floor((dt / 0.42) * steps.length)];
 };
-
-const beamMaterial = () =>
-  new THREE.ShaderMaterial({
-    uniforms: { uColor: { value: new THREE.Color('#ffe2bd') }, uOn: { value: 0 } },
-    vertexShader: /* glsl */ `
-      uniform float uOn;
-      varying float vH;
-      varying float vEdge;
-      void main() {
-        vec4 wp = modelMatrix * vec4(position, 1.0);
-        vec3 n = normalize(mat3(modelMatrix) * normal);
-        vec3 v = normalize(cameraPosition - wp.xyz);
-        vEdge = pow(abs(dot(n, v)), 1.6);
-        vH = position.y; // -0.5 alla base, 0.5 alla lampada
-        gl_Position = projectionMatrix * viewMatrix * wp;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform vec3 uColor;
-      uniform float uOn;
-      varying float vH;
-      varying float vEdge;
-      void main() {
-        float fall = smoothstep(-0.5, 0.5, vH);
-        gl_FragColor = vec4(uColor * vEdge * (0.04 + 0.16 * fall) * uOn, 1.0);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    side: THREE.DoubleSide,
-  });
 
 function Spot({ rig, glow }: { rig: Rig; glow: THREE.Texture }) {
   const clock = useLoaderClock();
