@@ -28,8 +28,8 @@ const Streaming = lazy(() => import('./pages/Streaming'));
 const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const Storia = lazy(() => import('./pages/Storia'));
-const StoriaPost = lazy(() => import('./pages/StoriaPost'));
+// const Storia = lazy(() => import('./pages/Storia'));
+// const StoriaPost = lazy(() => import('./pages/StoriaPost'));
 const LoaderPreview = lazy(() => import('./pages/LoaderPreview'));
 const SwishLoader = lazy(() => import('./loaders/SwishLoader'));
 
