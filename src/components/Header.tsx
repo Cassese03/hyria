@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,48 +47,48 @@ const Header = () => {
     <header className={`site-header ${isScrolled ? 'scrolled' : ''} w-full overflow-x-hidden`}>
       <div className="header-inner">
         <div className="header-logo" >
-          <a href="/">
+          <Link to="/">
             <img src="/images/logo-hyria.png" alt="Hyria Basket" className="h-10 md:h-12 w-auto object-contain" />
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="main-navigation desktop-nav">
           <ul className="nav-menu">
             {/* <li className="menu-item">
-              <a href="/streaming" style={{ display: 'flex', alignItems: 'center' }}>
+              <Link to="/streaming" style={{ display: 'flex', alignItems: 'center' }}>
                 LIVE <span className="pulse-dot-red"></span>
-              </a>
+              </Link>
             </li> */}
             <li className="menu-item">
-              <a href="/">HOME</a>
+              <Link to="/">HOME</Link>
             </li>
             <li className="menu-item">
-              <a href="/chi-siamo">CHI SIAMO</a>
+              <Link to="/chi-siamo">CHI SIAMO</Link>
             </li>
              {/* <li className="menu-item">
-              <a href="/storia">STORIA</a>
+              <Link to="/storia">STORIA</Link>
             </li> */}
             <li className="menu-item">
-              <a href="/spogliatoio">Roster</a>
+              <Link to="/spogliatoio">Roster</Link>
             </li>
             <li className="menu-item">
-              <a href="/settore-giovanile">minibasket</a>
+              <Link to="/settore-giovanile">minibasket</Link>
             </li>
             <li className="menu-item">
-              <a href="/calendario">Classifica</a>
+              <Link to="/calendario">Classifica</Link>
             </li>
             {/* <li className="menu-item">
-              <a href="/schedina">Schedina</a>
+              <Link to="/schedina">Schedina</Link>
             </li> */}
             {/* <li className="menu-item">
-              <a href="/store">STORE</a>
+              <Link to="/store">STORE</Link>
             </li> */}
             <li className="menu-item">
-              <a href="/sponsor">SPONSOR</a>
+              <Link to="/sponsor">SPONSOR</Link>
             </li>
             <li className="menu-item">
-              <a href="/contatti">CONTATTI</a>
+              <Link to="/contatti">CONTATTI</Link>
             </li>
           </ul>
         </nav>
@@ -113,37 +114,37 @@ const Header = () => {
           <div className="mobile-nav-container">
             <ul className="mobile-nav-menu">
               <li className="mobile-menu-item">
-                <a href="/chi-siamo" onClick={() => setIsOpen(false)}>CHI SIAMO</a>
+                <Link to="/chi-siamo" onClick={() => setIsOpen(false)}>CHI SIAMO</Link>
               </li>
               {/*<li className="mobile-menu-item">
-                <a href="/storia" onClick={() => setIsOpen(false)}>STORIA</a>
+                <Link to="/storia" onClick={() => setIsOpen(false)}>STORIA</Link>
               </li> */}
               <li className="mobile-menu-item">
-                <a href="/spogliatoio" onClick={() => setIsOpen(false)}>Roster</a>
+                <Link to="/spogliatoio" onClick={() => setIsOpen(false)}>Roster</Link>
               </li>
               <li className="mobile-menu-item">
-                <a href="/settore-giovanile" onClick={() => setIsOpen(false)}>minibasket</a>
+                <Link to="/settore-giovanile" onClick={() => setIsOpen(false)}>minibasket</Link>
               </li>
               <li className="mobile-menu-item">
-                <a href="/calendario" onClick={() => setIsOpen(false)}>Classifica</a>
+                <Link to="/calendario" onClick={() => setIsOpen(false)}>Classifica</Link>
               </li>
               {/* <li className="mobile-menu-item">
-                <a href="/schedina" onClick={() => setIsOpen(false)}>Schedina</a>
+                <Link to="/schedina" onClick={() => setIsOpen(false)}>Schedina</Link>
               </li> */}
               {/* Streaming nascosto per ora: la pagina resta raggiungibile da /streaming
               <li className="mobile-menu-item">
-                <a href="/streaming" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
+                <Link to="/streaming" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
                   LIVE <span className="pulse-dot-red"></span>
-                </a>
+                </Link>
               </li> */}
               {/* <li className="mobile-menu-item">
-                <a href="/store" onClick={() => setIsOpen(false)}>STORE</a>
+                <Link to="/store" onClick={() => setIsOpen(false)}>STORE</Link>
               </li> */}
               <li className="mobile-menu-item">
-                <a href="/sponsor" onClick={() => setIsOpen(false)}>SPONSOR</a>
+                <Link to="/sponsor" onClick={() => setIsOpen(false)}>SPONSOR</Link>
               </li>
               <li className="mobile-menu-item">
-                <a href="/contatti" onClick={() => setIsOpen(false)}>CONTATTI</a>
+                <Link to="/contatti" onClick={() => setIsOpen(false)}>CONTATTI</Link>
               </li>
             </ul>
           </div>

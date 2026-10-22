@@ -1143,7 +1143,7 @@ function SwishScene() {
 
 export default function SwishLoader(props: LoaderProps) {
   return (
-    <LoaderShell {...props} minMs={1600} outroMs={2600}>
+    <LoaderShell {...props} minMs={900} outroMs={800}>
       <SwishScene />
     </LoaderShell>
   );

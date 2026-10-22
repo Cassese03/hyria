@@ -1,5 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { canUseWebGL, saveData } from './arena/shots';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -28,20 +30,28 @@ const Streaming = lazy(() => import('./pages/Streaming'));
 const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-// archivio storico disattivato (route commentate più sotto)
-// const Storia = lazy(() => import('./pages/Storia'));
+const Storia = lazy(() => import('./pages/Storia'));
 const MinibasketNola = lazy(() => import('./pages/MinibasketNola'));
-// const StoriaPost = lazy(() => import('./pages/StoriaPost'));
+const StoriaPost = lazy(() => import('./pages/StoriaPost'));
 const LoaderPreview = lazy(() => import('./pages/LoaderPreview'));
 const SwishLoader = lazy(() => import('./loaders/SwishLoader'));
 
-// la pagina di anteprima gestisce da sola i suoi loading screen
 const NO_LOADER = ['/anteprima-loading'];
+const INTRO_KEY = 'hyria-intro-seen';
 
 /** Swish solo al primo ingresso nel sito: tra una pagina e l'altra fanno da transizione le intestazioni 3D */
 const FirstVisitLoader = () => {
   const location = useLocation();
-  const [show] = useState(() => !NO_LOADER.includes(location.pathname));
+  const [show] = useState(() => {
+    if (NO_LOADER.includes(location.pathname)) return false;
+    // intro già vista in questa sessione, riduci movimento, risparmio dati o niente WebGL: nessun loader a schermo intero
+    try {
+      if (sessionStorage.getItem(INTRO_KEY)) return false;
+    } catch {
+      /* storage non disponibile: si mostra l'intro */
+    }
+    return canUseWebGL() && !saveData() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
   const [loading, setLoading] = useState(() => document.readyState !== 'complete');
 
   // il caricamento "vero" finisce con l'evento load della pagina
@@ -56,27 +66,48 @@ const FirstVisitLoader = () => {
     if (!show) openLoaderGate();
   }, [show]);
 
+  const finish = () => {
+    try {
+      sessionStorage.setItem(INTRO_KEY, '1');
+    } catch {
+      /* ignorato */
+    }
+    openLoaderGate();
+  };
+
   if (!show) return null;
   return (
     <Suspense fallback={<div className="hl-loader" />}>
-      <SwishLoader isLoading={loading} onAnimationEnd={openLoaderGate} />
+      <SwishLoader isLoading={loading} onAnimationEnd={finish} />
     </Suspense>
   );
 };
 
+/** con la navigazione interna il browser non riporta più in cima da solo */
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+};
+
 const AppContent = () => {
+  const location = useLocation();
   return (
     <>
       <FirstVisitLoader />
       <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
         <Header />
         <main className="flex-grow pt-[60px] md:pt-[70px] w-full overflow-x-hidden">
-          <Suspense fallback={<div className="min-h-screen bg-hyria-primary flex items-center justify-center"><p className="text-white">Caricamento...</p></div>}>
+          <Suspense fallback={<div className="route-progress" role="progressbar" aria-label="Caricamento" />}>
+            <ScrollToTop />
+            <motion.div key={location.pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.15 }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/chi-siamo" element={<About />} />
-              {/*<Route path="/storia" element={<Storia />} /> */}
-              {/*<Route path="/storia/:slug" element={<StoriaPost />} /> */}
+              <Route path="/storia" element={<Storia />} />
+              <Route path="/storia/:slug" element={<StoriaPost />} />
               <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
               <Route path="/minibasket-nola" element={<MinibasketNola />} />
               <Route path="/sponsor" element={<Sponsor />} />
@@ -90,6 +121,7 @@ const AppContent = () => {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/anteprima-loading" element={<LoaderPreview />} />
             </Routes>
+            </motion.div>
           </Suspense>
         </main>
         <Footer />

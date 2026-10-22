@@ -2419,3 +2419,30 @@ img, video, iframe {
     font-size: 1.1rem;
   }
 }
+
+/* barra sottile mentre una pagina si scarica */
+.route-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+}
+.route-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #d96c00;
+  transform-origin: left;
+  animation: route-progress 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes route-progress {
+  0% { transform: translateX(-100%) scaleX(0.4); }
+  100% { transform: translateX(100%) scaleX(0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-progress::after { animation: none; }
+}

@@ -119,6 +119,9 @@ interface Hud {
   bar: HTMLSpanElement | null;
 }
 
+/** oltre questo tempo reale il loader esce comunque */
+const MAX_WAIT_S = 4;
+
 function Driver({
   clock,
   loading,
@@ -135,6 +138,7 @@ function Driver({
   onOutroEnd: () => void;
 }) {
   const outroStart = useRef(-1);
+  const startedAt = useRef(0);
   const ended = useRef(false);
   const shown = useRef(-1);
 
@@ -142,8 +146,12 @@ function Driver({
     if (!clock.ready) return;
     const dt = Math.min(raw, 0.05);
     clock.t += dt;
+    // tempo reale: su dispositivi lenti dt è limitato e clock.t rallenta, il loader non deve restare a oltranza
+    const now = performance.now();
+    if (!startedAt.current) startedAt.current = now;
+    const overdue = (now - startedAt.current) / 1000 > MAX_WAIT_S;
 
-    if (loading.current || clock.t < minS) {
+    if (!overdue && (loading.current || clock.t < minS)) {
       // mentre carica la barra si avvicina al 90% senza mai arrivarci
       const target = 0.9 * (1 - Math.exp(-clock.t / 1.4));
       clock.progress = THREE.MathUtils.damp(clock.progress, target, 4, dt);
@@ -152,10 +160,10 @@ function Driver({
       if (clock.progress > 0.995) {
         clock.progress = 1;
         clock.done = true;
-        outroStart.current = clock.t;
+        outroStart.current = now;
       }
     } else {
-      clock.outro = Math.min(1, (clock.t - outroStart.current) / outroS);
+      clock.outro = Math.min(1, (now - outroStart.current) / 1000 / outroS);
       if (clock.outro >= 1 && !ended.current) {
         ended.current = true;
         onOutroEnd();
@@ -223,7 +231,7 @@ export function LoaderShell({ isLoading, onAnimationEnd, minMs = 1500, outroMs, 
     const id = window.setTimeout(() => {
       setVisible(false);
       endCb.current?.();
-    }, 550);
+    }, 350);
     return () => window.clearTimeout(id);
   }, [fading]);
 
