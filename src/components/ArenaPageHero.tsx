@@ -2,15 +2,16 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Sponsor } from '../arena/assets';
 import type { JumboContent } from '../arena/textures';
-import { canUseWebGL, isMobileDevice, saveData, type ShotName } from '../arena/shots';
+import { canUseWebGL, isMobileDevice, saveData, type HeroShot, type ShotName } from '../arena/shots';
+import type { HistoryBanner } from '../storia/track';
 import { easeOutExpo } from '../utils/animations';
 import { useLoaderDoneAt } from '../loaders/gate';
 
 const ArenaHero = lazy(() => import('../arena/ArenaHero'));
 
 interface ArenaPageHeroProps {
-  /** inquadratura del palazzetto (vedi arena/shots.ts) */
-  shot: ShotName;
+  /** inquadratura del palazzetto (vedi arena/shots.ts), o calcolata e memoizzata dalla pagina */
+  shot: ShotName | HeroShot;
   /** scritta dipinta sulla fascia del parquet */
   floorTitle: string;
   kicker: string;
@@ -23,13 +24,16 @@ interface ArenaPageHeroProps {
   jumbo?: JumboContent;
   ledText?: string;
   miniHoop?: [number, number, number];
+  history?: { banners: HistoryBanner[]; active: number };
+  /** classe in più sulla sezione (varianti di layout) */
+  className?: string;
 }
 
 /**
  * Intestazione delle pagine interne: il palazzetto della Home visto da
  * un'inquadratura dedicata, con il titolo della pagina in sovrimpressione.
  */
-const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, boards, jumbo, ledText, miniHoop }: ArenaPageHeroProps) => {
+const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, boards, jumbo, ledText, miniHoop, history, className = '' }: ArenaPageHeroProps) => {
   const reduced = !!useReducedMotion();
   const [is3D] = useState(() => canUseWebGL() && !saveData());
   const [ready, setReady] = useState(false);
@@ -59,7 +63,7 @@ const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, 
   };
 
   return (
-    <section ref={root} className={`ph ${ready ? 'is-ready' : ''}`}>
+    <section ref={root} className={`ph ${className} ${ready ? 'is-ready' : ''}`}>
       <div className="ph-media" aria-hidden="true">
         <img src={image} alt="" className="ph-photo" decoding="async" fetchPriority="high" />
         {is3D && (
@@ -72,6 +76,7 @@ const ArenaPageHero = ({ shot, floorTitle, kicker, title, lead, actions, image, 
                 jumbo={jumbo}
                 ledText={ledText}
                 miniHoop={miniHoop}
+                history={history}
                 mobile={mobile}
                 reduced={reduced}
                 introAt={introAt}

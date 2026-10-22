@@ -1,16 +1,12 @@
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import '../styles/legal.css';
 
 const UPDATED = '12 ottobre 2026';
 
 const PrivacyPolicy = () => (
   <>
-    <PageHead
-      title="Privacy Policy – Hyria Basket"
-      description="Come ASD Hyria Basket tratta i dati personali raccolti sul sito: modulo contatti, schedina virtuale e statistiche di navigazione."
-      canonicalUrl="https://hyriabasket.it/privacy-policy"
-      ogUrl="https://hyriabasket.it/privacy-policy"
-    />
+    <PageHead {...seoFor('/privacy-policy')} />
     <div className="pg">
     <article className="legal">
       <header className="legal__head">

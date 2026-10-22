@@ -8,6 +8,7 @@ import {
   PaintBrushIcon,
 } from '@heroicons/react/24/outline';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import { LockerScene, type LockerMode } from '../locker/LockerScene';
 import { CATEGORY_ORDER, LOCKER_ROSTER, type LockerPlayer } from '../locker/roster';
 import { DEFAULT_KIT, type KitOptions } from '../locker/jerseyTexture';
@@ -183,12 +184,7 @@ const Spogliatoio = () => {
 
   return (
     <>
-      <PageHead
-        title="Spogliatoio 3D – Hyria Basket"
-        description="Entra nello spogliatoio di Hyria Basket: sfoglia le maglie della prima squadra in 3D e scopri la scheda di ogni giocatore."
-        canonicalUrl="https://hyriabasket.it/spogliatoio"
-        ogUrl="https://hyriabasket.it/spogliatoio"
-      />
+      <PageHead {...seoFor('/spogliatoio')} />
       <div className="locker-page" data-mode={mode}>
         <div className="locker-stage" ref={stageRef} />
 

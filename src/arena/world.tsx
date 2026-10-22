@@ -742,11 +742,13 @@ interface WorldProps {
   title?: string;
   jumbo?: JumboContent;
   ledText?: string;
+  /** stendardi al posto della galleria (es. l'archivio storico) */
+  banners?: ReactNode;
   onReady: () => void;
   children?: ReactNode;
 }
 
-export function ArenaWorld({ mobile, reduced, tour, title, jumbo, ledText, onReady, children }: WorldProps) {
+export function ArenaWorld({ mobile, reduced, tour, title, jumbo, ledText, banners, onReady, children }: WorldProps) {
   const { logo, photos } = use(loadAssets());
   const clock = useMemo(createShotClock, []);
 
@@ -770,7 +772,7 @@ export function ArenaWorld({ mobile, reduced, tour, title, jumbo, ledText, onRea
       <Jumbotron logo={logo} animate={tour && !reduced} content={jumbo} />
       <Stands mobile={mobile} />
       <ScorersTable tour={tour} text={ledText} />
-      <Banners photos={photos} logo={logo} tour={tour} />
+      {banners ?? <Banners photos={photos} logo={logo} tour={tour} />}
       <Hall />
       {children}
     </>

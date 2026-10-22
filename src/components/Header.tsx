@@ -65,6 +65,9 @@ const Header = () => {
             <li className="menu-item">
               <a href="/chi-siamo">CHI SIAMO</a>
             </li>
+             {/* <li className="menu-item">
+              <a href="/storia">STORIA</a>
+            </li> */}
             <li className="menu-item">
               <a href="/spogliatoio">Roster</a>
             </li>
@@ -112,6 +115,9 @@ const Header = () => {
               <li className="mobile-menu-item">
                 <a href="/chi-siamo" onClick={() => setIsOpen(false)}>CHI SIAMO</a>
               </li>
+              {/*<li className="mobile-menu-item">
+                <a href="/storia" onClick={() => setIsOpen(false)}>STORIA</a>
+              </li> */}
               <li className="mobile-menu-item">
                 <a href="/spogliatoio" onClick={() => setIsOpen(false)}>Roster</a>
               </li>

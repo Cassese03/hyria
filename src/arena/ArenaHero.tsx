@@ -2,22 +2,24 @@ import { Suspense, use, useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { loadBoardItems, type Sponsor } from './assets';
-import { SHOTS, type ShotName } from './shots';
+import { SHOTS, type HeroShot, type ShotName } from './shots';
 import type { JumboContent } from './textures';
 import { AdBoards, ArenaWorld, MiniHoop } from './world';
+import { HistoryBanners } from './history';
+import type { HistoryBanner } from '../storia/track';
 
 /* ─── Camera fissa con ingresso e parallasse ─────────────────────────────── */
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
-function HeroCamera({ shot, reduced, desktop, introAt }: { shot: ShotName; reduced: boolean; desktop: boolean; introAt: number }) {
+function HeroCamera({ shot, reduced, desktop, introAt }: { shot: ShotName | HeroShot; reduced: boolean; desktop: boolean; introAt: number }) {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const invalidate = useThree((s) => s.invalidate);
   const size = useThree((s) => s.size);
   const portrait = size.width < size.height * 0.9;
 
   const { pos, look } = useMemo(() => {
-    const s = SHOTS[shot];
+    const s: HeroShot = typeof shot === 'string' ? SHOTS[shot] : shot;
     return {
       pos: new THREE.Vector3(...((portrait && s.mPos) || s.pos)),
       look: new THREE.Vector3(...((portrait && s.mLook) || s.look)),
@@ -95,7 +97,8 @@ function Boards({ sponsors, animate }: { sponsors: Sponsor[]; animate: boolean }
 /* ─── Scena dell'intestazione ────────────────────────────────────────────── */
 
 export interface ArenaHeroProps {
-  shot: ShotName;
+  /** inquadratura con nome (shots.ts) o calcolata dalla pagina: in quel caso deve restare stabile */
+  shot: ShotName | HeroShot;
   floorTitle: string;
   boards?: Sponsor[];
   /** contenuto del tabellone centrale */
@@ -104,6 +107,8 @@ export interface ArenaHeroProps {
   ledText?: string;
   /** canestro minibasket con pallone che rimbalza */
   miniHoop?: [number, number, number];
+  /** stendardi dell'archivio storico al posto della galleria, con quello acceso */
+  history?: { banners: HistoryBanner[]; active: number };
   mobile: boolean;
   reduced: boolean;
   introAt: number;
@@ -113,7 +118,7 @@ export interface ArenaHeroProps {
 }
 
 export default function ArenaHero(props: ArenaHeroProps) {
-  const { shot, floorTitle, boards, jumbo, ledText, miniHoop, mobile, reduced, introAt, active, onReady } = props;
+  const { shot, floorTitle, boards, jumbo, ledText, miniHoop, history, mobile, reduced, introAt, active, onReady } = props;
   // cartelloni e pallone si muovono di continuo; il resto si ridisegna solo quando serve
   const moving = (boards || miniHoop) && !reduced;
   const frameloop = !active ? 'never' : moving ? 'always' : 'demand';
@@ -125,7 +130,16 @@ export default function ArenaHero(props: ArenaHeroProps) {
       camera={{ fov: 42, near: 0.1, far: 140, position: [0, 8, 12] }}
     >
       <Suspense fallback={null}>
-        <ArenaWorld mobile={mobile} reduced={reduced} tour={false} title={floorTitle} jumbo={jumbo} ledText={ledText} onReady={onReady}>
+        <ArenaWorld
+          mobile={mobile}
+          reduced={reduced}
+          tour={false}
+          title={floorTitle}
+          jumbo={jumbo}
+          ledText={ledText}
+          banners={history && <HistoryBanners banners={history.banners} active={history.active} />}
+          onReady={onReady}
+        >
           {boards && <Boards sponsors={boards} animate={!reduced} />}
           {miniHoop && <MiniHoop position={miniHoop} animate={!reduced} />}
           <HeroCamera shot={shot} reduced={reduced} desktop={!mobile} introAt={introAt} />

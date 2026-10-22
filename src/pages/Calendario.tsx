@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import ArenaPageHero from '../components/ArenaPageHero';
 import '../styles/classifica.css';
 
@@ -107,15 +108,7 @@ const Calendario = () => {
 
   return (
     <>
-      <PageHead
-        title="Classifica | Hyria Basket – Stagione 2026/27"
-        description="Classifica aggiornata in tempo reale della stagione 2026/27 di Hyria Basket Nola."
-        keywords="classifica, calendario, risultati, Hyria Basket, Nola, basket"
-        ogTitle="Classifica – Hyria Basket"
-        ogDescription="Segui la classifica aggiornata di Hyria Basket nella stagione 2026/27."
-        ogUrl="https://hyriabasket.it/classifica"
-        canonicalUrl="https://hyriabasket.it/classifica"
-      />
+      <PageHead {...seoFor('/calendario')} />
 
       <div className="pg">
         <ArenaPageHero

@@ -2,6 +2,7 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import { canUseWebGL, isMobileDevice, saveData } from '../arena/shots';
 import { useLoaderDoneAt } from '../loaders/gate';
 import { STATIONS, arena, setArenaTarget } from '../arena/store';
@@ -38,22 +39,6 @@ const STATS = [
 const GALLERY = [1, 2, 3, 4, 5, 6];
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
-
-const homeStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'SportsTeam',
-  name: 'Hyria Basket',
-  url: 'https://hyriabasket.it',
-  logo: 'https://hyriabasket.it/images/logo-hyria.png',
-  description:
-    'Hyria Basket - Squadra ufficiale di pallacanestro di Nola. Squadra, allenamenti, calendario e promozione del basket locale.',
-  sport: 'Basketball',
-  location: {
-    '@type': 'Place',
-    name: 'Nola',
-    address: { '@type': 'PostalAddress', addressLocality: 'Nola', addressCountry: 'IT' },
-  },
-};
 
 const Home: React.FC = () => {
   const reduced = !!useReducedMotion();
@@ -127,16 +112,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <PageHead
-        title="Hyriabasket – Basket a Nola | Squadra, Allenamenti e Calendario"
-        description="Hyria Basket è la squadra di pallacanestro di Nola. Scopri la squadra, allenamenti, calendario partite e ultime notizie del basket nolano."
-        keywords="Hyria Basket, basket Nola, pallacanestro, squadra, allenamenti, calendario, partite, sport Nola"
-        ogTitle="Hyria Basket - La Squadra di Basket di Nola"
-        ogDescription="Scopri Hyria Basket, la squadra di pallacanestro che rappresenta Nola. Seguici per allenamenti, partite e tutte le novità del basket locale."
-        ogUrl="https://hyriabasket.it"
-        canonicalUrl="https://hyriabasket.it"
-        structuredData={homeStructuredData}
-      />
+      <PageHead {...seoFor('/')} />
 
       <div className={`ah ${is3D ? 'ah--3d' : 'ah--static'} ${ready ? 'is-ready' : ''}`}>
         <div className="ah-backdrop" aria-hidden="true" />

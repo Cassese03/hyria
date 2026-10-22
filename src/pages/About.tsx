@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import ArenaPageHero from '../components/ArenaPageHero';
 import PeopleList from '../components/PeopleList';
 
@@ -29,26 +30,9 @@ const STAFF = [
   { name: 'Giacomo Mascolo', role: 'Socio fondatore' },
 ];
 
-const CHISIAMO_STRUCTURED_DATA = {
-  '@context': 'https://schema.org',
-  '@type': 'AboutPage',
-  name: 'Chi Siamo - Hyria Basket',
-  description: 'Scopri la storia e la missione di Hyria Basket, squadra di basket di Nola con passione giovanile.',
-  url: 'https://hyriabasket.it/chi-siamo',
-};
-
 const About: React.FC = () => (
   <>
-    <PageHead
-      title="Chi siamo | Hyriabasket – Basket a Nola con Passione Giovanile"
-      description="Scopri la storia di Hyria Basket, squadra di pallacanestro di Nola. La nostra missione, valori e passione per il basket giovanile."
-      keywords="chi siamo, Hyria Basket, storia, missione, basket Nola, squadra, valori, passione giovanile"
-      ogTitle="Chi Siamo - Hyria Basket Nola"
-      ogDescription="Conosci la storia e i valori di Hyria Basket, la squadra di basket di Nola che crede nella passione giovanile e nell'innovazione."
-      ogUrl="https://hyriabasket.it/chi-siamo"
-      canonicalUrl="https://hyriabasket.it/chi-siamo"
-      structuredData={CHISIAMO_STRUCTURED_DATA}
-    />
+    <PageHead {...seoFor('/chi-siamo')} />
 
     <div className="pg">
       <ArenaPageHero
@@ -90,6 +74,9 @@ const About: React.FC = () => (
               In poco tempo abbiamo costruito un progetto solido che comprende prima squadra, minibasket e numerose
               iniziative sul territorio, diventando un punto di riferimento per la pallacanestro della nostra zona.
             </p>
+            {/*<Link to="/storia" className="hy-link">
+              Sfoglia l'archivio storico
+            </Link>  */}
           </div>
         </div>
       </section>

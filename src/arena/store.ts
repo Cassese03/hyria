@@ -3,26 +3,39 @@
  * `s` è la posizione lungo il percorso: 0 = prima tappa, 1 = seconda, …
  * La pagina scrive `s`, la camera lo insegue con uno smorzamento.
  */
-export const arena = {
-  s: 0, // obiettivo calcolato dallo scroll
-  cam: 0, // posizione attuale (smorzata) della camera
-};
+export interface Track {
+  state: { s: number; cam: number };
+  subscribe: (fn: () => void) => () => void;
+  setTarget: (s: number) => void;
+}
 
-type Listener = () => void;
-const listeners = new Set<Listener>();
-
-export const subscribeArena = (fn: Listener) => {
-  listeners.add(fn);
-  return () => {
-    listeners.delete(fn);
+/** Un percorso camera guidato dallo scroll: la Home ha il suo, l'archivio storico un altro */
+export const createTrack = (): Track => {
+  const state = {
+    s: 0, // obiettivo calcolato dallo scroll
+    cam: 0, // posizione attuale (smorzata) della camera
+  };
+  const listeners = new Set<() => void>();
+  return {
+    state,
+    subscribe: (fn) => {
+      listeners.add(fn);
+      return () => {
+        listeners.delete(fn);
+      };
+    },
+    setTarget: (s) => {
+      if (Math.abs(s - state.s) < 1e-5) return;
+      state.s = s;
+      listeners.forEach((fn) => fn());
+    },
   };
 };
 
-export const setArenaTarget = (s: number) => {
-  if (Math.abs(s - arena.s) < 1e-5) return;
-  arena.s = s;
-  listeners.forEach((fn) => fn());
-};
+export const homeTrack = createTrack();
+export const arena = homeTrack.state;
+export const subscribeArena = homeTrack.subscribe;
+export const setArenaTarget = homeTrack.setTarget;
 
 // [x, y, z] in metri: niente three.js qui, così la Home non lo carica all'avvio
 export type Vec3 = [number, number, number];

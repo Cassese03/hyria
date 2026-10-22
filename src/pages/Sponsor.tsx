@@ -1,17 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import ArenaPageHero from '../components/ArenaPageHero';
 import { BOARD_SPONSORS, SPONSOR_BENEFITS, SPONSOR_PACKAGES, SPONSOR_TIERS, type SponsorEntry } from '../data/sponsors';
 import '../styles/sponsor.css';
-
-const sponsorStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Sponsor - Hyria Basket',
-  description: 'Scopri i nostri sponsor e le opportunità di partnership con Hyria Basket',
-  url: 'https://hyriabasket.it/sponsor',
-};
 
 const SponsorLogo: React.FC<{ sponsor: SponsorEntry }> = ({ sponsor }) => {
   const content = (
@@ -33,16 +26,7 @@ const SponsorLogo: React.FC<{ sponsor: SponsorEntry }> = ({ sponsor }) => {
 
 const Sponsor: React.FC = () => (
   <>
-    <PageHead
-      title="Sponsor | Hyria Basket - Partnership e Collaborazioni"
-      description="Scopri i nostri sponsor e partner. Opportunità di sponsorizzazione e collaborazione con Hyria Basket Nola."
-      keywords="sponsor, partnership, collaborazioni, Hyria Basket, Nola, basket"
-      ogTitle="Sponsor Hyria Basket - Diventa Partner"
-      ogDescription="Unisciti ai nostri sponsor e partner. Scopri le opportunità di collaborazione con Hyria Basket."
-      ogUrl="https://hyriabasket.it/sponsor"
-      canonicalUrl="https://hyriabasket.it/sponsor"
-      structuredData={sponsorStructuredData}
-    />
+    <PageHead {...seoFor('/sponsor')} />
 
     <div className="pg sp">
       <ArenaPageHero

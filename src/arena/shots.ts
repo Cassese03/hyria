@@ -35,4 +35,10 @@ export const canUseWebGL = () => {
 export const saveData = () =>
   !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
+/** Dispositivi molto modesti (poca memoria o pochi core): meglio la versione senza 3D */
+export const lowPowerDevice = () => {
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  return (nav.deviceMemory ?? 8) <= 2 || (nav.hardwareConcurrency ?? 8) <= 2;
+};
+
 export const isMobileDevice = () => window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { OG_IMAGE, clubGraph } from '../seo/site';
 
 interface PageHeadProps {
   title?: string;
@@ -10,18 +11,20 @@ interface PageHeadProps {
   ogUrl?: string;
   canonicalUrl?: string;
   structuredData?: object;
+  ogType?: 'website' | 'article';
 }
 
 const PageHead: React.FC<PageHeadProps> = ({
-  title = "Hyria Basket | Basket Nola – Squadra Ufficiale",
-  description = "Scopri Hyria Basket, la squadra di Basket di Nola. Allenamenti, partite, roster e ultime notizie ufficiali.",
-  keywords = "basket, pallacanestro, Nola, Hyria, squadra, sport, campionato",
+  title = "ASD Hyria Basket | Scuola Basket e Minibasket a Nola",
+  description = "Hyria Basket è la società di pallacanestro di Nola: minibasket dai 5 agli 11 anni, prima squadra nel campionato regionale e prova gratuita per i più piccoli.",
+  keywords = "basket Nola, minibasket Nola, pallacanestro, Agro Nolano, Hyria Basket",
   ogTitle,
   ogDescription,
-  ogImage = "https://hyriabasket.it/images/logo-hyria.png",
+  ogImage = OG_IMAGE.url,
   ogUrl = "https://hyriabasket.it",
   canonicalUrl,
-  structuredData
+  structuredData,
+  ogType = 'website',
 }) => {
   useEffect(() => {
     // Update title
@@ -31,7 +34,12 @@ const PageHead: React.FC<PageHeadProps> = ({
     const updateMetaTag = (property: string, content: string, isProperty = false) => {
       const selector = isProperty ? `meta[property="${property}"]` : `meta[name="${property}"]`;
       let meta = document.querySelector(selector) as HTMLMetaElement;
-      
+
+      // contenuto vuoto = il tag non serve a questa pagina
+      if (!content) {
+        meta?.remove();
+        return;
+      }
       if (!meta) {
         meta = document.createElement('meta');
         if (isProperty) {
@@ -71,21 +79,29 @@ const PageHead: React.FC<PageHeadProps> = ({
     updateMetaTag('og:description', ogDescription || description, true);
     updateMetaTag('og:image', ogImage, true);
     updateMetaTag('og:url', ogUrl, true);
-    updateMetaTag('og:type', 'website', true);
+    updateMetaTag('og:type', ogType, true);
+    updateMetaTag('og:site_name', 'Hyria Basket', true);
+    updateMetaTag('og:locale', 'it_IT', true);
+    // le dimensioni valgono solo per l'immagine di default; per le altre si tolgono
+    const isDefault = ogImage === OG_IMAGE.url;
+    updateMetaTag('og:image:width', isDefault ? String(OG_IMAGE.width) : '', true);
+    updateMetaTag('og:image:height', isDefault ? String(OG_IMAGE.height) : '', true);
+    updateMetaTag('og:image:alt', isDefault ? OG_IMAGE.alt : ogTitle || title, true);
     
     // Twitter Card tags
     updateMetaTag('twitter:card', 'summary_large_image');
     updateMetaTag('twitter:title', ogTitle || title);
     updateMetaTag('twitter:description', ogDescription || description);
     updateMetaTag('twitter:image', ogImage);
+    updateMetaTag('twitter:image:alt', isDefault ? OG_IMAGE.alt : ogTitle || title);
     
     // Canonical URL
     if (canonicalUrl) {
       updateLinkTag('canonical', canonicalUrl);
     }
     
-    // Structured Data
-    if (structuredData) {
+    // Structured Data: un solo script, sempre presente (di default il club)
+    {
       let script = document.querySelector('script[type="application/ld+json"]');
       
       if (!script) {
@@ -93,7 +109,7 @@ const PageHead: React.FC<PageHeadProps> = ({
         script.setAttribute('type', 'application/ld+json');
         document.head.appendChild(script);
       }
-      script.textContent = JSON.stringify(structuredData);
+      script.textContent = JSON.stringify(structuredData ?? clubGraph());
     }
 
     // Add Firebase Analytics Script
@@ -128,9 +144,9 @@ const PageHead: React.FC<PageHeadProps> = ({
 
     // Cleanup function to reset title when component unmounts
     return () => {
-      document.title = "Hyria Basket | Basket Nola – Squadra Ufficiale";
+      document.title = "ASD Hyria Basket | Scuola Basket e Minibasket a Nola";
     };
-  }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, canonicalUrl, structuredData]);
+  }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, canonicalUrl, structuredData, ogType]);
 
   return null; // This component doesn't render anything
 };

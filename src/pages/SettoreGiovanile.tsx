@@ -1,18 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import ArenaPageHero from '../components/ArenaPageHero';
 import PeopleList from '../components/PeopleList';
 import FaqList from '../components/FaqList';
 import '../styles/settore.css';
-
-const SETTORE_STRUCTURED_DATA = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Settore Giovanile - Hyria Basket',
-  description: 'Scopri il settore giovanile di Hyria Basket. Corsi, allenamenti e sviluppo per giovani talenti del basket a Nola.',
-  url: 'https://hyriabasket.it/settore-giovanile',
-};
 
 // Gruppi del minibasket in ordine di età
 const GROUPS = [
@@ -71,16 +64,7 @@ const FAQS = [
 
 const SettoreGiovanile: React.FC = () => (
   <>
-    <PageHead
-      title="Settore Giovanile | Basket a Nola – Hyriabasket"
-      description="Scopri il settore giovanile di Hyria Basket a Nola. Corsi di basket per bambini e ragazzi, allenamenti qualificati e sviluppo dei giovani talenti."
-      keywords="settore giovanile, basket bambini, minibasket, Nola, Hyria, allenamenti giovani, scuola basket"
-      ogTitle="Settore Giovanile Hyria Basket - Basket per Bambini e Ragazzi"
-      ogDescription="Il settore giovanile di Hyria Basket offre corsi di basket per tutte le età. Allenamenti qualificati e sviluppo dei giovani talenti a Nola."
-      ogUrl="https://hyriabasket.it/settore-giovanile"
-      canonicalUrl="https://hyriabasket.it/settore-giovanile"
-      structuredData={SETTORE_STRUCTURED_DATA}
-    />
+    <PageHead {...seoFor('/settore-giovanile')} />
 
     <div className="pg">
       <ArenaPageHero

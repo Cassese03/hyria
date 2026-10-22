@@ -1,16 +1,9 @@
 import PageHead from '../components/PageHead';
+import { seoFor } from '../seo/routes';
 import ArenaPageHero from '../components/ArenaPageHero';
 import ContactForm from '../components/ContactForm';
 import FaqList from '../components/FaqList';
 import '../styles/contatti.css';
-
-const CONTACT_STRUCTURED_DATA = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPage',
-  name: 'Contatti - Hyria Basket',
-  description: 'Contatta Hyria Basket per informazioni su corsi, iscrizioni e attività. Trova i nostri recapiti e modulo di contatto.',
-  url: 'https://hyriabasket.it/contatti',
-};
 
 const PHONES = [
   { name: 'Attilio', number: '+39 333 746 1777' },
@@ -47,16 +40,7 @@ const tel = (n: string) => `tel:${n.replace(/\s/g, '')}`;
 
 const Contact = () => (
   <>
-    <PageHead
-      title="Contatti Hyriabasket – Squadra Basket Nola"
-      description="Contatta Hyria Basket per informazioni su corsi, allenamenti e iscrizioni. Trova tutti i nostri recapiti telefonici, email e sede a Nola."
-      keywords="contatti Hyria Basket, telefono basket Nola, email pallacanestro, iscrizioni minibasket, sede Nola"
-      ogTitle="Contatti Hyria Basket - Informazioni e Iscrizioni"
-      ogDescription="Contattaci per informazioni su corsi di basket, iscrizioni e attività. Tutti i recapiti di Hyria Basket a Nola."
-      ogUrl="https://hyriabasket.it/contatti"
-      canonicalUrl="https://hyriabasket.it/contatti"
-      structuredData={CONTACT_STRUCTURED_DATA}
-    />
+    <PageHead {...seoFor('/contatti')} />
 
     <div className="pg">
       <ArenaPageHero
