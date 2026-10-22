@@ -34,6 +34,8 @@ export interface RouteSeo {
   priority: number;
   changefreq: 'weekly' | 'monthly' | 'yearly';
   lastmod?: string;
+  /** route non attiva in App.tsx: fuori da sitemap e prerender */
+  hidden?: boolean;
 }
 
 const crumbs = (name: string, path: string) => breadcrumbs([{ name: 'Home', path: '/' }, { name, path }]);
@@ -134,6 +136,8 @@ export const ROUTES: RouteSeo[] = [
   },
   {
     path: '/storia',
+    // l'archivio è disattivato in App.tsx: togliere hidden quando si riattiva
+    hidden: true,
     title: 'Archivio storico | Hyria Basket – La nostra storia',
     description:
       'Stagioni, tornei, minibasket ed eventi: la storia di Hyria Basket, il club di basket di Nola, raccontata capitolo per capitolo.',

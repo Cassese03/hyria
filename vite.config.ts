@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+import { seoPrerender } from './scripts/seo-plugin'
 
 // Supabase: nel sito entrano SOLO l'URL e la chiave pubblica, letti per nome.
 // Non allarghiamo `envPrefix`: l'integrazione Vercel crea anche SUPABASE_SERVICE_ROLE_KEY e SUPABASE_JWT_SECRET.
@@ -34,7 +35,7 @@ export default defineConfig(({ mode }) => {
   assertPublicKey(supabaseKey)
 
   return {
-    plugins: [react()],
+    plugins: [react(), seoPrerender()],
     define: {
       __SUPABASE_URL__: JSON.stringify(supabaseUrl),
       __SUPABASE_KEY__: JSON.stringify(supabaseKey),

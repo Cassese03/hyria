@@ -12,6 +12,8 @@ interface PageHeadProps {
   canonicalUrl?: string;
   structuredData?: object;
   ogType?: 'website' | 'article';
+  /** pagine da non indicizzare (es. capitolo inesistente) */
+  noindex?: boolean;
 }
 
 const PageHead: React.FC<PageHeadProps> = ({
@@ -25,6 +27,7 @@ const PageHead: React.FC<PageHeadProps> = ({
   canonicalUrl,
   structuredData,
   ogType = 'website',
+  noindex = false,
 }) => {
   useEffect(() => {
     // Update title
@@ -73,6 +76,7 @@ const PageHead: React.FC<PageHeadProps> = ({
     // Update meta tags
     updateMetaTag('description', description);
     updateMetaTag('keywords', keywords);
+    updateMetaTag('robots', noindex ? 'noindex, follow' : '');
     
     // Open Graph tags
     updateMetaTag('og:title', ogTitle || title, true);
@@ -146,7 +150,7 @@ const PageHead: React.FC<PageHeadProps> = ({
     return () => {
       document.title = "ASD Hyria Basket | Scuola Basket e Minibasket a Nola";
     };
-  }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, canonicalUrl, structuredData, ogType]);
+  }, [title, description, keywords, ogTitle, ogDescription, ogImage, ogUrl, canonicalUrl, structuredData, ogType, noindex]);
 
   return null; // This component doesn't render anything
 };

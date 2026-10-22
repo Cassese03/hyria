@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
 import { seoFor } from '../seo/routes';
+import { PARENT_FAQS } from '../seo/site';
 import ArenaPageHero from '../components/ArenaPageHero';
 import PeopleList from '../components/PeopleList';
 import FaqList from '../components/FaqList';
@@ -37,29 +38,6 @@ const COACHES = [
   { name: 'Davide Esposito', role: 'Allenatore' },
   { name: 'Giacomo Mascolo', role: 'Allenatore' },
   { name: 'Lorenzo Cassese', role: 'Allenatore' },
-];
-
-const FAQS = [
-  {
-    question: 'Come posso iscrivere mio figlio o mia figlia?',
-    answer:
-      'Contattaci tramite i nostri profili social, per telefono o dal modulo contatti. Per iscriversi servono il modulo di iscrizione compilato e un certificato medico sportivo valido.',
-  },
-  {
-    question: 'Quanto costa l’iscrizione?',
-    answer:
-      'Il costo varia in base alla categoria. Contattaci per i dettagli e per le agevolazioni dedicate alle famiglie con più figli iscritti.',
-  },
-  {
-    question: 'Si possono fare allenamenti di prova?',
-    answer:
-      "Sì: offriamo fino a 3 allenamenti di prova gratuiti, così i bambini conoscono l'ambiente prima di iscriversi.",
-  },
-  {
-    question: 'Dove si svolgono gli allenamenti?',
-    answer:
-      "Nel nostro impianto principale a Nola e in altre strutture convenzionate della zona. Gli indirizzi vengono comunicati al momento dell'iscrizione.",
-  },
 ];
 
 const SettoreGiovanile: React.FC = () => (
@@ -106,6 +84,9 @@ const SettoreGiovanile: React.FC = () => (
               Ogni gruppo ha obiettivi e programmi adatti all'età, ma tutti condividono la stessa filosofia: insegnare il
               basket come scuola di vita.
             </p>
+            <Link to="/minibasket-nola" className="hy-link">
+              Orari, palestra e prova gratuita
+            </Link>
           </div>
         </div>
       </section>
@@ -166,7 +147,7 @@ const SettoreGiovanile: React.FC = () => (
           <header className="pg-head">
             <h2 className="hy-h2">Domande frequenti</h2>
           </header>
-          <FaqList faqs={FAQS} />
+          <FaqList faqs={PARENT_FAQS} />
         </div>
       </section>
 

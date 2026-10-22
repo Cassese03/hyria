@@ -25,6 +25,11 @@
       "dest": "/favicon.ico"
     },
     {
+      "src": "/(.+?)/?",
+      "dest": "/$1/index.html",
+      "check": true
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

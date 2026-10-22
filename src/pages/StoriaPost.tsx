@@ -58,7 +58,7 @@ function BlockView({ block }: { block: Block }) {
 
 const NotFound = () => (
   <div className="pg">
-    <PageHead title="Capitolo non trovato | Hyria Basket" description="Il capitolo richiesto non è nell'archivio storico." />
+    <PageHead title="Capitolo non trovato | Hyria Basket" description="Il capitolo richiesto non è nell'archivio storico." noindex />
     <section className="pg-sec st-missing">
       <div className="pg-wrap">
         <p className="hy-kicker">Archivio storico</p>

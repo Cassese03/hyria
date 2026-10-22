@@ -28,8 +28,10 @@ const Streaming = lazy(() => import('./pages/Streaming'));
 const Spogliatoio = lazy(() => import('./pages/Spogliatoio'));
 const HyriaBettingPage = lazy(() => import('./pages/HyriaBettingPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const Storia = lazy(() => import('./pages/Storia'));
-const StoriaPost = lazy(() => import('./pages/StoriaPost'));
+// archivio storico disattivato (route commentate più sotto)
+// const Storia = lazy(() => import('./pages/Storia'));
+const MinibasketNola = lazy(() => import('./pages/MinibasketNola'));
+// const StoriaPost = lazy(() => import('./pages/StoriaPost'));
 const LoaderPreview = lazy(() => import('./pages/LoaderPreview'));
 const SwishLoader = lazy(() => import('./loaders/SwishLoader'));
 
@@ -76,6 +78,7 @@ const AppContent = () => {
               {/*<Route path="/storia" element={<Storia />} /> */}
               {/*<Route path="/storia/:slug" element={<StoriaPost />} /> */}
               <Route path="/settore-giovanile" element={<SettoreGiovanile />} />
+              <Route path="/minibasket-nola" element={<MinibasketNola />} />
               <Route path="/sponsor" element={<Sponsor />} />
               <Route path="/store" element={<Store />} />
               <Route path="/carrello" element={<Cart />} />

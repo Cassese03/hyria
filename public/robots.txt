@@ -1,5 +1,23 @@
+# Hyria Basket – crawler benvenuti, compresi gli assistenti AI
 User-agent: *
 Allow: /
+Disallow: /anteprima-loading
+Disallow: /carrello
 
-# Sitemap
+# Motori e assistenti AI: accesso esplicito (llms.txt riassume il club per loro)
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+Disallow: /anteprima-loading
+Disallow: /carrello
+
 Sitemap: https://hyriabasket.it/sitemap.xml

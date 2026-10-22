@@ -1,0 +1,116 @@
+/* ─── Landing "Scuola Minibasket a Nola" ─────────────────────────────────── */
+
+.mb-ladder-text {
+  margin: 0.2rem 0 0;
+  color: var(--hy-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.sg-ladder h3.sg-ladder-name {
+  margin: 0;
+}
+
+/* quattro motivi: quattro colonne su desktop */
+@media (min-width: 900px) {
+  .mb-why {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.mb-table-wrap {
+  overflow-x: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.mb-table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+  font-size: 0.98rem;
+}
+
+.mb-table th,
+.mb-table td {
+  padding: 0.95rem 1rem 0.95rem 0;
+  border-top: 1px solid var(--hy-line);
+  text-align: left;
+}
+
+.mb-table thead th {
+  border-top: 0;
+  color: var(--hy-faint);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.mb-table tbody th {
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.mb-table td {
+  color: var(--hy-muted);
+}
+
+.mb-where {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.mb-where h3 {
+  margin: 0 0 0.75rem;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mb-where address {
+  color: var(--hy-muted);
+  font-style: normal;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.mb-venues {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--hy-muted);
+}
+
+.mb-towns {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.mb-towns li {
+  padding: 0.55rem 0.9rem;
+  border-left: 3px solid var(--hy-orange);
+  background: rgba(94, 3, 3, 0.45);
+  color: #fff;
+  font-family: 'Arvo', Georgia, serif;
+  font-weight: 700;
+}
+
+.mb-also {
+  margin: 1rem 0 0;
+  color: var(--hy-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 699px) {
+  .mb-where {
+    grid-template-columns: 1fr;
+  }
+}

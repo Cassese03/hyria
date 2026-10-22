@@ -85,7 +85,7 @@ export const PARENT_FAQS: Faq[] = [
   {
     question: 'Dove si svolgono gli allenamenti?',
     answer:
-      'Nella nostra palestra in Via Madonna delle Grazie 61 a Nola (NA), facilmente raggiungibile da Cimitile, Casamarciano, Saviano e dagli altri comuni dell’Agro Nolano.',
+      'Nella nostra palestra in Via Madonna delle Grazie 61 a Nola (NA), facilmente raggiungibile da Cimitile, Casamarciano, Saviano e dagli altri comuni dell’Agro Nolano, e in altre strutture convenzionate della zona comunicate al momento dell’iscrizione.',
   },
   {
     question: 'Quante volte a settimana ci si allena?',
